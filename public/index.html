@@ -464,29 +464,6 @@ async function dbLoad(key){
 // ── API 키 ──
 const API_KEY = 'qkCjlMwEqQIoLCAGFgDUGK29bwyjtuLV';
 
-// ── localStorage 저장/불러오기 ──
-function saveData(){
-  // localStorage 백업
-  try{
-    if(typeof rooms!=='undefined') localStorage.setItem('ansou_rooms', JSON.stringify(rooms));
-    if(typeof callLogs!=='undefined') localStorage.setItem('ansou_callLogs', JSON.stringify(callLogs));
-    if(typeof dLogs!=='undefined') localStorage.setItem('ansou_dailyLogs', JSON.stringify(dLogs));
-    if(typeof diaryList!=='undefined') localStorage.setItem('ansou_diary', JSON.stringify(diaryList));
-    if(typeof myPosts!=='undefined') localStorage.setItem('ansou_myPosts', JSON.stringify(myPosts));
-    if(typeof snsData!=='undefined') localStorage.setItem('ansou_snsData', JSON.stringify(snsData));
-  }catch(e){}
-  // DB 저장 (Railway)
-  if(typeof rooms!=='undefined') dbSave('rooms', rooms);
-  if(typeof callLogs!=='undefined') dbSave('callLogs', callLogs);
-  if(typeof dLogs!=='undefined') dbSave('dailyLogs', dLogs);
-  if(typeof diaryList!=='undefined') dbSave('diary', diaryList);
-  if(typeof myPosts!=='undefined') dbSave('myPosts', myPosts);
-  if(typeof snsData!=='undefined') dbSave('snsData', snsData);
-}
-function loadData(){
-  try{
-    const r=localStorage.getItem('ansou_rooms');
-    if(r){const p=JSON.parse(r);rooms.length=0;rooms.push(...p);}
     const cl=localStorage.getItem('ansou_callLogs');
     if(cl){const p=JSON.parse(cl);callLogs.length=0;callLogs.push(...p);}
     const dl=localStorage.getItem('ansou_dailyLogs');
@@ -744,7 +721,6 @@ function addNotif(icon,type,msg,action){
 let snsData=[];
 let myPosts=[];
 function renderSNS(){
-  saveData();
   const f=document.getElementById('snsFeed');f.innerHTML='';
   [...myPosts,...snsData].forEach(p=>f.appendChild(mkPost(p)));
 }
@@ -853,7 +829,6 @@ renderSNS();
 // ══ 채팅 ══
 let rooms=[];let curRoom=null;let chatLk=false;
 function renderRooms(){
-  saveData();
   const list=document.getElementById('roomList');list.innerHTML='';
   if(!rooms.length){list.innerHTML='<div style="text-align:center;padding:24px;font-size:12px;color:var(--gray);">아직 채팅 기록이 없어요</div>';return;}
   rooms.forEach((r,i)=>{
@@ -937,6 +912,7 @@ async function sendMsg(){
   appendMsg(i,{role:'assistant',content:rep});room.hist.push({role:'assistant',content:rep});
   chatLk=false;if(snd)snd.disabled=false;
   renderRooms();
+  saveData();
 }
 function handleRK(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
 
@@ -1050,7 +1026,6 @@ async function sendCC(){
   addCC('an',sp);callHistory.push({role:'assistant',content:rep});callLk=false;
 }
 function renderCallLogs(){
-  saveData();
   const list=document.getElementById('callLogList');list.innerHTML='';
   if(!callLogs.length){list.innerHTML='<div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">통화 기록이 없어요</div>';return;}
   callLogs.forEach((l,i)=>{
@@ -1157,6 +1132,7 @@ async function sendD(){
   const sys=buildSys(`\n【씬】${log.sit}`);
   const rep=await api(log.hist,sys);ty.remove();
   addDMsg({role:'assistant',content:rep});log.hist.push({role:'assistant',content:rep});dLk=false;
+  saveData();
 }
 function handleDK(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendD();}}
 
@@ -1179,7 +1155,6 @@ function switchDTab(tab){
 function endDaily(){if(curDIdx!==null)dLogs[curDIdx].ended=true;closeDailyOvl();}
 function closeDailyOvl(){document.getElementById('dailyOvl').classList.remove('open');curDIdx=null;renderDailyList();}
 function renderDailyList(){
-  saveData();
   const list=document.getElementById('dailyList');list.innerHTML='';
   if(!dLogs.length){list.innerHTML='<div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">아직 기록이 없어요</div>';return;}
   dLogs.forEach((l,i)=>{
@@ -1292,7 +1267,6 @@ async function generateNote(){
 }
 
 function renderDiaryList(){
-  saveData();
   const list=document.getElementById('diaryList');
   list.innerHTML='';
   if(!diaryList.length){
