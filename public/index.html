@@ -1333,7 +1333,7 @@ async function sendAutoTalk(){
 setTimeout(sendAutoTalk, 30000 + Math.random()*150000);
 
 // ══ 데이터 영속화 (Supabase) ══
-let firstMet=null;
+let firstMet='2023-12-21T00:00:00';
 async function saveData(){
   await dbSave('appState', {rooms, dLogs, diaryList, myPosts, firstMet});
 }
