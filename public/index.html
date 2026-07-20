@@ -499,6 +499,7 @@ function saveDP(){
   localStorage.setItem('dp',JSON.stringify(DP));
   const el=document.getElementById('savedOk');el.style.display='block';setTimeout(()=>el.style.display='none',2000);
   const mh=document.getElementById('myHandleDisp');if(mh)mh.textContent=DP.handle||'@FLYtotheFUTURE';
+  saveData();
 }
 function v(id){const el=document.getElementById(id);return el?el.value:'';}
 
@@ -1346,7 +1347,7 @@ setTimeout(sendAutoTalk, 30000 + Math.random()*150000);
 // ══ 데이터 영속화 (Supabase) ══
 let firstMet='2023-12-21T00:00:00';
 async function saveData(){
-  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, snsData, callLogs, firstMet});
+  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, snsData, callLogs, firstMet, DP});
 }
 async function loadData(){
   const d=await dbLoad('appState');
@@ -1358,6 +1359,7 @@ async function loadData(){
     if(d.snsData) snsData=d.snsData;
     if(d.callLogs) callLogs=d.callLogs;
     if(d.firstMet) firstMet=d.firstMet;
+    if(d.DP){ DP=d.DP; localStorage.setItem('dp',JSON.stringify(DP)); applyDP(); }
   }
   if(!firstMet) firstMet=new Date().toISOString();
   renderRooms();
