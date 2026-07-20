@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>白石 杏 — 개인 공간</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00bbdc">
+<link rel="apple-touch-icon" href="/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--mint:#00bbdc;--mint-l:#b3eaf5;--mint-p:#e8f9fd;--dark:#1a2a3a;--gray:#8899aa;--white:#fff;--bg:#f0f9fc;--r:16px;--rs:10px;}
@@ -300,6 +303,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
           <span style="opacity:.7;">오늘의 상태</span>
           <span id="homeMoodBadge" style="background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;">일기 탭에서 확인해봐요</span>
         </div>
+        <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-size:11px;">
+          <span id="metBadge" style="opacity:.9;">만난 지 계산 중...</span>
+          <button onclick="openTimeline()" style="background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:20px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">타임라인 ›</button>
+        </div>
       </div>
       <div class="sec-title">✦ 새로운 알림</div>
       <div id="notifList">
@@ -450,6 +457,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
         <button class="rv-send" onclick="sendD()" style="flex-shrink:0;align-self:flex-end;margin-bottom:0;">➤</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- 타임라인 오버레이 -->
+<div class="overlay" id="timelineOvl" onclick="if(event.target===this)closeTimeline()">
+  <div class="ovl-panel">
+    <div class="ovl-hdr">
+      <div style="flex:1;font-weight:700;font-size:14px;">✦ 우리의 타임라인</div>
+      <button class="ovl-close" onclick="closeTimeline()">✕</button>
+    </div>
+    <div class="scroll" id="timelineList" style="padding:14px;"></div>
   </div>
 </div>
 
@@ -612,7 +630,16 @@ function parseMsg(raw){
   return{speech:speech.join('\n').trim(),narr:narr.join(' ').trim()};
 }
 
-function mkMsg(role,raw,ts,speechOverride,narrOverride){
+function typeReveal(el, fullText, onDone, speed=22){
+  let i=0;
+  const step=Math.max(1, Math.round(fullText.length/45));
+  const id=setInterval(()=>{
+    i+=step;
+    if(i>=fullText.length){ i=fullText.length; clearInterval(id); if(onDone)onDone(); }
+    el.innerHTML=esc(fullText.slice(0,i));
+  }, speed);
+}
+function mkMsg(role,raw,ts,speechOverride,narrOverride,animate){
   const isU=role==='user';
   // 직접 전달된 speech/narr 우선, 없으면 파싱
   let speech = speechOverride!==undefined ? speechOverride : null;
@@ -628,8 +655,14 @@ function mkMsg(role,raw,ts,speechOverride,narrOverride){
   if(speech){
     const d=document.createElement('div');d.className='mb'+(isU?' u':'');
     const av=isU?'<div class="m-av u">颯</div>':'<div class="m-av">杏</div>';
-    d.innerHTML=`${av}<div class="m-content"><div class="m-speech">${esc(speech)}</div>${!narr?`<div class="m-time">${ts}</div>`:''}</div>`;
+    d.innerHTML=`${av}<div class="m-content"><div class="m-speech"></div>${!narr?`<div class="m-time">${ts}</div>`:''}</div>`;
     wrap.appendChild(d);
+    const spEl=d.querySelector('.m-speech');
+    if(animate && !isU){
+      wrap.dataset.pendingText=speech;
+    }else{
+      spEl.innerHTML=esc(speech);
+    }
   }
 
   // 지문 — 말풍선 없이 이탤릭으로 분리
@@ -786,7 +819,7 @@ async function postMine(){
   const txt=document.getElementById('myPostTxt').value.trim();if(!txt)return;
   document.getElementById('myPostTxt').value='';
   const p={id:'my-'+Date.now(),who:'me',nm:DP.name||'소우타',hl:DP.handle||'@FLYtotheFUTURE',ts:new Date(),time:'방금 전',body:txt,lk:0,liked:false,cmts:[]};
-  myPosts.unshift(p);renderSNS();
+  myPosts.unshift(p);renderSNS();saveData();
   if(Math.random()>.25){
     setTimeout(async()=>{
       const myH=DP.handle||'@FLYtotheFUTURE';const r=await api([{role:'user',content:`소우타(${myH}) 게시글: "${txt}". 짧게 댓글 달아줘. 맨 앞에 @${myH.replace('@','')} 태그 붙여서.`}],buildSys('\n상황: 소우타 SNS 게시글에 댓글. 1-2문장. 괄호 서술 없이. 반드시 맨 앞에 @태그 붙일 것.'));
@@ -860,10 +893,20 @@ function openRoom(i){
   el.scrollTop=el.scrollHeight;
 }
 function closeRoom(){curRoom=null;document.getElementById('roomView').classList.remove('open');document.getElementById('chatListWrap').style.display='';renderRooms();}
-function endRoom(i){rooms[i].ended=true;closeRoom();}
-function appendMsg(i,msg){
+function endRoom(i){rooms[i].ended=true;closeRoom();saveData();}
+function appendMsg(i,msg,animate){
   const room=rooms[i];const ts=nowt();room.msgs.push({...msg,ts});
-  if(curRoom===i){const el=document.getElementById('rvMsgs');if(el){el.appendChild(mkMsg(msg.role,msg.content,ts,msg.speech,msg.narr));el.scrollTop=el.scrollHeight;}}
+  if(curRoom===i){
+    const el=document.getElementById('rvMsgs');
+    if(el){
+      const node=mkMsg(msg.role,msg.content,ts,msg.speech,msg.narr,animate);
+      el.appendChild(node);el.scrollTop=el.scrollHeight;
+      if(node.dataset&&node.dataset.pendingText){
+        const spEl=node.querySelector('.m-speech');
+        typeReveal(spEl, node.dataset.pendingText, ()=>{el.scrollTop=el.scrollHeight;});
+      }
+    }
+  }
 }
 async function sendMsg(){
   if(chatLk||curRoom===null)return;
@@ -888,7 +931,7 @@ async function sendMsg(){
   const el=document.getElementById('rvMsgs');
   const ty=mkTyping();if(el){el.appendChild(ty);el.scrollTop=el.scrollHeight;}
   const rep=await api(room.hist);ty.remove();
-  appendMsg(i,{role:'assistant',content:rep});room.hist.push({role:'assistant',content:rep});
+  appendMsg(i,{role:'assistant',content:rep},true);room.hist.push({role:'assistant',content:rep});
   chatLk=false;if(snd)snd.disabled=false;
   renderRooms();
   saveData();
@@ -1198,6 +1241,7 @@ async function generateDiary(){
   const entry={type:'diary',date:dateStr,content:rep.trim(),ts:Date.now()};
   diaryList.unshift(entry);
   renderDiaryList();
+  saveData();
 }
 
 async function generateNote(){
@@ -1221,6 +1265,7 @@ async function generateNote(){
   const entry={type:'note',noteType,date:dateStr,content:rep.trim(),ts:Date.now()};
   diaryList.unshift(entry);
   renderDiaryList();
+  saveData();
 }
 
 function renderDiaryList(){
@@ -1281,10 +1326,134 @@ async function sendAutoTalk(){
   // 홈 알림 추가
   const{speech}=parseMsg(msg);
   addNotif('💬','메시지',`杏: ${speech.slice(0,30)}${speech.length>30?'...':''}`, 'newChat');
+  saveData();
 }
 
 // 30초~3분 사이 랜덤으로 선톡
 setTimeout(sendAutoTalk, 30000 + Math.random()*150000);
+
+// ══ 데이터 영속화 (Supabase) ══
+let firstMet=null;
+async function saveData(){
+  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, firstMet});
+}
+async function loadData(){
+  const d=await dbLoad('appState');
+  if(d){
+    if(d.rooms) rooms=d.rooms;
+    if(d.dLogs) dLogs=d.dLogs;
+    if(d.diaryList) diaryList=d.diaryList;
+    if(d.myPosts) myPosts=d.myPosts;
+    if(d.firstMet) firstMet=d.firstMet;
+  }
+  if(!firstMet) firstMet=new Date().toISOString();
+  renderRooms();
+  renderDiaryList();
+  renderSNS();
+  updateMetBadge();
+  saveData();
+  loadNotifs();
+  scheduleSideEvent();
+}
+
+// ══ 타임라인 ══
+const dreamChapters=[
+  {t:'1화. 네 연기를 처음 본 날', d:'중학교 3학년, 더운 여름날. 안이 소우타의 연기를 우연히 지켜보다 인기척을 느낀 소년과 눈이 마주치며 시작된 인연.'},
+  {t:'2화. 네 노래를 처음 들은 날', d:'안이 자신의 무대(WEEKEND GARAGE)에 소우타를 초대. 관객 속에서 눈을 맞추는 안을 보며, 소우타는 그때 자각하지 못한 사랑을 시작한다.'},
+  {t:'3화. 너의 뒤에서라도', d:'고등학교 진학 후, 앞서 나아가는 안 옆에 설 자격이 없다고 느끼며 스스로 거리를 두는 소우타. "나는 분명 너한테 방해가 될테니까..."'},
+  {t:'4화. 진심', d:'부모의 기대 속에서 정말 연기를 좋아하는지조차 확신하지 못하는 소우타. "...힘들어."'},
+  {t:'5화. 잠연', d:'그럼에도 안이 먼저 손을 내밀고, 두려움에 가려졌던 확신이 드러난다. "좋아해."'}
+];
+function updateMetBadge(){
+  const el=document.getElementById('metBadge');if(!el||!firstMet)return;
+  const days=Math.max(1, Math.floor((Date.now()-new Date(firstMet).getTime())/86400000)+1);
+  el.textContent=`만난 지 ${days}일째`;
+}
+function openTimeline(){
+  const list=document.getElementById('timelineList');list.innerHTML='';
+  const badge=document.getElementById('metBadge');
+  if(badge){
+    const intro=document.createElement('div');
+    intro.style.cssText='margin-bottom:14px;font-size:12px;color:var(--gray);';
+    intro.textContent=`이 공간에서 ${badge.textContent}예요.`;
+    list.appendChild(intro);
+  }
+  dreamChapters.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='diary-card';d.style.margin='0 0 12px';
+    d.innerHTML=`<div class="diary-card-hdr"><div class="diary-card-icon">✦</div><div class="diary-card-title">${esc(c.t)}</div></div><div class="diary-card-body">${esc(c.d)}</div>`;
+    list.appendChild(d);
+  });
+  document.getElementById('timelineOvl').classList.add('open');
+}
+function closeTimeline(){document.getElementById('timelineOvl').classList.remove('open');}
+
+// ══ 알림(진짜 저장되는) ══
+let notifStore=[];
+function renderNotifFromStore(){
+  const list=document.getElementById('notifList');if(!list)return;
+  list.innerHTML='';
+  notifStore.slice().reverse().forEach(n=>{
+    const d=document.createElement('div');d.className='notif-card'+(n.read?' read':'');
+    d.innerHTML=`<div class="notif-type">${n.icon} ${esc(n.type)}${n.read?'':' <span class="nbadge">NEW</span>'}</div><div class="notif-msg">${esc(n.msg)}</div><div class="notif-time">${esc(n.date)}</div>`;
+    d.onclick=()=>{n.read=true;d.classList.add('read');d.querySelector('.nbadge')?.remove();updateHBadge();saveNotifs();};
+    list.appendChild(d);
+  });
+}
+function updateHBadge(){
+  const n=notifStore.filter(x=>!x.read).length;
+  const b=document.getElementById('hBadge');
+  if(b){ if(n>0){b.style.display='';b.textContent=n;} else {b.style.display='none';} }
+}
+async function saveNotifs(){ await dbSave('notifications', notifStore); }
+async function genDailyNotif(today){
+  try{
+    const sys=buildSys('\n상황: 아침에 안이 소우타에게 문득 남기는 짧은 메시지. 대사 1문장만, 지문/괄호 없이, 다정하거나 발랄한 톤으로.');
+    const line=await api([{role:'user',content:'[오늘의 첫 메시지를 안이 소우타에게 남긴다]'}],sys);
+    const clean=line.replace(/\(.*?\)/gs,'').trim();
+    notifStore.push({icon:'💌',type:'오늘의 한마디',msg:clean,date:nowt(),day:today,kind:'daily',read:false});
+    await saveNotifs();
+  }catch(e){}
+}
+async function loadNotifs(){
+  const d=await dbLoad('notifications');
+  if(d && Array.isArray(d)) notifStore=d;
+  const today=new Date().toISOString().slice(0,10);
+  if(!notifStore.some(n=>n.day===today && n.kind==='daily')){
+    await genDailyNotif(today);
+  }
+  renderNotifFromStore();
+  updateHBadge();
+}
+
+// ══ 조연 캐릭터 서브 이벤트 (프로젝트 세카이) ══
+const sideChars=[
+  {name:'시노노메 아키토', trait:'겉보기엔 사교적이지만 실제 성격은 까칠함. 재능이 없어도 좌절 않고 몇 배로 노력하는 올곧은 타입, 팀 리더 포지션. 안과는 2년째 같은 반인 정반대 친구지만 의외로 잘 맞음. 안을 좋아하면서 고백 안 하는 소우타를 답답해함.'},
+  {name:'쿠사나기 네네', trait:'내성적이고 소극적이지만 중요한 순간엔 할 말은 하는 강단있는 성격. 노래에 대한 열정이 크고 계속 발전하려 함. 소우타와는 연기 얘기를 자주 나누며 도움을 주는 친절한 사이.'},
+  {name:'텐마 사키', trait:'밝고 텐션 높은 분위기 메이커. 몸이 약하지만 좌절하지 않고 늘 긍정적. 어릴 때 병원에서 소우타를 처음 만난 인연, 다정하고 착한 친구.'},
+  {name:'아키야마 미즈키', trait:'귀여운 걸 좋아하는 기분파. 진짜 모습을 들키는 것에 예민해 방어적인 면도 있지만 마음 연 사람 앞에선 밝음. 안의 소개로 소우타와 친해진 사이, 종종 "배우님"이라고 놀림.'},
+  {name:'키리타니 하루카', trait:'적극적이고 체계적인 팔방미인. 동정심과 책임감이 강함. 예능에서 소우타와 처음 만난 연예계 동료, 말은 적은 편이지만 할 말은 다 하는 성격이라 반전 매력.'},
+  {name:'카미시로 루이', trait:'마이페이스 천재. 능글맞으면서 부드럽지만 본질은 현실적이고 냉철함. 솔직하지 못한 대화를 싫어함. 소우타의 재능을 탐내는 연예계 동료, 인사할 때마다 도망가려 함(이유는 불명).'}
+];
+function scheduleSideEvent(){
+  setTimeout(async()=>{
+    try{
+      const c=sideChars[Math.floor(Math.random()*sideChars.length)];
+      const sys=`당신은 프로젝트 세카이(프로세카)의 캐릭터 ${c.name}입니다.\n성격/특징: ${c.trait}\n지금 사기하시 소우타에게 짧은 메시지를 하나 보냅니다. 1문장, 대사만, 괄호나 지문 없이, 캐릭터의 말투 그대로.`;
+      const line=await api([{role:'user',content:`[${c.name}가 소우타에게 메시지를 보낸다]`}],sys);
+      const clean=line.replace(/\(.*?\)/gs,'').trim();
+      notifStore.push({icon:'📩',type:c.name,msg:clean,date:nowt(),day:new Date().toISOString().slice(0,10),kind:'side',read:false});
+      renderNotifFromStore();updateHBadge();saveNotifs();
+    }catch(e){}
+    scheduleSideEvent();
+  }, 480000 + Math.random()*720000); // 8~20분 간격
+}
+loadData();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});
+}
 </script>
 <!-- 통화 녹음 상세보기 오버레이 -->
 <div class="call-log-detail" id="callDetailOverlay" onclick="if(event.target===this)closeCallDetail()">

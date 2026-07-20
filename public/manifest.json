@@ -1,0 +1,14 @@
+{
+  "name": "Ansou - 白石 杏",
+  "short_name": "안소우",
+  "description": "시라이시 안과의 개인 공간",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f0f9fc",
+  "theme_color": "#00bbdc",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
