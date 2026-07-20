@@ -766,6 +766,7 @@ function toggleLk(id,btn){
   const p=[...snsData,...myPosts].find(x=>x.id===id);if(!p)return;
   p.liked=!p.liked;p.lk+=p.liked?1:-1;
   btn.className='sa'+(p.liked?' liked':'');btn.textContent=(p.liked?'💗':'🤍')+' '+p.lk;
+  saveData();
 }
 function togCmt(id){
   const el=document.getElementById('ca-'+id);
@@ -785,6 +786,7 @@ async function addCmt(id){
   if(p)p.cmts.push({who:myHandle,txt:myComment});
   const cl=document.getElementById('cl-'+id);
   cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:myHandle,txt:myComment}));
+  saveData();
   // 안의 답댓글 — 내 핸들 태그
   if(Math.random()>.35){
     setTimeout(async()=>{
@@ -792,6 +794,7 @@ async function addCmt(id){
       const sp=r.replace(/\(.*?\)/gs,'').trim();
       cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:'@LightUptheFire',txt:sp}));
       if(p)p.cmts.push({who:'@LightUptheFire',txt:sp});
+      saveData();
     },1200+Math.random()*1500);
   }
 }
@@ -824,7 +827,7 @@ async function postMine(){
     setTimeout(async()=>{
       const myH=DP.handle||'@FLYtotheFUTURE';const r=await api([{role:'user',content:`소우타(${myH}) 게시글: "${txt}". 짧게 댓글 달아줘. 맨 앞에 @${myH.replace('@','')} 태그 붙여서.`}],buildSys('\n상황: 소우타 SNS 게시글에 댓글. 1-2문장. 괄호 서술 없이. 반드시 맨 앞에 @태그 붙일 것.'));
       const sp=r.replace(/\(.*?\)/gs,'').trim();
-      p.cmts.push({who:'@LightUptheFire',txt:sp}); renderSNS();
+      p.cmts.push({who:'@LightUptheFire',txt:sp}); renderSNS();saveData();
     },2500+Math.random()*3000);
   }
 }
@@ -835,6 +838,7 @@ setTimeout(()=>{
   const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:t,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[]};
   snsData.unshift(ap);renderSNS();
   addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
+  saveData();
 },9000+Math.random()*12000);
 renderSNS();
 
@@ -1023,7 +1027,7 @@ function endCall(){
   const dur=document.getElementById('callTmr').textContent;
   // 통화 중 메시지 저장
   const logMsgs=[...callHistory];
-  callLogs.unshift({nm:'시라이시 안',time:nowt(),dur,msgs:logMsgs,dir:callDirection});renderCallLogs();
+  callLogs.unshift({nm:'시라이시 안',time:nowt(),dur,msgs:logMsgs,dir:callDirection});renderCallLogs();saveData();
   callSec=0;document.getElementById('callTmr').textContent='00:00';document.getElementById('callTmr').classList.remove('vis');
   document.getElementById('callStxt').textContent='통화를 시작해보세요';
   document.getElementById('callBtns').innerHTML=`<button class="cbtn start" onclick="startCall()">📞</button>`;
@@ -1335,7 +1339,7 @@ setTimeout(sendAutoTalk, 30000 + Math.random()*150000);
 // ══ 데이터 영속화 (Supabase) ══
 let firstMet='2023-12-21T00:00:00';
 async function saveData(){
-  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, firstMet});
+  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, snsData, callLogs, firstMet});
 }
 async function loadData(){
   const d=await dbLoad('appState');
@@ -1344,12 +1348,15 @@ async function loadData(){
     if(d.dLogs) dLogs=d.dLogs;
     if(d.diaryList) diaryList=d.diaryList;
     if(d.myPosts) myPosts=d.myPosts;
+    if(d.snsData) snsData=d.snsData;
+    if(d.callLogs) callLogs=d.callLogs;
     if(d.firstMet) firstMet=d.firstMet;
   }
   if(!firstMet) firstMet=new Date().toISOString();
   renderRooms();
   renderDiaryList();
   renderSNS();
+  renderCallLogs();
   updateMetBadge();
   saveData();
   loadNotifs();
