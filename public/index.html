@@ -831,15 +831,22 @@ async function postMine(){
     },2500+Math.random()*3000);
   }
 }
-// 자동 포스트
-const autoTopics=['오늘 연습 진짜 잘 됐어. RAD WEEKEND 생각하면 심장이 두근거림 ㅋㅋ 더 멀리 가야지.\n#뮤지션 #RADWEEKEND #목표','카페 서빙하다가 갑자기 새 멜로디 생각남. 이런 게 뮤지션이지.\n#WEEKENDGARAGE #일상 #뮤지션','소우타가 연기 연습한다고 했는데 구경 가도 되는지 물어봐야 하나... 어색한가.\n#사기하시소우타 #연기 #뭔가어색함','오늘 하늘 진짜 예쁘다. 이런 날에 라이브 하면 완전 최고일 텐데.\n#노래하는별 #하늘 #라이브하고싶다','아키토랑 또 싸웠다 진짜ㅋㅋㅋ 근데 화가 안 남 그 녀석도 나름 신경 써주는 거 알아서\n#시노노메아키토 #VividBADSQUAD #싸웠지만괜찮아','꿈에서 RAD WEEKEND 넘어서는 이벤트 열었어. 현실로 만들 거야 반드시.\n#RADWEEKEND #꿈 #반드시이룬다'];
-setTimeout(()=>{
-  const t=autoTopics[Math.floor(Math.random()*autoTopics.length)];
-  const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:t,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[]};
-  snsData.unshift(ap);renderSNS();
-  addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
-  saveData();
-},9000+Math.random()*12000);
+// 자동 포스트 — 하루 한 번, AI가 그때그때 새로 생성 (고정 문구 X)
+async function scheduleAutoPost(){
+  const today=new Date().toISOString().slice(0,10);
+  if(snsData.some(p=>p.auto && p.day===today)) return; // 오늘 이미 올렸으면 스킵
+  setTimeout(async()=>{
+    try{
+      const sys=buildSys('\n상황: 안이 SNS에 짧은 글을 하나 올리려 한다. 오늘 있었던 일, 음악 활동, RAD WEEKEND 목표, 친구들과의 에피소드, 혹은 소우타에 대한 생각 중 하나를 자연스럽게 담아서. 1~3문장, 해시태그 1~3개 포함. 안의 말투 그대로, 게시물 본문만 출력하고 다른 설명은 붙이지 말 것.');
+      const t=await api([{role:'user',content:'[안이 SNS에 글을 올린다]'}],sys);
+      const clean=t.replace(/\(.*?\)/gs,'').trim();
+      const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[],auto:true,day:today};
+      snsData.unshift(ap);renderSNS();
+      addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
+      saveData();
+    }catch(e){}
+  },9000+Math.random()*12000);
+}
 renderSNS();
 
 // ══ 채팅 ══
@@ -1361,6 +1368,7 @@ async function loadData(){
   saveData();
   loadNotifs();
   scheduleSideEvent();
+  scheduleAutoPost();
 }
 
 // ══ 타임라인 ══
