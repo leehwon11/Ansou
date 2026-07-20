@@ -5,10 +5,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// DB 연결
+// DB 연결 (연결이 안 될 때 무한 대기하지 않도록 타임아웃 설정)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
+  connectionTimeoutMillis: 10000
 });
 
 // DB 테이블 초기화
