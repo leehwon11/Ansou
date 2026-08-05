@@ -999,6 +999,7 @@ function makeCmtHTML(c){
     avClass='me';displayName=c.who;handle=c.who;
   }
   const cmtId='cmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+  cmtMap[cmtId]=c;
   const repliesHtml=(c.replies||[]).map(r=>makeReplyHTML(r)).join('');
   return `<div class="cmt-item" id="${cmtId}">
     <div class="cmt-av ${avClass}">${avContent}</div>
@@ -1009,8 +1010,8 @@ function makeCmtHTML(c){
       ${repliesHtml?`<div class="cmt-replies" id="replies-${cmtId}">${repliesHtml}</div>`:`<div class="cmt-replies" id="replies-${cmtId}" style="display:none;"></div>`}
       <div class="reply-inp-area" id="rinp-${cmtId}">
         <div class="cmt-av me" style="width:22px;height:22px;overflow:hidden;flex-shrink:0;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
-        <input class="reply-inp" id="ri-${cmtId}" placeholder="답글 달기..." onkeydown="if(event.key==='Enter')sendReply('${cmtId}',c)">
-        <button class="reply-send" onclick="sendReply('${cmtId}',c)">전송</button>
+        <input class="reply-inp" id="ri-${cmtId}" placeholder="답글 달기..." onkeydown="if(event.key==='Enter')sendReply('${cmtId}')">
+        <button class="reply-send" onclick="sendReply('${cmtId}')">전송</button>
       </div>
     </div>
   </div>`;
@@ -1054,7 +1055,8 @@ function toggleReplyInp(cmtId){
   }
 }
 
-async function sendReply(cmtId, c){
+async function sendReply(cmtId){
+  const c=cmtMap[cmtId];if(!c)return;
   const inp=document.getElementById('ri-'+cmtId);
   if(!inp)return;
   const txt=inp.value.trim();if(!txt)return;
@@ -1096,6 +1098,8 @@ async function sendReply(cmtId, c){
   },1000+Math.random()*1500);
 }
 
+// 댓글 객체 전역 저장소
+const cmtMap={};
 function renderCmtText(txt){
   // @태그 파란색으로 표시
   return esc(txt).replace(/@(\S+)/g,'<span style="color:var(--mint);font-weight:500;">@$1</span>');
