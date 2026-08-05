@@ -269,6 +269,24 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .diary-card-body.note{font-style:italic;color:#445566;background:var(--mint-p);border-radius:0 0 var(--r) var(--r);}
 .diary-generating{text-align:center;padding:24px;font-size:12px;color:var(--gray);}
 .mood-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,187,220,.1);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--mint);margin-top:4px;}
+
+/* 달력 */
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:12px;color:var(--dark);position:relative;transition:background .15s;}
+.cal-day:hover{background:var(--mint-p);}
+.cal-day.today{background:var(--mint);color:#fff;font-weight:700;}
+.cal-day.has-entry::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--mint);}
+.cal-day.today.has-entry::after{background:#fff;}
+.cal-day.other-month{color:var(--mint-l);}
+.cal-day.sun{color:#ff5c5c;}
+.cal-day.today.sun{color:#fff;}
+.cal-day.sat{color:#4488ff;}
+.cal-day.today.sat{color:#fff;}
+/* 일기 상세 오버레이 */
+.diary-detail{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4);display:none;align-items:flex-end;}
+.diary-detail.open{display:flex;}
+.dd-panel{width:100%;max-width:480px;margin:0 auto;background:var(--bg);border-radius:var(--r) var(--r) 0 0;max-height:85dvh;display:flex;flex-direction:column;animation:su .3s ease;}
+.dd-hdr{background:var(--white);padding:12px 16px;border-bottom:1px solid var(--mint-l);border-radius:var(--r) var(--r) 0 0;display:flex;align-items:center;gap:8px;}
+.dd-body{flex:1;overflow-y:auto;padding:14px;}
 </style>
 </head>
 <body>
@@ -309,7 +327,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
           <button onclick="openTimeline()" style="background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:20px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">타임라인 ›</button>
         </div>
       </div>
-      <div class="sec-title">✦ 새로운 알림</div>
+      <div class="sec-title" style="display:flex;align-items:center;justify-content:space-between;padding-right:14px;">✦ 새로운 알림 <button onclick="markAllRead()" style="background:none;border:none;font-size:10px;color:var(--mint);cursor:pointer;font-family:'Noto Sans KR',sans-serif;">전체 읽음</button></div>
       <div id="notifList">
 
 
@@ -406,6 +424,24 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
       <div style="margin:0 14px 10px;display:flex;gap:8px;">
         <button onclick="generateDiary()" style="flex:1;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:11px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">✦ 오늘 일기 생성</button>
         <button onclick="generateNote()" style="flex:1;background:var(--white);color:var(--mint);border:1.5px solid var(--mint);border-radius:var(--rs);padding:11px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">📝 메모/노트</button>
+      </div>
+      <!-- 달력 뷰 -->
+      <div style="margin:0 14px 10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <button onclick="calPrev()" style="background:none;border:none;color:var(--mint);font-size:18px;cursor:pointer;padding:4px 8px;">‹</button>
+          <div id="calTitle" style="font-size:13px;font-weight:700;color:var(--dark);"></div>
+          <button onclick="calNext()" style="background:none;border:none;color:var(--mint);font-size:18px;cursor:pointer;padding:4px 8px;">›</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
+          <div style="text-align:center;font-size:10px;color:#ff5c5c;padding:4px 0;">일</div>
+          <div style="text-align:center;font-size:10px;color:var(--gray);padding:4px 0;">월</div>
+          <div style="text-align:center;font-size:10px;color:var(--gray);padding:4px 0;">화</div>
+          <div style="text-align:center;font-size:10px;color:var(--gray);padding:4px 0;">수</div>
+          <div style="text-align:center;font-size:10px;color:var(--gray);padding:4px 0;">목</div>
+          <div style="text-align:center;font-size:10px;color:var(--gray);padding:4px 0;">금</div>
+          <div style="text-align:center;font-size:10px;color:#4488ff;padding:4px 0;">토</div>
+        </div>
+        <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
       </div>
       <div id="diaryList"></div>
     </div>
@@ -504,6 +540,10 @@ function saveDP(){
   localStorage.setItem('dp',JSON.stringify(DP));
   const el=document.getElementById('savedOk');el.style.display='block';setTimeout(()=>el.style.display='none',2000);
   const mh=document.getElementById('myHandleDisp');if(mh)mh.textContent=DP.handle||'@FLYtotheFUTURE';
+  // SNS 작성란 핸들 즉시 반영
+  const hd=document.getElementById('myHandleDisp');if(hd)hd.textContent=DP.handle||'@FLYtotheFUTURE';
+  // 피드 재렌더링 (이름/핸들 반영)
+  renderSNS();
   saveData();
 }
 function v(id){const el=document.getElementById(id);return el?el.value:'';}
@@ -769,6 +809,7 @@ function mkPost(p){
       <button class="sa${p.liked?' liked':''}" onclick="toggleLk('${p.id}',this)">${p.liked?'💗':'🤍'} ${p.lk}</button>
       <button class="sa" onclick="togCmt('${p.id}')">💬 ${p.cmts.length}</button>
       <button class="sa">🔁</button>
+      ${(isMe||isAn)?`<button class="sa" onclick="deletePost('${p.id}')" style="margin-left:auto;color:#ff5c5c;">🗑️</button>`:''}
     </div>
     <div class="cmt-area" id="ca-${p.id}">
       <div class="cmt-list" id="cl-${p.id}">
@@ -799,24 +840,39 @@ function togCmt(id){
 async function addCmt(id){
   const inp=document.getElementById('ci-'+id);const txt=inp.value.trim();if(!txt)return;inp.value='';
   const myHandle=DP.handle||'@FLYtotheFUTURE';
-  // 내 댓글 — 게시글 주인 태그
   const p=[...snsData,...myPosts].find(x=>x.id===id);
-  const postOwnerHandle=p&&p.who==='an'?'@LightUptheFire':myHandle;
+  const cl=document.getElementById('cl-'+id);
+  // 게시글 주인 핸들 파악 (안/조연/나)
+  let postOwnerHandle=myHandle;
+  let postOwnerWho='me';
+  if(p){
+    if(p.who==='an'){postOwnerHandle='@LightUptheFire';postOwnerWho='an';}
+    else{
+      const sc=sideChars.find(s=>s.handle===p.who);
+      if(sc){postOwnerHandle=sc.handle;postOwnerWho='side';}
+    }
+  }
   const myComment=`@${postOwnerHandle.replace('@','')} ${txt}`;
   if(p)p.cmts.push({who:myHandle,txt:myComment});
-  const cl=document.getElementById('cl-'+id);
   cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:myHandle,txt:myComment}));
   saveData();
-  // 안의 답댓글 — 내 핸들 태그
-  if(Math.random()>.35){
-    setTimeout(async()=>{
-      const r=await api([{role:'user',content:`소우타(${myHandle})가 SNS 댓글을 달았어: "${txt}". 짧게 1문장으로 답댓글 달아줘. 앞에 @${myHandle.replace('@','')} 태그 붙여서.`}],buildSys('\n상황: SNS 댓글 답글. 1문장. 괄호 서술 없이 대사만. 반드시 맨 앞에 @태그 붙일 것.'));
-      const sp=r.replace(/\(.*?\)/gs,'').trim();
-      cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:'@LightUptheFire',txt:sp}));
-      if(p)p.cmts.push({who:'@LightUptheFire',txt:sp});
-      saveData();
-    },1200+Math.random()*1500);
-  }
+  // 게시글 주인이 답댓글
+  setTimeout(async()=>{
+    let sys2,prompt2;
+    if(postOwnerWho==='an'){
+      sys2=buildSys('\n상황: SNS 댓글 답글. 1문장. 괄호 서술 없이 대사만. 반드시 맨 앞에 @태그 붙일 것.');
+      prompt2=`소우타(${myHandle})가 SNS 댓글을 달았어: "${txt}". 짧게 1문장으로 답댓글 달아줘. 앞에 @${myHandle.replace('@','')} 태그 붙여서.`;
+    } else if(postOwnerWho==='side'){
+      const sc=sideChars.find(s=>s.handle===postOwnerHandle);
+      sys2=buildSideCharSys(sc,'\n소우타가 내 SNS 게시글에 댓글을 달았다. 짧게 1문장으로 답댓글. 반드시 맨 앞에 @태그 붙일 것. 대사만.');
+      prompt2=`[소우타(${myHandle})가 댓글 달았어: "${txt}"]`;
+    } else return;
+    const r=await api([{role:'user',content:prompt2}],sys2);
+    const sp=r.replace(/\(.*?\)/gs,'').trim();
+    cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:postOwnerHandle,txt:sp}));
+    if(p)p.cmts.push({who:postOwnerHandle,txt:sp});
+    saveData();
+  },1200+Math.random()*1500);
 }
 // 조연 캐릭터 아이콘 색상 매핑
 const sideCharColors={
@@ -934,12 +990,31 @@ let rooms=[];let curRoom=null;let chatLk=false;
 function renderRooms(){
   const list=document.getElementById('roomList');list.innerHTML='';
   if(!rooms.length){list.innerHTML='<div style="text-align:center;padding:24px;font-size:12px;color:var(--gray);">아직 채팅 기록이 없어요</div>';return;}
+  // 최대 30개 유지
+  if(rooms.length>30) rooms=rooms.slice(0,30);
+  // 날짜별 그룹화
+  const groups={};
   rooms.forEach((r,i)=>{
-    const last=r.msgs[r.msgs.length-1];
-    const{speech}=last?parseMsg(last.content):{speech:'...'};
-    const d=document.createElement('div');d.className='room-item';
-    d.innerHTML=`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="ri-info"><div class="ri-name">시라이시 안 ⭐</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
-    d.onclick=()=>openRoom(i);list.appendChild(d);
+    const dateKey=r.id?new Date(r.id).toISOString().slice(0,10):(r.st||'기타');
+    if(!groups[dateKey]) groups[dateKey]=[];
+    groups[dateKey].push({room:r,idx:i});
+  });
+  Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(dateKey=>{
+    const items=groups[dateKey];
+    const d=new Date(dateKey);
+    const days=['일','월','화','수','목','금','토'];
+    const label=isNaN(d)? dateKey : `${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+    const sep=document.createElement('div');
+    sep.style.cssText='display:flex;align-items:center;gap:8px;padding:8px 14px 4px;';
+    sep.innerHTML=`<div style="flex:1;height:1px;background:var(--mint-l);"></div><div style="font-size:10px;color:var(--mint);font-weight:700;white-space:nowrap;">${esc(label)}</div><div style="flex:1;height:1px;background:var(--mint-l);"></div>`;
+    list.appendChild(sep);
+    items.forEach(({room:r,idx:i})=>{
+      const last=r.msgs[r.msgs.length-1];
+      const{speech}=last?parseMsg(last.content):{speech:'...'};
+      const d=document.createElement('div');d.className='room-item';
+      d.innerHTML=`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="ri-info"><div class="ri-name">시라이시 안 ⭐</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
+      d.onclick=()=>openRoom(i);list.appendChild(d);
+    });
   });
 }
 async function newChat(){
@@ -1172,8 +1247,10 @@ function openCallDetail(i){
       const isU=m.role==='user';
       const div=document.createElement('div');
       div.className='rec-msg'+(isU?' u':'');
-      let html=`<div class="rec-bubble">${esc(m.content||'')}</div>`;
-      div.innerHTML=html;
+      const avImg=isU
+        ?`<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+        :`<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      div.innerHTML=`<div style="display:flex;gap:8px;align-items:flex-start;${isU?'flex-direction:row-reverse;':''}"><div style="width:28px;height:28px;border-radius:50%;flex-shrink:0;overflow:hidden;">${avImg}</div><div class="rec-bubble">${esc(m.content||'')}</div></div>`;
       msgs.appendChild(div);
     });
   }
@@ -1448,7 +1525,7 @@ function sw(id,btn){
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
   if(id==='home'){const b=document.getElementById('hBadge');if(b)b.remove();}
-  if(id==='diary'){loadMood();}
+  if(id==='diary'){loadMood();renderCalendar();}
 }
 
 // 안이 먼저 채팅 선톡 보내기 (페이지 열고 랜덤 시간 후)
@@ -1501,6 +1578,8 @@ async function loadData(){
   loadNotifs();
   scheduleSideEvent();
   scheduleAutoPost();
+  scheduleAutoCall();
+  renderCalendar();
 }
 
 // ══ 타임라인 ══
@@ -1707,6 +1786,143 @@ function scheduleSideEvent(){
     }catch(e){}
     scheduleSideEvent();
   }, 480000 + Math.random()*720000);
+}
+
+// ══ 알림 전체 읽음 ══
+function markAllRead(){
+  notifStore.forEach(n=>n.read=true);
+  renderNotifFromStore();updateHBadge();saveNotifs();
+}
+
+// ══ SNS 게시글 삭제 ══
+function deletePost(id){
+  if(!confirm('이 게시글을 삭제할까요?')) return;
+  const mi=myPosts.findIndex(x=>x.id===id);
+  const si=snsData.findIndex(x=>x.id===id);
+  if(mi>=0) myPosts.splice(mi,1);
+  if(si>=0) snsData.splice(si,1);
+  renderSNS();saveData();
+}
+
+// ══ 안이 먼저 통화 걸어오기 ══
+function scheduleAutoCall(){
+  // 하루 한 번만, 30~90분 사이 랜덤
+  const today=new Date().toISOString().slice(0,10);
+  const calledKey='autoCall_'+today;
+  dbLoad(calledKey).then(v=>{
+    if(v) return; // 오늘 이미 걸었으면 스킵
+    const delay=1800000+Math.random()*3600000; // 30~90분
+    setTimeout(async()=>{
+      // 통화 탭에 있거나 이미 통화 중이면 스킵
+      if(callOn) return;
+      // 알림 먼저
+      addNotif('📞','전화','杏에게서 전화가 왔어요.','call');
+      await dbSave(calledKey, true);
+      // 통화 탭으로 이동 안 해도 알림만 표시
+    },delay);
+  }).catch(()=>{});
+}
+
+// ══ 달력 뷰 ══
+let calYear=new Date().getFullYear();
+let calMonth=new Date().getMonth();
+
+function renderCalendar(){
+  const title=document.getElementById('calTitle');
+  const grid=document.getElementById('calGrid');
+  if(!title||!grid) return;
+  title.textContent=`${calYear}년 ${calMonth+1}월`;
+  grid.innerHTML='';
+
+  // 이번 달에 일기/메모 있는 날짜 Set
+  const entryDates=new Set();
+  diaryList.forEach(e=>{
+    if(e.ts){
+      const d=new Date(e.ts);
+      if(d.getFullYear()===calYear && d.getMonth()===calMonth){
+        entryDates.add(d.getDate());
+      }
+    }
+  });
+
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const lastDate=new Date(calYear,calMonth+1,0).getDate();
+  const prevLastDate=new Date(calYear,calMonth,0).getDate();
+  const today=new Date();
+
+  // 이전 달 빈칸
+  for(let i=0;i<firstDay;i++){
+    const day=prevLastDate-firstDay+1+i;
+    const el=document.createElement('div');
+    el.className='cal-day other-month';
+    el.textContent=day;
+    grid.appendChild(el);
+  }
+  // 이번 달
+  for(let d=1;d<=lastDate;d++){
+    const el=document.createElement('div');
+    const dow=new Date(calYear,calMonth,d).getDay();
+    let cls='cal-day';
+    if(dow===0) cls+=' sun';
+    if(dow===6) cls+=' sat';
+    if(d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear()) cls+=' today';
+    if(entryDates.has(d)) cls+=' has-entry';
+    el.className=cls;
+    el.textContent=d;
+    if(entryDates.has(d)){
+      el.onclick=()=>openDiaryDay(calYear,calMonth,d);
+    }
+    grid.appendChild(el);
+  }
+  // 다음 달 빈칸
+  const total=firstDay+lastDate;
+  const remain=total%7===0?0:7-(total%7);
+  for(let i=1;i<=remain;i++){
+    const el=document.createElement('div');
+    el.className='cal-day other-month';
+    el.textContent=i;
+    grid.appendChild(el);
+  }
+}
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
+
+function openDiaryDay(y,m,d){
+  const entries=diaryList.filter(e=>{
+    if(!e.ts) return false;
+    const dt=new Date(e.ts);
+    return dt.getFullYear()===y && dt.getMonth()===m && dt.getDate()===d;
+  });
+  if(!entries.length) return;
+  const days=['일','월','화','수','목','금','토'];
+  const dt=new Date(y,m,d);
+  const dateLabel=`${m+1}월 ${d}일 ${days[dt.getDay()]}요일`;
+
+  // 오버레이 생성
+  let ovl=document.getElementById('diaryDetailOvl');
+  if(!ovl){
+    ovl=document.createElement('div');
+    ovl.id='diaryDetailOvl';
+    ovl.className='diary-detail';
+    ovl.innerHTML=`<div class="dd-panel"><div class="dd-hdr"><button onclick="document.getElementById('diaryDetailOvl').classList.remove('open')" style="background:none;border:none;cursor:pointer;color:var(--gray);font-size:19px;padding:0 6px 0 0;">✕</button><div style="font-weight:700;font-size:14px;" id="ddTitle"></div></div><div class="dd-body" id="ddBody"></div></div>`;
+    ovl.onclick=e=>{if(e.target===ovl)ovl.classList.remove('open');};
+    document.body.appendChild(ovl);
+  }
+  document.getElementById('ddTitle').textContent=dateLabel;
+  const body=document.getElementById('ddBody');
+  body.innerHTML='';
+  entries.forEach(entry=>{
+    const card=document.createElement('div');
+    card.className='diary-card';
+    card.style.marginBottom='12px';
+    if(entry.type==='diary'){
+      card.innerHTML=`<div class="diary-card-hdr"><div class="diary-card-icon">📔</div><div class="diary-card-title">오늘의 일기</div></div><div class="diary-card-body">${esc(entry.content)}</div>`;
+    } else {
+      card.innerHTML=`<div class="diary-card-hdr"><div class="diary-card-icon">📝</div><div class="diary-card-title">${esc(entry.noteType)}</div></div><div class="diary-card-body note">${esc(entry.content)}</div>`;
+    }
+    body.appendChild(card);
+  });
+  ovl.classList.add('open');
 }
 loadData();
 </script>
