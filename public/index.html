@@ -89,6 +89,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-txt{font-size:12px;line-height:1.6;color:var(--dark);word-break:break-word;}
 .cmt-meta{font-size:10px;color:var(--gray);margin-top:3px;}
 
+
+/* 답글 스레드 */
+.cmt-replies{padding-left:36px;border-left:2px solid var(--mint-l);margin-top:4px;}
+.cmt-reply-item{display:flex;gap:8px;align-items:flex-start;padding:7px 0;}
+.cmt-reply-av{width:22px;height:22px;border-radius:50%;flex-shrink:0;overflow:hidden;}
+.cmt-reply-body{flex:1;min-width:0;}
+.cmt-reply-who{font-size:11px;font-weight:700;color:var(--dark);margin-bottom:1px;}
+.cmt-reply-txt{font-size:11px;line-height:1.6;color:var(--dark);word-break:break-word;}
+.cmt-reply-meta{font-size:10px;color:var(--gray);margin-top:2px;display:flex;align-items:center;gap:8px;}
+.reply-inp-area{display:none;margin-top:6px;padding-left:36px;}
+.reply-inp-area.open{display:flex;gap:6px;align-items:center;}
+.reply-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:4px 2px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--dark);outline:none;}
+.reply-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
 /* 채팅 */
 .chat-list{overflow-y:auto;padding-bottom:20px;max-height:calc(100dvh - 110px);}
 .new-chat-btn{margin:12px 14px 4px;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;width:calc(100% - 28px);font-size:13px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
@@ -985,14 +998,102 @@ function makeCmtHTML(c){
     avContent=c.who[0]||'?';
     avClass='me';displayName=c.who;handle=c.who;
   }
-  return `<div class="cmt-item">
+  const cmtId='cmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+  const repliesHtml=(c.replies||[]).map(r=>makeReplyHTML(r)).join('');
+  return `<div class="cmt-item" id="${cmtId}">
     <div class="cmt-av ${avClass}">${avContent}</div>
     <div class="cmt-body">
       <div class="cmt-who">${esc(displayName)} <span style="font-weight:400;color:var(--gray);font-size:11px;">${esc(handle)}</span></div>
       <div class="cmt-txt">${renderCmtText(c.txt)}</div>
-      <div class="cmt-meta">방금 전</div>
+      <div class="cmt-meta">방금 전 <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;">답글</button></div>
+      ${repliesHtml?`<div class="cmt-replies" id="replies-${cmtId}">${repliesHtml}</div>`:`<div class="cmt-replies" id="replies-${cmtId}" style="display:none;"></div>`}
+      <div class="reply-inp-area" id="rinp-${cmtId}">
+        <div class="cmt-av me" style="width:22px;height:22px;overflow:hidden;flex-shrink:0;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <input class="reply-inp" id="ri-${cmtId}" placeholder="답글 달기..." onkeydown="if(event.key==='Enter')sendReply('${cmtId}',c)">
+        <button class="reply-send" onclick="sendReply('${cmtId}',c)">전송</button>
+      </div>
     </div>
   </div>`;
+}
+
+function makeReplyHTML(r){
+  const isAn2=r.who==='@LightUptheFire';
+  const isMe2=r.who===(DP.handle||'@FLYtotheFUTURE')||r.who==='me';
+  const sc2=sideChars&&sideChars.find(s=>s.handle===r.who);
+  let av2,nm2;
+  if(isAn2){
+    av2='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    nm2='시라이시 안';
+  } else if(isMe2){
+    av2='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    nm2=DP.name||'소우타';
+  } else if(sc2){
+    const img2=sideCharImages[sc2.handle];
+    av2=img2?`<img src="${img2}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`:`<div style="width:100%;height:100%;background:${sideCharColors[sc2.handle]||'#aaa'};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`;
+    nm2=sc2.nm;
+  } else {
+    av2=r.who[0]||'?';nm2=r.who;
+  }
+  return `<div class="cmt-reply-item">
+    <div class="cmt-reply-av">${av2}</div>
+    <div class="cmt-reply-body">
+      <div class="cmt-reply-who">${esc(nm2)} <span style="font-weight:400;color:var(--gray);font-size:10px;">${esc(r.who)}</span></div>
+      <div class="cmt-reply-txt">${renderCmtText(r.txt)}</div>
+      <div class="cmt-reply-meta">방금 전</div>
+    </div>
+  </div>`;
+}
+
+function toggleReplyInp(cmtId){
+  const area=document.getElementById('rinp-'+cmtId);
+  if(!area)return;
+  area.classList.toggle('open');
+  if(area.classList.contains('open')){
+    const inp=document.getElementById('ri-'+cmtId);
+    if(inp)inp.focus();
+  }
+}
+
+async function sendReply(cmtId, c){
+  const inp=document.getElementById('ri-'+cmtId);
+  if(!inp)return;
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  const myHandle=DP.handle||'@FLYtotheFUTURE';
+  // 답글 저장
+  if(!c.replies) c.replies=[];
+  const reply={who:myHandle,txt};
+  c.replies.push(reply);
+  const repliesEl=document.getElementById('replies-'+cmtId);
+  if(repliesEl){
+    repliesEl.style.display='';
+    repliesEl.insertAdjacentHTML('beforeend',makeReplyHTML(reply));
+  }
+  document.getElementById('rinp-'+cmtId).classList.remove('open');
+  saveData();
+  // 답글 대상 캐릭터가 응답
+  const postOwnerWho=c.who;
+  let sys3,prompt3;
+  if(postOwnerWho==='@LightUptheFire'){
+    sys3=buildSys('\n상황: SNS 댓글 답글. 1문장. 대사만. 반드시 맨 앞에 @'+myHandle.replace('@','')+' 태그.');
+    prompt3='소우타가 답글을 달았어: "'+txt+'". 짧게 1문장으로 답해줘.';
+  } else {
+    const sc3=sideChars.find(s=>s.handle===postOwnerWho);
+    if(!sc3) return;
+    sys3=buildSideCharSys(sc3,'\n소우타가 내 댓글에 답글을 달았다. 1문장. 반드시 맨 앞에 @'+myHandle.replace('@','')+' 태그. 대사만.');
+    prompt3='[소우타 답글: "'+txt+'"]';
+  }
+  setTimeout(async()=>{
+    try{
+      const r2=await api([{role:'user',content:prompt3}],sys3);
+      const sp2=r2.replace(/\(.*?\)/gs,'').trim();
+      const reply2={who:postOwnerWho,txt:sp2};
+      c.replies.push(reply2);
+      const repliesEl2=document.getElementById('replies-'+cmtId);
+      if(repliesEl2){repliesEl2.style.display='';repliesEl2.insertAdjacentHTML('beforeend',makeReplyHTML(reply2));}
+      saveData();
+    }catch(e){}
+  },1000+Math.random()*1500);
 }
 
 function renderCmtText(txt){
