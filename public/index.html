@@ -933,7 +933,7 @@ async function addCmt(id){
     }
   }
   const myComment=`@${postOwnerHandle.replace('@','')} ${txt}`;
-  if(p)p.cmts.push({who:myHandle,txt:myComment});
+  if(p)p.cmts.push({who:myHandle,txt:myComment,ts:new Date()});
   cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:myHandle,txt:myComment}));
   saveData();
   // 게시글 주인이 답댓글
@@ -999,6 +999,7 @@ function makeCmtHTML(c){
     avClass='me';displayName=c.who;handle=c.who;
   }
   const cmtId='cmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+  if(!c.ts) c.ts=new Date();
   cmtMap[cmtId]=c;
   const repliesHtml=(c.replies||[]).map(r=>makeReplyHTML(r)).join('');
   return `<div class="cmt-item" id="${cmtId}">
@@ -1006,7 +1007,7 @@ function makeCmtHTML(c){
     <div class="cmt-body">
       <div class="cmt-who">${esc(displayName)} <span style="font-weight:400;color:var(--gray);font-size:11px;">${esc(handle)}</span></div>
       <div class="cmt-txt">${renderCmtText(c.txt)}</div>
-      <div class="cmt-meta">방금 전 <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;">답글</button></div>
+      <div class="cmt-meta">${c.ts?liveTime(new Date(c.ts)):'방금 전'} <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;">답글</button></div>
       ${repliesHtml?`<div class="cmt-replies" id="replies-${cmtId}">${repliesHtml}</div>`:`<div class="cmt-replies" id="replies-${cmtId}" style="display:none;"></div>`}
       <div class="reply-inp-area" id="rinp-${cmtId}">
         <div class="cmt-av me" style="width:22px;height:22px;overflow:hidden;flex-shrink:0;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
@@ -1040,7 +1041,7 @@ function makeReplyHTML(r){
     <div class="cmt-reply-body">
       <div class="cmt-reply-who">${esc(nm2)} <span style="font-weight:400;color:var(--gray);font-size:10px;">${esc(r.who)}</span></div>
       <div class="cmt-reply-txt">${renderCmtText(r.txt)}</div>
-      <div class="cmt-reply-meta">방금 전</div>
+      <div class="cmt-reply-meta">${r.ts?liveTime(new Date(r.ts)):'방금 전'}</div>
     </div>
   </div>`;
 }
@@ -1064,7 +1065,7 @@ async function sendReply(cmtId){
   const myHandle=DP.handle||'@FLYtotheFUTURE';
   // 답글 저장
   if(!c.replies) c.replies=[];
-  const reply={who:myHandle,txt};
+  const reply={who:myHandle,txt,ts:new Date()};
   c.replies.push(reply);
   const repliesEl=document.getElementById('replies-'+cmtId);
   if(repliesEl){
@@ -1089,7 +1090,7 @@ async function sendReply(cmtId){
     try{
       const r2=await api([{role:'user',content:prompt3}],sys3);
       const sp2=r2.replace(/\(.*?\)/gs,'').trim();
-      const reply2={who:postOwnerWho,txt:sp2};
+      const reply2={who:postOwnerWho,txt:sp2,ts:new Date()};
       c.replies.push(reply2);
       const repliesEl2=document.getElementById('replies-'+cmtId);
       if(repliesEl2){repliesEl2.style.display='';repliesEl2.insertAdjacentHTML('beforeend',makeReplyHTML(reply2));}
