@@ -1186,7 +1186,7 @@ async function generateAnPost(slot, today){
     const clean=t.replace(/\(.*?\)/gs,'').trim();
     const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[],auto:true,day:today,slot};
     snsData.unshift(ap);renderSNS();
-    addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
+    addNotif('📱','SNS 새 글','시라이시 안이 새 글을 올렸어요.','snsTop');
     saveData();
     // 조연 1~2명 댓글
     const commenters=[...sideChars].sort(()=>Math.random()-0.5).slice(0,1+Math.floor(Math.random()*2));
@@ -1212,7 +1212,7 @@ async function generateSidePost(c, today){
     const clean=t.replace(/\(.*?\)/gs,'').trim();
     const cp={id:'auto-'+Date.now(),who:c.handle,nm:c.nm,hl:c.handle,ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*50)+3,liked:false,cmts:[],auto:true,day:today};
     snsData.push(cp);renderSNS();
-    addNotif(c.icon,'SNS 새 글',c.nm+'이 새 글을 올렸어요.','snsTop');
+    addNotif(c.icon,'SNS 새 글',(c.nm.slice(-1).charCodeAt(0)>44031&&(c.nm.charCodeAt(c.nm.length-1)-44032)%28!==0?c.nm+'이 ':c.nm+'가 ')+'새 글을 올렸어요.','snsTop');
     saveData();
     if(Math.random()>0.5){
       setTimeout(async()=>{
@@ -1541,7 +1541,7 @@ function startCall(dir){
   callOn=true;callDirection=dir||'out';
   document.getElementById('callAv').classList.add('ring');
   if(dir==='in'){
-    document.getElementById('callStxt').textContent='杏이 전화를 걸어왔어...';
+    document.getElementById('callStxt').textContent='시라이시 안이 전화를 걸어왔어...';
     document.getElementById('callBtns').innerHTML=`
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
         <button class="cbtn end" onclick="rejectCall()">📵</button>
@@ -1977,7 +1977,7 @@ async function sendAutoTalk(){
   renderRooms();
   // 홈 알림 추가
   const{speech}=parseMsg(msg);
-  addNotif('💬','메시지',`杏: ${speech.slice(0,30)}${speech.length>30?'...':''}`, 'newChat');
+  addNotif('💬','메시지',`시라이시 안: ${speech.slice(0,30)}${speech.length>30?'...':''}`, 'newChat');
   saveData();
 }
 
@@ -2362,7 +2362,7 @@ function scheduleAutoCall(){
       // 통화 탭에 있거나 이미 통화 중이면 스킵
       if(callOn) return;
       // 알림 먼저
-      addNotif('📞','전화','杏에게서 전화가 왔어요.','call');
+      addNotif('📞','전화','시라이시 안에게서 전화가 왔어요.','call');
       await dbSave(calledKey, true);
       // 통화 탭으로 이동 안 해도 알림만 표시
     },delay);
