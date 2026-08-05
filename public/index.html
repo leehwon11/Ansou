@@ -342,7 +342,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
     <div class="scroll">
       <div class="compose-box">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">
-          <div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타"></div>
+          <div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타"></div>
           <div style="font-size:12px;color:var(--gray);" id="myHandleDisp">@FLYtotheFUTURE</div>
         </div>
         <textarea id="myPostTxt" rows="3" placeholder="지금 무슨 생각 하고 있어?"></textarea>
@@ -507,7 +507,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <div class="ovl-panel">
     <div class="ovl-hdr">
       <button class="ovl-close" onclick="closeDailyOvl()">✕</button>
-      <div class="rv-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+      <div class="rv-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
       <div class="rv-info">
         <div class="rv-name" id="dOvlTitle">일상</div>
         <div class="rv-sub" id="dOvlSub"></div>
@@ -552,8 +552,8 @@ async function dbLoad(key){
   try{const r=await fetch('/api/data/'+key);if(r.ok){const d=await r.json();return d.value;}return null;}catch(e){return null;}
 }
 // 별
-const IMG_AN='https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png';
-const IMG_SO='https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png';
+const IMG_AN='https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png';
+const IMG_SO='https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png';
 function avAn(size=''){return '<img src="'+IMG_AN+'" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';}
 function avSo(size=''){return '<img src="'+IMG_SO+'" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';}
 const sb=document.getElementById('sBg');
@@ -767,7 +767,7 @@ function mkMsg(role,raw,ts,speechOverride,narrOverride,animate){
   // 대사 말풍선
   if(speech){
     const d=document.createElement('div');d.className='mb'+(isU?' u':'');
-    const av=isU?'<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>':'<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>';
+    const av=isU?'<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>':'<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>';
     d.innerHTML=`${av}<div class="m-content"><div class="m-speech"></div>${!narr?`<div class="m-time">${ts}</div>`:''}</div>`;
     wrap.appendChild(d);
     const spEl=d.querySelector('.m-speech');
@@ -789,13 +789,13 @@ function mkMsg(role,raw,ts,speechOverride,narrOverride,animate){
   // 둘 다 없으면 raw 그대로
   if(!speech&&!narr){
     const d=document.createElement('div');d.className='mb'+(isU?' u':'');
-    const av=isU?'<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>':'<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>';
+    const av=isU?'<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>':'<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>';
     d.innerHTML=`${av}<div class="m-content"><div class="m-speech">${esc(raw)}</div><div class="m-time">${ts}</div></div>`;
     wrap.appendChild(d);
   }
   return wrap;
 }
-function mkTyping(){const d=document.createElement('div');d.className='mb';d.innerHTML=`<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="typ-row"><div class="typ-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>`;return d;}
+function mkTyping(){const d=document.createElement('div');d.className='mb';d.innerHTML=`<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="typ-row"><div class="typ-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>`;return d;}
 
 // 알림 읽기
 function rdN(id,tab,action){
@@ -855,13 +855,12 @@ function mkPost(p){
   const sideChar=sideChars&&sideChars.find(s=>s.handle===p.who);
   let avHTML;
   if(isMe){
-    avHTML=`<div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타"></div>`;
+    avHTML=`<div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타"></div>`;
   } else if(isAn){
-    avHTML=`<div class="sns-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안"></div>`;
+    avHTML=`<div class="sns-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안"></div>`;
   } else if(sideChar){
-    const bg=sideCharColors[sideChar.handle]||'linear-gradient(135deg,#aaa,#ccc)';
-    const ini=sideCharInitials[sideChar.handle]||sideChar.nm[0];
-    avHTML=`<div class="sns-av" style="background:${bg};font-size:13px;color:#fff;font-weight:700;">${ini}</div>`;
+    const img2=sideCharImages[sideChar.handle];
+    avHTML=img2?`<div class="sns-av" style="overflow:hidden;"><img src="${img2}" alt="${sideChar.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="sns-av" style="background:${sideCharColors[sideChar.handle]||'#aaa'};font-size:13px;color:#fff;font-weight:700;">${sideCharInitials[sideChar.handle]||sideChar.nm[0]}</div>`;
   } else {
     avHTML=`<div class="sns-av">${p.nm?p.nm[0]:'?'}</div>`;
   }
@@ -884,7 +883,7 @@ function mkPost(p){
         ${p.cmts.map(c=>makeCmtHTML(c)).join('')}
       </div>
       <div class="cmt-ir">
-        <div class="cmt-ir-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="cmt-ir-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
         <input class="cmt-inp" id="ci-${p.id}" placeholder="댓글 달기..." onkeydown="if(event.key==='Enter')addCmt('${p.id}')">
         <button class="cmt-send" onclick="addCmt('${p.id}')">전송</button>
       </div>
@@ -951,6 +950,14 @@ const sideCharColors={
   '@HarukaKiritani':'linear-gradient(135deg,#3498db,#74b9ff)',
   '@LouiKamishiro':'linear-gradient(135deg,#a29bfe,#6c5ce7)',
 };
+const sideCharImages={
+  '@AkitoSinonome':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/akito.jpg',
+  '@NeneKusanagi':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/nene.jpg',
+  '@SakiTenma':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/saki.jpg',
+  '@MizukiAkiyama':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/mizuki.jpg',
+  '@HarukaKiritani':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/haruka.jpg',
+  '@LouiKamishiro':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/rui.jpg',
+};
 const sideCharInitials={
   '@AkitoSinonome':'彰',
   '@NeneKusanagi':'寧',
@@ -965,15 +972,14 @@ function makeCmtHTML(c){
   const sideChar=sideChars&&sideChars.find(s=>s.handle===c.who);
   let avContent,avClass,displayName,handle;
   if(isAn){
-    avContent='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    avContent='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
     avClass='an';displayName='시라이시 안';handle='@LightUptheFire';
   } else if(isMe){
-    avContent='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    avContent='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
     avClass='me';displayName=DP.name||'소우타';handle=DP.handle||'@FLYtotheFUTURE';
   } else if(sideChar){
-    const bg=sideCharColors[sideChar.handle]||'linear-gradient(135deg,#aaa,#ccc)';
-    const ini=sideCharInitials[sideChar.handle]||sideChar.nm[0];
-    avContent=`<div style="width:100%;height:100%;background:${bg};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
+    const img=sideCharImages[sideChar.handle];
+    avContent=img?`<img src="${img}" alt="${sideChar.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`:`<div style="width:100%;height:100%;background:${sideCharColors[sideChar.handle]||'#aaa'};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">${sideCharInitials[sideChar.handle]||sideChar.nm[0]}</div>`;
     avClass='an';displayName=sideChar.nm;handle=sideChar.handle;
   } else {
     avContent=c.who[0]||'?';
@@ -1120,7 +1126,8 @@ function renderRooms(){
       const{speech}=last?parseMsg(last.content):{speech:'...'};
       const d=document.createElement('div');d.className='room-item';
       const sc2=room.charName?sideChars.find(s=>s.name===room.charName):null;
-      const riAv=sc2?`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`:`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+      const sc2img=sc2?sideCharImages[sc2.handle]:null;
+      const riAv=sc2?(sc2img?`<div class="ri-av" style="overflow:hidden;"><img src="${sc2img}" alt="${sc2.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`):`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
       const riName=sc2?sc2.nm+' '+sc2.icon:'시라이시 안 ⭐';
       d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
       d.onclick=()=>{if(room.charName)openSideRoom(i);else openRoom(i);};list.appendChild(d);
@@ -1142,14 +1149,16 @@ function openSideRoom(i){
   curRoom=i;const room=rooms[i];
   const c=sideChars.find(s=>s.name===room.charName);
   if(!c){openRoom(i);return;}
+  const img3=sideCharImages[c.handle];
   const bg=sideCharColors[c.handle]||'linear-gradient(135deg,#aaa,#ccc)';
   const ini=sideCharInitials[c.handle]||c.nm[0];
+  const scAvHTML=img3?`<img src="${img3}" alt="${c.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`:`${ini}`;
   document.getElementById('chatListWrap').style.display='none';
   const rv=document.getElementById('roomView');rv.classList.add('open');
   rv.innerHTML=`
     <div class="rv-hdr">
       <button class="rv-back" onclick="closeRoom()">‹</button>
-      <div class="rv-av" style="background:${bg};font-size:14px;color:#fff;font-weight:700;">${ini}</div>
+      <div class="rv-av" style="${img3?'overflow:hidden;':'background:'+bg+';font-size:14px;color:#fff;font-weight:700;'}">${scAvHTML}</div>
       <div class="rv-info"><div class="rv-name">${esc(c.nm)}</div><div class="rv-sub">${room.st} 시작${room.ended?' · 종료됨':' · 진행 중'}</div></div>
       ${!room.ended?`<button class="end-btn" onclick="endRoom(${i})">채팅 종료</button>`:''}
     </div>
@@ -1172,8 +1181,8 @@ function openSideRoom(i){
   room.msgs.forEach(m=>{
     const isU=m.role==='user';
     const wrap=document.createElement('div');wrap.className='msg-wrap'+(isU?' u':'');
-    const avU=`<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
-    const avC=`<div class="m-av" style="background:${bg};font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
+    const avU=`<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+    const avC=img3?`<div class="m-av" style="overflow:hidden;"><img src="${img3}" alt="${c.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="m-av" style="background:${bg};font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
     const av=isU?avU:avC;
     const parsed=parseMsg(m.content);
     const sp=m.speech!==undefined?m.speech:parsed.speech;
@@ -1210,7 +1219,7 @@ async function sendSideMsg(){
   const el=document.getElementById('rvMsgs');
   // 유저 메시지 표시
   const wrap=document.createElement('div');wrap.className='msg-wrap u';
-  const avU=`<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+  const avU=`<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
   if(speechTxt){const d=document.createElement('div');d.className='mb u';d.innerHTML=`${avU}<div class="m-content"><div class="m-speech">${esc(speechTxt)}</div>${!narrTxt?`<div class="m-time">${ts}</div>`:''}</div>`;wrap.appendChild(d);}
   if(narrTxt){const nd=document.createElement('div');nd.className='narr-block u';nd.innerHTML=`<div class="m-narr-standalone">${esc(narrTxt)}</div><div class="m-time" style="text-align:right">${ts}</div>`;wrap.appendChild(nd);}
   el.appendChild(wrap);el.scrollTop=el.scrollHeight;
@@ -1223,7 +1232,7 @@ async function sendSideMsg(){
   room.hist.push({role:'assistant',content:rep});
   // AI 메시지 표시
   const wrap2=document.createElement('div');wrap2.className='msg-wrap';
-  const avC=`<div class="m-av" style="background:${bg};font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
+  const avC=img3?`<div class="m-av" style="overflow:hidden;"><img src="${img3}" alt="${c.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="m-av" style="background:${bg};font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
   if(parsed.speech){const d=document.createElement('div');d.className='mb';d.innerHTML=`${avC}<div class="m-content"><div class="m-speech">${esc(parsed.speech)}</div>${!parsed.narr?`<div class="m-time">${nowt()}</div>`:''}</div>`;wrap2.appendChild(d);}
   if(parsed.narr){const nd=document.createElement('div');nd.className='narr-block';nd.innerHTML=`<div class="m-narr-standalone">${esc(parsed.narr)}</div><div class="m-time">${nowt()}</div>`;wrap2.appendChild(nd);}
   el.appendChild(wrap2);el.scrollTop=el.scrollHeight;
@@ -1247,7 +1256,7 @@ function openRoom(i){
   rv.innerHTML=`
     <div class="rv-hdr">
       <button class="rv-back" onclick="closeRoom()">‹</button>
-      <div class="rv-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+      <div class="rv-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
       <div class="rv-info"><div class="rv-name">시라이시 안 ⭐</div><div class="rv-sub">${room.st} 시작${room.ended?' · 종료됨':' · 진행 중'}</div></div>
       ${!room.ended?`<button class="end-btn" onclick="endRoom(${i})">채팅 종료</button>`:''}
     </div>
@@ -1414,8 +1423,8 @@ function addCC(who,txt){
   const d=document.createElement('div');d.className='mb'+(isU?' u':'');
   const style='font-size:12px;padding:7px 11px;';
   d.innerHTML=isU
-    ?`<div class="m-av u" style="width:22px;height:22px;font-size:10px;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div><div class="m-speech" style="${style}">${esc(txt)}</div></div>`
-    :`<div class="m-av" style="width:22px;height:22px;font-size:10px;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div><div class="m-speech" style="${style}background:var(--white);border:1px solid var(--mint-l);border-radius:14px;border-bottom-left-radius:4px;color:var(--dark);">${esc(txt)}</div></div>`;
+    ?`<div class="m-av u" style="width:22px;height:22px;font-size:10px;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div><div class="m-speech" style="${style}">${esc(txt)}</div></div>`
+    :`<div class="m-av" style="width:22px;height:22px;font-size:10px;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div><div class="m-speech" style="${style}background:var(--white);border:1px solid var(--mint-l);border-radius:14px;border-bottom-left-radius:4px;color:var(--dark);">${esc(txt)}</div></div>`;
   m.appendChild(d);m.scrollTop=m.scrollHeight;
 }
 async function sendCC(){
@@ -1461,8 +1470,8 @@ function openCallDetail(i){
       const div=document.createElement('div');
       div.className='rec-msg'+(isU?' u':'');
       const avImg=isU
-        ?`<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
-        :`<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+        ?`<img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+        :`<img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
       div.innerHTML=`<div style="display:flex;gap:8px;align-items:flex-start;${isU?'flex-direction:row-reverse;':''}"><div style="width:28px;height:28px;border-radius:50%;flex-shrink:0;overflow:hidden;">${avImg}</div><div class="rec-bubble">${esc(m.content||'')}</div></div>`;
       msgs.appendChild(div);
     });
