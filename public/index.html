@@ -1039,7 +1039,7 @@ function makeReplyHTML(r){
   return `<div class="cmt-reply-item">
     <div class="cmt-reply-av">${av2}</div>
     <div class="cmt-reply-body">
-      <div class="cmt-reply-who">${esc(nm2)} <span style="font-weight:400;color:var(--gray);font-size:10px;">${esc(r.who)}</span></div>
+      <div class="cmt-reply-who">${esc(nm2)}</div>
       <div class="cmt-reply-txt">${renderCmtText(r.txt)}</div>
       <div class="cmt-reply-meta">${r.ts?liveTime(new Date(r.ts)):'방금 전'}</div>
     </div>
