@@ -887,7 +887,7 @@ function mkPost(p){
     ${p.img?`<img src="${p.img}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:8px;border:1px solid var(--mint-l);" onclick="window.open('${p.img}','_blank')">`:''}
     <div class="sns-acts">
       <button class="sa${p.liked?' liked':''}" onclick="toggleLk('${p.id}',this)">${p.liked?'💗':'🤍'} ${p.lk}</button>
-      <button class="sa" onclick="togCmt('${p.id}')">💬 ${p.cmts.length}</button>
+      <button class="sa" onclick="togCmt('${p.id}')">💬 ${p.cmts.reduce((acc,c)=>acc+1+(c.replies?c.replies.length:0),0)}</button>
       <button class="sa">🔁</button>
       ${(isMe||isAn)?`<button class="sa" onclick="deletePost('${p.id}')" style="margin-left:auto;color:#ff5c5c;">🗑️</button>`:''}
     </div>
@@ -1041,7 +1041,7 @@ function makeReplyHTML(r){
     <div class="cmt-reply-body">
       <div class="cmt-reply-who">${esc(nm2)}</div>
       <div class="cmt-reply-txt">${renderCmtText(r.txt)}</div>
-      <div class="cmt-reply-meta">${r.ts?liveTime(new Date(r.ts)):'방금 전'}</div>
+      <div class="cmt-reply-meta" data-ts="${r.ts?new Date(r.ts).getTime():''}">방금 전</div>
     </div>
   </div>`;
 }
@@ -1751,7 +1751,14 @@ renderDailyList();
 
 
 // 1분마다 SNS 시간 자동 갱신
-setInterval(()=>{ renderSNS(); }, 60000);
+setInterval(()=>{
+  renderSNS();
+  // 답글 시간도 업데이트
+  document.querySelectorAll('[data-ts]').forEach(el=>{
+    const ts=el.dataset.ts;
+    if(ts) el.textContent=liveTime(new Date(parseInt(ts)));
+  });
+}, 60000);
 
 // ══ 일기/노트/감정 ══
 let diaryList=[];
@@ -1980,6 +1987,7 @@ async function loadData(){
   loadNotifs();
   scheduleSideEvent();
   scheduleAutoPost();
+  scheduleAutoInteract();
   scheduleAutoCall();
   renderCalendar();
 }
@@ -2385,6 +2393,58 @@ async function addGalleryImages(input){
     }
   }
   input.value='';
+}
+
+
+// ══ 캐릭터 자동 SNS 상호작용 (5~10분마다) ══
+function scheduleAutoInteract(){
+  setTimeout(async()=>{
+    try{
+      const allPosts=[...snsData,...myPosts].filter(p=>p.cmts!==undefined);
+      if(!allPosts.length){ scheduleAutoInteract(); return; }
+      // 랜덤 게시글 선택
+      const post=allPosts[Math.floor(Math.random()*allPosts.length)];
+      // 이미 댓글 단 캐릭터 제외
+      const commentedHandles=post.cmts.map(c=>c.who);
+      const available=sideChars.filter(c=>!commentedHandles.includes(c.handle) && c.handle!==post.who);
+      if(!available.length){ scheduleAutoInteract(); return; }
+      const c=available[Math.floor(Math.random()*available.length)];
+      // 게시글 주인 파악
+      const isAnPost=post.who==='an'||post.who==='@LightUptheFire';
+      const ownerHandle=isAnPost?'@LightUptheFire':post.who;
+      const ownerTag=ownerHandle.replace('@','');
+      const sys=buildSideCharSys(c,`
+${post.nm||'누군가'}(@${ownerTag})의 SNS 게시글에 자연스럽게 댓글. 1문장. 반드시 맨 앞에 @${ownerTag} 태그. 대사만. 괄호 없이.`);
+      const prompt=`[게시글: "${(post.body||'').slice(0,80)}"]`;
+      const r=await api([{role:'user',content:prompt}],sys);
+      const sp=r.replace(/\(.*?\)/gs,'').trim();
+      post.cmts.push({who:c.handle,txt:sp,ts:new Date()});
+      renderSNS();
+      saveData();
+      // 50% 확률로 게시글 주인도 답댓글
+      if(Math.random()>0.5){
+        setTimeout(async()=>{
+          try{
+            let sys2,prompt2;
+            if(isAnPost){
+              sys2=buildSys('\n상황: SNS 댓글 답글. 1문장. 대사만. 반드시 맨 앞에 @'+c.handle.replace('@','')+' 태그.');
+              prompt2=`${c.nm}이 댓글 달았어: "${sp}". 짧게 답해줘.`;
+            } else {
+              const owner=sideChars.find(s=>s.handle===post.who);
+              if(!owner) return;
+              sys2=buildSideCharSys(owner,'\n내 게시글에 댓글이 달렸다. 1문장. 반드시 맨 앞에 @'+c.handle.replace('@','')+' 태그. 대사만.');
+              prompt2=`[${c.nm}이 댓글: "${sp}"]`;
+            }
+            const r2=await api([{role:'user',content:prompt2}],sys2);
+            const sp2=r2.replace(/\(.*?\)/gs,'').trim();
+            post.cmts.push({who:ownerHandle,txt:sp2,ts:new Date()});
+            renderSNS();saveData();
+          }catch(e){}
+        },3000+Math.random()*4000);
+      }
+    }catch(e){}
+    scheduleAutoInteract();
+  }, 300000 + Math.random()*300000); // 5~10분
 }
 
 loadData();
