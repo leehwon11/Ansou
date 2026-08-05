@@ -1041,60 +1041,107 @@ async function postMine(){
   },2000+Math.random()*2000);
 }
 // 자동 포스트 — 하루 한 번, AI가 그때그때 새로 생성 (고정 문구 X)
+// 안의 SNS 포스트 생성 (slot: 'morning'|'lunch'|'evening')
+async function generateAnPost(slot, today){
+  const slotCtx = slot==='morning'?'아침 — 오늘 하루 시작하는 기분이나 아침 루틴, 연습 계획':
+                  slot==='lunch'?'점심 — 오전에 있었던 일, 연습 중간 소감, 친구들과의 에피소드':
+                  '저녁 — 오늘 하루를 마무리하는 소감, 오늘의 감상, 소우타에 대한 생각';
+  try{
+    const sys=buildSys('\n상황: 안이 SNS에 짧은 글을 하나 올리려 한다. ['+slotCtx+'] 1~3문장, 해시태그 1~3개 포함. 안의 말투 그대로, 게시물 본문만 출력.');
+    const t=await api([{role:'user',content:'[안이 SNS에 글을 올린다]'}],sys);
+    const clean=t.replace(/\(.*?\)/gs,'').trim();
+    const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[],auto:true,day:today,slot};
+    snsData.unshift(ap);renderSNS();
+    addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
+    saveData();
+    // 조연 1~2명 댓글
+    const commenters=[...sideChars].sort(()=>Math.random()-0.5).slice(0,1+Math.floor(Math.random()*2));
+    commenters.forEach((sc,ci)=>{
+      setTimeout(async()=>{
+        try{
+          const csys=buildSideCharSys(sc,'\n안(@LightUptheFire)의 SNS 게시글에 짧은 댓글. 1문장. 반드시 맨 앞에 @LightUptheFire 태그. 대사만.');
+          const cr=await api([{role:'user',content:`[안의 글: "${clean}"]`}],csys);
+          const csp=cr.replace(/\(.*?\)/gs,'').trim();
+          ap.cmts.push({who:sc.handle,txt:csp});
+          renderSNS();saveData();
+        }catch(e){}
+      },5000+(ci*4000)+Math.random()*3000);
+    });
+  }catch(e){}
+}
+
+// 조연 SNS 포스트 생성
+async function generateSidePost(c, today){
+  try{
+    const sys=buildSideCharSys(c,`\nSNS에 짧은 글을 올린다. ${c.snsStyle} 게시물 본문만 출력. 다른 설명 붙이지 말 것.`);
+    const t=await api([{role:'user',content:`[${c.name}가 SNS에 글을 올린다]`}],sys);
+    const clean=t.replace(/\(.*?\)/gs,'').trim();
+    const cp={id:'auto-'+Date.now(),who:c.handle,nm:c.nm,hl:c.handle,ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*50)+3,liked:false,cmts:[],auto:true,day:today};
+    snsData.push(cp);renderSNS();
+    addNotif(c.icon,'SNS 새 글',c.nm+'이 새 글을 올렸어요.','snsTop');
+    saveData();
+    if(Math.random()>0.5){
+      setTimeout(async()=>{
+        try{
+          const commenter=sideChars.filter(x=>x.handle!==c.handle)[Math.floor(Math.random()*5)];
+          const csys=buildSideCharSys(commenter,`\n${c.name}(${c.handle})의 SNS 게시글에 짧은 댓글. 1문장. 반드시 맨 앞에 @${c.handle.replace('@','')} 태그. 대사만.`);
+          const cr=await api([{role:'user',content:`[게시글: "${clean}"]`}],csys);
+          const csp=cr.replace(/\(.*?\)/gs,'').trim();
+          cp.cmts.push({who:commenter.handle,txt:csp});
+          renderSNS();saveData();
+        }catch(e){}
+      },3000+Math.random()*5000);
+    }
+  }catch(e){}
+}
+
 async function scheduleAutoPost(){
-  const today=new Date().toISOString().slice(0,10);
-  // 안의 오늘 포스트
-  if(!snsData.some(p=>p.auto && p.day===today && p.who==='an')){
-    setTimeout(async()=>{
-      try{
-        const sys=buildSys('\n상황: 안이 SNS에 짧은 글을 하나 올리려 한다. 오늘 있었던 일, 음악 활동, RAD WEEKEND 목표, 친구들과의 에피소드, 혹은 소우타에 대한 생각 중 하나를 자연스럽게 담아서. 1~3문장, 해시태그 1~3개 포함. 안의 말투 그대로, 게시물 본문만 출력하고 다른 설명은 붙이지 말 것.');
-        const t=await api([{role:'user',content:'[안이 SNS에 글을 올린다]'}],sys);
-        const clean=t.replace(/\(.*?\)/gs,'').trim();
-        const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[],auto:true,day:today};
-        snsData.unshift(ap);renderSNS();
-        addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
-        saveData();
-        // 조연 1~2명이 안의 게시글에 댓글
-        const commenters=sideChars.sort(()=>Math.random()-0.5).slice(0,1+Math.floor(Math.random()*2));
-        commenters.forEach((sc,ci)=>{
-          setTimeout(async()=>{
-            const csys=buildSideCharSys(sc,'\n안(@LightUptheFire)의 SNS 게시글에 짧은 댓글. 1문장. 반드시 맨 앞에 @LightUptheFire 태그. 대사만.');
-            const cr=await api([{role:'user',content:`[안의 글: "${clean}"]`}],csys);
-            const csp=cr.replace(/\(.*?\)/gs,'').trim();
-            ap.cmts.push({who:sc.handle,txt:csp});
-            renderSNS();saveData();
-          },5000+(ci*4000)+Math.random()*3000);
-        });
-      }catch(e){}
-    },9000+Math.random()*12000);
+  const now=new Date();
+  const today=now.toISOString().slice(0,10);
+  const hour=now.getHours();
+
+  // ── 안의 아침/점심/저녁 포스트 ──
+  // 각 슬롯별로 오늘 이미 올렸는지 확인
+  const anPosts=snsData.filter(p=>p.auto && p.day===today && p.who==='an');
+  const slots=[
+    {slot:'morning', minHour:7,  label:'아침'},
+    {slot:'lunch',   minHour:12, label:'점심'},
+    {slot:'evening', minHour:18, label:'저녁'},
+  ];
+  let delay=2000;
+  for(const s of slots){
+    const alreadyPosted=anPosts.some(p=>p.slot===s.slot);
+    if(!alreadyPosted && hour>=s.minHour){
+      setTimeout(()=>generateAnPost(s.slot, today), delay);
+      delay+=8000; // 슬롯 간 8초 간격
+    }
   }
-  // 조연 캐릭터들도 하루 1~2명 포스트
+
+  // ── 조연 포스트 (하루 3명, 각 시간대별) ──
   const postedChars=snsData.filter(p=>p.auto && p.day===today && p.who!=='an' && p.who!=='me').map(p=>p.who);
-  const unposted=sideChars.filter(c=>!postedChars.includes(c.handle));
-  const toPost=unposted.sort(()=>Math.random()-0.5).slice(0,2);
-  toPost.forEach((c,idx)=>{
-    setTimeout(async()=>{
-      try{
-        const sys=buildSideCharSys(c,`\nSNS에 짧은 글을 올린다. ${c.snsStyle} 게시물 본문만 출력. 다른 설명 붙이지 말 것.`);
-        const t=await api([{role:'user',content:`[${c.name}가 SNS에 글을 올린다]`}],sys);
-        const clean=t.replace(/\(.*?\)/gs,'').trim();
-        const cp={id:'auto-'+Date.now(),who:c.handle,nm:c.nm,hl:c.handle,ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*50)+3,liked:false,cmts:[],auto:true,day:today};
-        snsData.push(cp);renderSNS();
-        saveData();
-        // 조연들끼리 댓글 달기 (랜덤으로)
-        if(Math.random()>0.5){
-          setTimeout(async()=>{
-            const commenter=sideChars.filter(x=>x.handle!==c.handle)[Math.floor(Math.random()*5)];
-            const csys=buildSideCharSys(commenter,`\n${c.name}(${c.handle})의 SNS 게시글에 짧은 댓글을 달아줘. 1문장. 반드시 맨 앞에 @${c.handle.replace('@','')} 태그 붙일 것. 대사만, 괄호 없이.`);
-            const cr=await api([{role:'user',content:`[게시글: "${clean}"]`}],csys);
-            const csp=cr.replace(/\(.*?\)/gs,'').trim();
-            cp.cmts.push({who:commenter.handle,txt:csp});
-            renderSNS();saveData();
-          },3000+Math.random()*5000);
-        }
-      }catch(e){}
-    },20000+(idx*15000)+Math.random()*20000);
-  });
+  // 아침(7~): 2명, 저녁(18~): 1명
+  const morningChars=sideChars.filter(c=>!postedChars.includes(c.handle));
+  if(hour>=7 && morningChars.length){
+    const pick=[...morningChars].sort(()=>Math.random()-0.5).slice(0,2);
+    const alreadyMorning=snsData.filter(p=>p.auto && p.day===today && p.who!=='an' && p.who!=='me');
+    // 2명까지만
+    const need=2-alreadyMorning.filter(p=>['morning','m'].includes(p.sideSlot)).length;
+    if(need>0){
+      pick.slice(0,need).forEach((c,i)=>{
+        setTimeout(()=>generateSidePost(c,today), delay+(i*10000));
+      });
+      delay+=pick.length*10000;
+    }
+  }
+  if(hour>=18){
+    const eveningChars=sideChars.filter(c=>!snsData.some(p=>p.auto && p.day===today && p.who===c.handle));
+    if(eveningChars.length){
+      const pick=[...eveningChars].sort(()=>Math.random()-0.5).slice(0,1);
+      pick.forEach((c,i)=>{
+        setTimeout(()=>generateSidePost(c,today), delay+(i*10000));
+      });
+    }
+  }
 }
 renderSNS();
 
@@ -1794,6 +1841,12 @@ setTimeout(sendAutoTalk, 30000 + Math.random()*150000);
 
 // ══ 데이터 영속화 (Supabase) ══
 let firstMet='2023-12-21T00:00:00';
+function updateMetBadge(){
+  const el=document.getElementById('metBadge');if(!el||!firstMet)return;
+  const days=Math.max(1, Math.floor((Date.now()-new Date(firstMet).getTime())/86400000)+1);
+  el.textContent=`만난 지 ${days}일째`;
+}
+updateMetBadge(); // 기본값으로 즉시 표시
 async function saveData(){
   await dbSave('appState', {rooms, dLogs, diaryList, myPosts, snsData, callLogs, firstMet, DP, galleryItems});
 }
@@ -1833,11 +1886,7 @@ const dreamChapters=[
   {t:'4화. 진심', d:'부모의 기대 속에서 정말 연기를 좋아하는지조차 확신하지 못하는 소우타. "...힘들어."'},
   {t:'5화. 잠연', d:'그럼에도 안이 먼저 손을 내밀고, 두려움에 가려졌던 확신이 드러난다. "좋아해."'}
 ];
-function updateMetBadge(){
-  const el=document.getElementById('metBadge');if(!el||!firstMet)return;
-  const days=Math.max(1, Math.floor((Date.now()-new Date(firstMet).getTime())/86400000)+1);
-  el.textContent=`만난 지 ${days}일째`;
-}
+
 function openTimeline(){
   const list=document.getElementById('timelineList');list.innerHTML='';
   const badge=document.getElementById('metBadge');
