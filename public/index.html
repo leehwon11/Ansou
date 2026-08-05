@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>白石 杏 — 개인 공간</title>
+<title>白石 杏</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00bbdc">
 <link rel="apple-touch-icon" href="/icon.svg">
@@ -60,8 +60,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .post-btn:hover{background:#0090b8;}
 .sns-post{margin:0 14px 10px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;}
 .sns-ph{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.sns-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700;flex-shrink:0;}
+.sns-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700;flex-shrink:0;overflow:hidden;}
 .sns-av.u{background:linear-gradient(135deg,#556677,#334455);}
+.sns-av img,.cmt-av img,.m-av img,.ri-av img,.rv-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .sns-nm{font-size:13px;font-weight:700;}
 .sns-hl{font-size:11px;color:var(--gray);}
 .sns-body{font-size:13px;line-height:1.7;color:var(--dark);margin-bottom:10px;white-space:pre-wrap;}
@@ -72,7 +73,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-area{margin-top:8px;padding-top:10px;border-top:1px solid var(--mint-p);display:none;}
 .cmt-area.open{display:block;}
 .cmt-ir{display:flex;gap:8px;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid var(--mint-p);}
-.cmt-ir-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#556677,#334455);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;flex-shrink:0;}
+.cmt-ir-av{overflow:hidden;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#556677,#334455);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;flex-shrink:0;}
 .cmt-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:5px 2px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--gray);outline:none;}
 .cmt-inp::placeholder{color:var(--mint-l);}
 .cmt-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;white-space:nowrap;}
@@ -80,7 +81,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-list{display:flex;flex-direction:column;gap:0;}
 .cmt-item{display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--mint-p);}
 .cmt-item:last-child{border-bottom:none;}
-.cmt-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
+.cmt-av{overflow:hidden;width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
 .cmt-av.an{background:linear-gradient(135deg,var(--mint),#0090b8);}
 .cmt-av.me{background:linear-gradient(135deg,#556677,#334455);}
 .cmt-body{flex:1;min-width:0;}
@@ -94,7 +95,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .new-chat-btn:hover{background:#0090b8;}
 .room-item{margin:0 14px 9px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:transform .15s;}
 .room-item:hover{transform:translateY(-1px);}
-.ri-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700;flex-shrink:0;}
+.ri-av{overflow:hidden;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700;flex-shrink:0;}
 .ri-info{flex:1;min-width:0;}
 .ri-name{font-size:13px;font-weight:700;}
 .ri-prev{font-size:11px;color:var(--gray);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -105,7 +106,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .room-view.open{display:flex;}
 .rv-hdr{background:var(--white);padding:11px 14px;border-bottom:1px solid var(--mint-l);display:flex;align-items:center;gap:10px;}
 .rv-back{background:none;border:none;cursor:pointer;color:var(--gray);font-size:20px;padding:0 6px 0 0;line-height:1;}
-.rv-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;flex-shrink:0;}
+.rv-av{overflow:hidden;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;flex-shrink:0;}
 .rv-info{flex:1;}
 .rv-name{font-size:13px;font-weight:700;}
 .rv-sub{font-size:10px;color:var(--gray);}
@@ -117,7 +118,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 /* 메시지 블록 (서술형) */
 .mb{display:flex;gap:8px;align-items:flex-start;}
 .mb.u{flex-direction:row-reverse;}
-.m-av{width:27px;height:27px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
+.m-av{overflow:hidden;width:27px;height:27px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--mint),#0090b8);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
 .m-av.u{background:linear-gradient(135deg,#556677,#334455);}
 .m-content{max-width:78%;}
 .m-speech{padding:10px 13px;border-radius:16px;font-size:13px;line-height:1.75;word-break:break-word;}
@@ -322,7 +323,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
     <div class="scroll">
       <div class="compose-box">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">
-          <div class="sns-av u">颯</div>
+          <div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타"></div>
           <div style="font-size:12px;color:var(--gray);" id="myHandleDisp">@FLYtotheFUTURE</div>
         </div>
         <textarea id="myPostTxt" rows="3" placeholder="지금 무슨 생각 하고 있어?"></textarea>
@@ -435,7 +436,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <div class="ovl-panel">
     <div class="ovl-hdr">
       <button class="ovl-close" onclick="closeDailyOvl()">✕</button>
-      <div class="rv-av">杏</div>
+      <div class="rv-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
       <div class="rv-info">
         <div class="rv-name" id="dOvlTitle">일상</div>
         <div class="rv-sub" id="dOvlSub"></div>
@@ -480,6 +481,10 @@ async function dbLoad(key){
   try{const r=await fetch('/api/data/'+key);if(r.ok){const d=await r.json();return d.value;}return null;}catch(e){return null;}
 }
 // 별
+const IMG_AN='https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png';
+const IMG_SO='https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png';
+function avAn(size=''){return `<img src="${IMG_AN}" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;}
+function avSo(size=''){return `<img src="${IMG_SO}" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;}
 const sb=document.getElementById('sBg');
 for(let i=0;i<26;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*4+2;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*3+2).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;sb.appendChild(s);}
 
@@ -655,7 +660,7 @@ function mkMsg(role,raw,ts,speechOverride,narrOverride,animate){
   // 대사 말풍선
   if(speech){
     const d=document.createElement('div');d.className='mb'+(isU?' u':'');
-    const av=isU?'<div class="m-av u">颯</div>':'<div class="m-av">杏</div>';
+    const av=isU?'<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>':'<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>';
     d.innerHTML=`${av}<div class="m-content"><div class="m-speech"></div>${!narr?`<div class="m-time">${ts}</div>`:''}</div>`;
     wrap.appendChild(d);
     const spEl=d.querySelector('.m-speech');
@@ -677,13 +682,13 @@ function mkMsg(role,raw,ts,speechOverride,narrOverride,animate){
   // 둘 다 없으면 raw 그대로
   if(!speech&&!narr){
     const d=document.createElement('div');d.className='mb'+(isU?' u':'');
-    const av=isU?'<div class="m-av u">颯</div>':'<div class="m-av">杏</div>';
+    const av=isU?'<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>':'<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>';
     d.innerHTML=`${av}<div class="m-content"><div class="m-speech">${esc(raw)}</div><div class="m-time">${ts}</div></div>`;
     wrap.appendChild(d);
   }
   return wrap;
 }
-function mkTyping(){const d=document.createElement('div');d.className='mb';d.innerHTML=`<div class="m-av">杏</div><div class="typ-row"><div class="typ-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>`;return d;}
+function mkTyping(){const d=document.createElement('div');d.className='mb';d.innerHTML=`<div class="m-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="typ-row"><div class="typ-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>`;return d;}
 
 // 알림 읽기
 function rdN(id,tab,action){
@@ -742,7 +747,7 @@ function mkPost(p){
   const d=document.createElement('div');d.className='sns-post';
   d.innerHTML=`
     <div class="sns-ph">
-      <div class="sns-av${isMe?' u':''}">${isMe?'S':'杏'}</div>
+      <div class="sns-av${isMe?' u':''}"><img src="${isMe?'https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png':'https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png'}" alt="${isMe?'소우타':'안'}"></div>
       <div><div class="sns-nm">${esc(p.nm)}</div><div class="sns-hl">${esc(p.hl)} · ${p.ts?liveTime(p.ts):p.time}</div></div>
     </div>
     <div class="sns-body">${esc(p.body)}</div>
@@ -756,7 +761,7 @@ function mkPost(p){
         ${p.cmts.map(c=>makeCmtHTML(c)).join('')}
       </div>
       <div class="cmt-ir">
-        <div class="cmt-ir-av">颯</div>
+        <div class="cmt-ir-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
         <input class="cmt-inp" id="ci-${p.id}" placeholder="댓글 달기..." onkeydown="if(event.key==='Enter')addCmt('${p.id}')">
         <button class="cmt-send" onclick="addCmt('${p.id}')">전송</button>
       </div>
@@ -801,7 +806,7 @@ async function addCmt(id){
 }
 function makeCmtHTML(c){
   const isAn=c.who==='@LightUptheFire';
-  const initial=isAn?'杏':'颯';
+  const initial=isAn?'<img src=\"https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png\" alt=\"안\" style=\"width:100%;height:100%;object-fit:cover;border-radius:50%;\">':'<img src=\"https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png\" alt=\"소우타\" style=\"width:100%;height:100%;object-fit:cover;border-radius:50%;\">';
   const avClass=isAn?'an':'me';
   const displayName=isAn?'시라이시 안':(window.DP&&DP.name?DP.name:'소우타');
   const handle=isAn?'@LightUptheFire':(window.DP&&DP.handle?DP.handle:'@FLYtotheFUTURE');
@@ -824,13 +829,13 @@ async function postMine(){
   document.getElementById('myPostTxt').value='';
   const p={id:'my-'+Date.now(),who:'me',nm:DP.name||'소우타',hl:DP.handle||'@FLYtotheFUTURE',ts:new Date(),time:'방금 전',body:txt,lk:0,liked:false,cmts:[]};
   myPosts.unshift(p);renderSNS();saveData();
-  if(Math.random()>.25){
-    setTimeout(async()=>{
-      const myH=DP.handle||'@FLYtotheFUTURE';const r=await api([{role:'user',content:`소우타(${myH}) 게시글: "${txt}". 짧게 댓글 달아줘. 맨 앞에 @${myH.replace('@','')} 태그 붙여서.`}],buildSys('\n상황: 소우타 SNS 게시글에 댓글. 1-2문장. 괄호 서술 없이. 반드시 맨 앞에 @태그 붙일 것.'));
-      const sp=r.replace(/\(.*?\)/gs,'').trim();
-      p.cmts.push({who:'@LightUptheFire',txt:sp}); renderSNS();saveData();
-    },2500+Math.random()*3000);
-  }
+  // 안이 항상 댓글 달도록 수정 (랜덤 제거)
+  setTimeout(async()=>{
+    const myH=DP.handle||'@FLYtotheFUTURE';
+    const r=await api([{role:'user',content:`소우타(${myH})가 SNS에 글을 올렸어: "${txt}". 안이 댓글을 달아줘. 1-2문장, 반드시 맨 앞에 @${myH.replace('@','')} 태그 붙일 것. 대사만, 괄호 서술 없이.`}],buildSys('\n상황: 소우타 SNS 게시글에 안이 댓글. 반드시 맨 앞에 @태그 붙일 것. 괄호 서술 없이.'));
+    const sp=r.replace(/\(.*?\)/gs,'').trim();
+    p.cmts.push({who:'@LightUptheFire',txt:sp}); renderSNS();saveData();
+  },2000+Math.random()*2000);
 }
 // 자동 포스트 — 하루 한 번, AI가 그때그때 새로 생성 (고정 문구 X)
 async function scheduleAutoPost(){
@@ -859,7 +864,7 @@ function renderRooms(){
     const last=r.msgs[r.msgs.length-1];
     const{speech}=last?parseMsg(last.content):{speech:'...'};
     const d=document.createElement('div');d.className='room-item';
-    d.innerHTML=`<div class="ri-av">杏</div><div class="ri-info"><div class="ri-name">시라이시 안 ⭐</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
+    d.innerHTML=`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="ri-info"><div class="ri-name">시라이시 안 ⭐</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
     d.onclick=()=>openRoom(i);list.appendChild(d);
   });
 }
@@ -880,7 +885,7 @@ function openRoom(i){
   rv.innerHTML=`
     <div class="rv-hdr">
       <button class="rv-back" onclick="closeRoom()">‹</button>
-      <div class="rv-av">杏</div>
+      <div class="rv-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
       <div class="rv-info"><div class="rv-name">시라이시 안 ⭐</div><div class="rv-sub">${room.st} 시작${room.ended?' · 종료됨':' · 진행 중'}</div></div>
       ${!room.ended?`<button class="end-btn" onclick="endRoom(${i})">채팅 종료</button>`:''}
     </div>
@@ -1047,8 +1052,8 @@ function addCC(who,txt){
   const d=document.createElement('div');d.className='mb'+(isU?' u':'');
   const style='font-size:12px;padding:7px 11px;';
   d.innerHTML=isU
-    ?`<div class="m-av u" style="width:22px;height:22px;font-size:10px;">颯</div><div><div class="m-speech" style="${style}">${esc(txt)}</div></div>`
-    :`<div class="m-av" style="width:22px;height:22px;font-size:10px;">杏</div><div><div class="m-speech" style="${style}background:var(--white);border:1px solid var(--mint-l);border-radius:14px;border-bottom-left-radius:4px;color:var(--dark);">${esc(txt)}</div></div>`;
+    ?`<div class="m-av u" style="width:22px;height:22px;font-size:10px;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div><div class="m-speech" style="${style}">${esc(txt)}</div></div>`
+    :`<div class="m-av" style="width:22px;height:22px;font-size:10px;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div><div class="m-speech" style="${style}background:var(--white);border:1px solid var(--mint-l);border-radius:14px;border-bottom-left-radius:4px;color:var(--dark);">${esc(txt)}</div></div>`;
   m.appendChild(d);m.scrollTop=m.scrollHeight;
 }
 async function sendCC(){
@@ -1191,11 +1196,28 @@ function closeDailyOvl(){document.getElementById('dailyOvl').classList.remove('o
 function renderDailyList(){
   const list=document.getElementById('dailyList');list.innerHTML='';
   if(!dLogs.length){list.innerHTML='<div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">아직 기록이 없어요</div>';return;}
+  // 날짜별 그룹화
+  const groups={};
   dLogs.forEach((l,i)=>{
-    const last=l.msgs[l.msgs.length-1];const{speech}=last?parseMsg(last.content):{speech:'기록 없음'};
-    const d=document.createElement('div');d.className='dli';
-    d.innerHTML=`<div class="dli-hdr"><div class="dli-ico">${l.ended?'✅':'🟢'}</div><div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.st}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
-    d.onclick=()=>{curDIdx=i;openDOvl(l);};list.appendChild(d);
+    // st에서 날짜 추출 또는 id(timestamp) 사용
+    const dateKey=l.id?new Date(l.id).toISOString().slice(0,10):'기타';
+    if(!groups[dateKey]) groups[dateKey]=[];
+    groups[dateKey].push({log:l,idx:i});
+  });
+  Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(dateKey=>{
+    const items=groups[dateKey];
+    const dateLabel=getDateWithDay(items[0].log.id||null);
+    // 날짜 구분선
+    const sep=document.createElement('div');
+    sep.style.cssText='display:flex;align-items:center;gap:8px;padding:8px 14px 4px;';
+    sep.innerHTML=`<div style="flex:1;height:1px;background:var(--mint-l);"></div><div style="font-size:10px;color:var(--mint);font-weight:700;white-space:nowrap;">${esc(dateLabel)}</div><div style="flex:1;height:1px;background:var(--mint-l);"></div>`;
+    list.appendChild(sep);
+    items.forEach(({log:l,idx:i})=>{
+      const last=l.msgs[l.msgs.length-1];const{speech}=last?parseMsg(last.content):{speech:'기록 없음'};
+      const d=document.createElement('div');d.className='dli';
+      d.innerHTML=`<div class="dli-hdr"><div class="dli-ico">${l.ended?'✅':'🟢'}</div><div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
+      d.onclick=()=>{curDIdx=i;openDOvl(l);};list.appendChild(d);
+    });
   });
 }
 renderDailyList();
@@ -1215,6 +1237,16 @@ async function loadMood(){
   if(moodLoaded)return;
   moodLoaded=true;
   const today=new Date();
+  const todayKey=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // DB에서 오늘 날짜 무드 확인
+  const saved=await dbLoad('mood_'+todayKey);
+  if(saved && saved.emoji && saved.txt){
+    document.getElementById('moodEmoji').textContent=saved.emoji;
+    document.getElementById('moodText').textContent=saved.txt;
+    updateHomeMood(saved.emoji,saved.txt);
+    return;
+  }
+  // 오늘 처음이면 새로 생성 후 저장
   const dateStr=today.getMonth()+1+'월 '+today.getDate()+'일';
   const sys=buildSys('\n오늘('+dateStr+') 시라이시 안의 감정 상태를 한 문장으로 표현해줘. 15자 이내. 괄호 서술 없이. 이모지 없이 텍스트만.');
   const rep=await api([{role:'user',content:'[오늘 안의 감정 상태는?]'}],sys);
@@ -1222,8 +1254,8 @@ async function loadMood(){
   const emoji=moodEmojis[Math.floor(Math.random()*moodEmojis.length)];
   document.getElementById('moodEmoji').textContent=emoji;
   document.getElementById('moodText').textContent=txt;
-  // 홈에도 감정 상태 표시
   updateHomeMood(emoji,txt);
+  await dbSave('mood_'+todayKey,{emoji,txt});
 }
 
 function updateHomeMood(emoji,txt){
@@ -1259,7 +1291,8 @@ async function generateDiary(){
 async function generateNote(){
   const list=document.getElementById('diaryList');
   const today=new Date();
-  const dateStr=today.getMonth()+1+'월 '+today.getDate()+'일';
+  const days=['일','월','화','수','목','금','토'];
+  const dateStr=today.getMonth()+1+'월 '+today.getDate()+'일 '+days[today.getDay()]+'요일';
   const loading=document.createElement('div');
   loading.className='diary-generating';
   loading.innerHTML='<div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px;"><div class="td"></div><div class="td"></div><div class="td"></div></div>메모를 작성하는 중...';
@@ -1280,6 +1313,11 @@ async function generateNote(){
   saveData();
 }
 
+function getDateWithDay(ts){
+  const d=ts?new Date(ts):new Date();
+  const days=['일','월','화','수','목','금','토'];
+  return (d.getMonth()+1)+'월 '+d.getDate()+'일 '+days[d.getDay()]+'요일';
+}
 function renderDiaryList(){
   const list=document.getElementById('diaryList');
   list.innerHTML='';
@@ -1287,26 +1325,44 @@ function renderDiaryList(){
     list.innerHTML='<div style="text-align:center;padding:30px;font-size:12px;color:var(--gray);">아직 일기가 없어요.<br>버튼을 눌러 생성해봐요.</div>';
     return;
   }
+  // 날짜별 그룹화
+  const groups={};
   diaryList.forEach(entry=>{
-    const d=document.createElement('div');d.className='diary-card';
-    if(entry.type==='diary'){
-      d.innerHTML=`
-        <div class="diary-card-hdr">
-          <div class="diary-card-icon">📔</div>
-          <div class="diary-card-title">오늘의 일기</div>
-          <div class="diary-card-date">${esc(entry.date)}</div>
-        </div>
-        <div class="diary-card-body">${esc(entry.content)}</div>`;
-    } else {
-      d.innerHTML=`
-        <div class="diary-card-hdr">
-          <div class="diary-card-icon">📝</div>
-          <div class="diary-card-title">${esc(entry.noteType)}</div>
-          <div class="diary-card-date">${esc(entry.date)}</div>
-        </div>
-        <div class="diary-card-body note">${esc(entry.content)}</div>`;
-    }
-    list.appendChild(d);
+    const dateKey=entry.ts?new Date(entry.ts).toISOString().slice(0,10):(entry.date||'기타');
+    if(!groups[dateKey]) groups[dateKey]=[];
+    groups[dateKey].push(entry);
+  });
+  // 날짜 내림차순 정렬
+  Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(dateKey=>{
+    const entries=groups[dateKey];
+    const sampleEntry=entries[0];
+    const dateLabel=getDateWithDay(sampleEntry.ts||null);
+    // 날짜 구분선
+    const sep=document.createElement('div');
+    sep.style.cssText='display:flex;align-items:center;gap:8px;padding:8px 14px 4px;';
+    sep.innerHTML=`<div style="flex:1;height:1px;background:var(--mint-l);"></div><div style="font-size:10px;color:var(--mint);font-weight:700;white-space:nowrap;">${esc(dateLabel)}</div><div style="flex:1;height:1px;background:var(--mint-l);"></div>`;
+    list.appendChild(sep);
+    entries.forEach(entry=>{
+      const d=document.createElement('div');d.className='diary-card';
+      if(entry.type==='diary'){
+        d.innerHTML=`
+          <div class="diary-card-hdr">
+            <div class="diary-card-icon">📔</div>
+            <div class="diary-card-title">오늘의 일기</div>
+            <div class="diary-card-date">${esc(dateLabel)}</div>
+          </div>
+          <div class="diary-card-body">${esc(entry.content)}</div>`;
+      } else {
+        d.innerHTML=`
+          <div class="diary-card-hdr">
+            <div class="diary-card-icon">📝</div>
+            <div class="diary-card-title">${esc(entry.noteType)}</div>
+            <div class="diary-card-date">${esc(dateLabel)}</div>
+          </div>
+          <div class="diary-card-body note">${esc(entry.content)}</div>`;
+      }
+      list.appendChild(d);
+    });
   });
 }
 renderDiaryList();
