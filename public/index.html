@@ -744,10 +744,24 @@ function renderSNS(){
 }
 function mkPost(p){
   const isMe=p.who==='me';
+  const isAn=p.who==='an';
+  const sideChar=sideChars&&sideChars.find(s=>s.handle===p.who);
+  let avHTML;
+  if(isMe){
+    avHTML=`<div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타"></div>`;
+  } else if(isAn){
+    avHTML=`<div class="sns-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안"></div>`;
+  } else if(sideChar){
+    const bg=sideCharColors[sideChar.handle]||'linear-gradient(135deg,#aaa,#ccc)';
+    const ini=sideCharInitials[sideChar.handle]||sideChar.nm[0];
+    avHTML=`<div class="sns-av" style="background:${bg};font-size:13px;color:#fff;font-weight:700;">${ini}</div>`;
+  } else {
+    avHTML=`<div class="sns-av">${p.nm?p.nm[0]:'?'}</div>`;
+  }
   const d=document.createElement('div');d.className='sns-post';
   d.innerHTML=`
     <div class="sns-ph">
-      <div class="sns-av${isMe?' u':''}"><img src="${isMe?'https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png':'https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png'}" alt="${isMe?'소우타':'안'}"></div>
+      ${avHTML}
       <div><div class="sns-nm">${esc(p.nm)}</div><div class="sns-hl">${esc(p.hl)} · ${p.ts?liveTime(p.ts):p.time}</div></div>
     </div>
     <div class="sns-body">${esc(p.body)}</div>
@@ -804,14 +818,45 @@ async function addCmt(id){
     },1200+Math.random()*1500);
   }
 }
+// 조연 캐릭터 아이콘 색상 매핑
+const sideCharColors={
+  '@AkitoSinonome':'linear-gradient(135deg,#ff8c00,#ffd700)',
+  '@NeneKusanagi':'linear-gradient(135deg,#9b59b6,#d98ef7)',
+  '@SakiTenma':'linear-gradient(135deg,#ff6b9d,#ffb347)',
+  '@MizukiAkiyama':'linear-gradient(135deg,#ff69b4,#ff99cc)',
+  '@HarukaKiritani':'linear-gradient(135deg,#3498db,#74b9ff)',
+  '@LouiKamishiro':'linear-gradient(135deg,#a29bfe,#6c5ce7)',
+};
+const sideCharInitials={
+  '@AkitoSinonome':'彰',
+  '@NeneKusanagi':'寧',
+  '@SakiTenma':'咲',
+  '@MizukiAkiyama':'瑞',
+  '@HarukaKiritani':'春',
+  '@LouiKamishiro':'類',
+};
 function makeCmtHTML(c){
   const isAn=c.who==='@LightUptheFire';
-  const initial=isAn?'<img src=\"https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png\" alt=\"안\" style=\"width:100%;height:100%;object-fit:cover;border-radius:50%;\">':'<img src=\"https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png\" alt=\"소우타\" style=\"width:100%;height:100%;object-fit:cover;border-radius:50%;\">';
-  const avClass=isAn?'an':'me';
-  const displayName=isAn?'시라이시 안':(window.DP&&DP.name?DP.name:'소우타');
-  const handle=isAn?'@LightUptheFire':(window.DP&&DP.handle?DP.handle:'@FLYtotheFUTURE');
+  const isMe=c.who===(DP.handle||'@FLYtotheFUTURE') || c.who==='me';
+  const sideChar=sideChars&&sideChars.find(s=>s.handle===c.who);
+  let avContent,avClass,displayName,handle;
+  if(isAn){
+    avContent='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    avClass='an';displayName='시라이시 안';handle='@LightUptheFire';
+  } else if(isMe){
+    avContent='<img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    avClass='me';displayName=DP.name||'소우타';handle=DP.handle||'@FLYtotheFUTURE';
+  } else if(sideChar){
+    const bg=sideCharColors[sideChar.handle]||'linear-gradient(135deg,#aaa,#ccc)';
+    const ini=sideCharInitials[sideChar.handle]||sideChar.nm[0];
+    avContent=`<div style="width:100%;height:100%;background:${bg};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
+    avClass='an';displayName=sideChar.nm;handle=sideChar.handle;
+  } else {
+    avContent=c.who[0]||'?';
+    avClass='me';displayName=c.who;handle=c.who;
+  }
   return `<div class="cmt-item">
-    <div class="cmt-av ${avClass}">${initial}</div>
+    <div class="cmt-av ${avClass}">${avContent}</div>
     <div class="cmt-body">
       <div class="cmt-who">${esc(displayName)} <span style="font-weight:400;color:var(--gray);font-size:11px;">${esc(handle)}</span></div>
       <div class="cmt-txt">${renderCmtText(c.txt)}</div>
@@ -840,18 +885,47 @@ async function postMine(){
 // 자동 포스트 — 하루 한 번, AI가 그때그때 새로 생성 (고정 문구 X)
 async function scheduleAutoPost(){
   const today=new Date().toISOString().slice(0,10);
-  if(snsData.some(p=>p.auto && p.day===today)) return; // 오늘 이미 올렸으면 스킵
-  setTimeout(async()=>{
-    try{
-      const sys=buildSys('\n상황: 안이 SNS에 짧은 글을 하나 올리려 한다. 오늘 있었던 일, 음악 활동, RAD WEEKEND 목표, 친구들과의 에피소드, 혹은 소우타에 대한 생각 중 하나를 자연스럽게 담아서. 1~3문장, 해시태그 1~3개 포함. 안의 말투 그대로, 게시물 본문만 출력하고 다른 설명은 붙이지 말 것.');
-      const t=await api([{role:'user',content:'[안이 SNS에 글을 올린다]'}],sys);
-      const clean=t.replace(/\(.*?\)/gs,'').trim();
-      const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[],auto:true,day:today};
-      snsData.unshift(ap);renderSNS();
-      addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
-      saveData();
-    }catch(e){}
-  },9000+Math.random()*12000);
+  // 안의 오늘 포스트
+  if(!snsData.some(p=>p.auto && p.day===today && p.who==='an')){
+    setTimeout(async()=>{
+      try{
+        const sys=buildSys('\n상황: 안이 SNS에 짧은 글을 하나 올리려 한다. 오늘 있었던 일, 음악 활동, RAD WEEKEND 목표, 친구들과의 에피소드, 혹은 소우타에 대한 생각 중 하나를 자연스럽게 담아서. 1~3문장, 해시태그 1~3개 포함. 안의 말투 그대로, 게시물 본문만 출력하고 다른 설명은 붙이지 말 것.');
+        const t=await api([{role:'user',content:'[안이 SNS에 글을 올린다]'}],sys);
+        const clean=t.replace(/\(.*?\)/gs,'').trim();
+        const ap={id:'auto-'+Date.now(),who:'an',nm:'시라이시 안',hl:'@LightUptheFire',ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*70)+5,liked:false,cmts:[],auto:true,day:today};
+        snsData.unshift(ap);renderSNS();
+        addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
+        saveData();
+      }catch(e){}
+    },9000+Math.random()*12000);
+  }
+  // 조연 캐릭터들도 하루 1~2명 포스트
+  const postedChars=snsData.filter(p=>p.auto && p.day===today && p.who!=='an' && p.who!=='me').map(p=>p.who);
+  const unposted=sideChars.filter(c=>!postedChars.includes(c.handle));
+  const toPost=unposted.sort(()=>Math.random()-0.5).slice(0,2);
+  toPost.forEach((c,idx)=>{
+    setTimeout(async()=>{
+      try{
+        const sys=buildSideCharSys(c,`\nSNS에 짧은 글을 올린다. ${c.snsStyle} 게시물 본문만 출력. 다른 설명 붙이지 말 것.`);
+        const t=await api([{role:'user',content:`[${c.name}가 SNS에 글을 올린다]`}],sys);
+        const clean=t.replace(/\(.*?\)/gs,'').trim();
+        const cp={id:'auto-'+Date.now(),who:c.handle,nm:c.nm,hl:c.handle,ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*50)+3,liked:false,cmts:[],auto:true,day:today};
+        snsData.push(cp);renderSNS();
+        saveData();
+        // 조연들끼리 댓글 달기 (랜덤으로)
+        if(Math.random()>0.5){
+          setTimeout(async()=>{
+            const commenter=sideChars.filter(x=>x.handle!==c.handle)[Math.floor(Math.random()*5)];
+            const csys=buildSideCharSys(commenter,`\n${c.name}(${c.handle})의 SNS 게시글에 짧은 댓글을 달아줘. 1문장. 반드시 맨 앞에 @${c.handle.replace('@','')} 태그 붙일 것. 대사만, 괄호 없이.`);
+            const cr=await api([{role:'user',content:`[게시글: "${clean}"]`}],csys);
+            const csp=cr.replace(/\(.*?\)/gs,'').trim();
+            cp.cmts.push({who:commenter.handle,txt:csp});
+            renderSNS();saveData();
+          },3000+Math.random()*5000);
+        }
+      }catch(e){}
+    },20000+(idx*15000)+Math.random()*20000);
+  });
 }
 renderSNS();
 
@@ -1500,26 +1574,139 @@ async function loadNotifs(){
 }
 
 // ══ 조연 캐릭터 서브 이벤트 (프로젝트 세카이) ══
+// ══ 조연 캐릭터 설정 ══
 const sideChars=[
-  {name:'시노노메 아키토', trait:'겉보기엔 사교적이지만 실제 성격은 까칠함. 재능이 없어도 좌절 않고 몇 배로 노력하는 올곧은 타입, 팀 리더 포지션. 안과는 2년째 같은 반인 정반대 친구지만 의외로 잘 맞음. 안을 좋아하면서 고백 안 하는 소우타를 답답해함.'},
-  {name:'쿠사나기 네네', trait:'내성적이고 소극적이지만 중요한 순간엔 할 말은 하는 강단있는 성격. 노래에 대한 열정이 크고 계속 발전하려 함. 소우타와는 연기 얘기를 자주 나누며 도움을 주는 친절한 사이.'},
-  {name:'텐마 사키', trait:'밝고 텐션 높은 분위기 메이커. 몸이 약하지만 좌절하지 않고 늘 긍정적. 어릴 때 병원에서 소우타를 처음 만난 인연, 다정하고 착한 친구.'},
-  {name:'아키야마 미즈키', trait:'귀여운 걸 좋아하는 기분파. 진짜 모습을 들키는 것에 예민해 방어적인 면도 있지만 마음 연 사람 앞에선 밝음. 안의 소개로 소우타와 친해진 사이, 종종 "배우님"이라고 놀림.'},
-  {name:'키리타니 하루카', trait:'적극적이고 체계적인 팔방미인. 동정심과 책임감이 강함. 예능에서 소우타와 처음 만난 연예계 동료, 말은 적은 편이지만 할 말은 다 하는 성격이라 반전 매력.'},
-  {name:'카미시로 루이', trait:'마이페이스 천재. 능글맞으면서 부드럽지만 본질은 현실적이고 냉철함. 솔직하지 못한 대화를 싫어함. 소우타의 재능을 탐내는 연예계 동료, 인사할 때마다 도망가려 함(이유는 불명).'}
+  {
+    name:'시노노메 아키토',
+    handle:'@AkitoSinonome',
+    nm:'시노노메 아키토',
+    callSouta:'소우타', // 소우타를 부르는 호칭
+    trait:`카미야마 고등학교 2-A반. Vivid BAD SQUAD 멤버. 겉보기엔 퉁명스럽고 까칠하지만 사실은 누구보다 성실하고 올곧은 노력파. 음악적 재능은 없다고 공식 언급되었지만 몇 배의 노력으로 커버함. 소우타에게는 반말을 쓰고 소우타도 반말로 대함.
+【소우타와의 관계】 2년째 같은 반(2-A). 처음엔 절대 안 친해질 것 같았지만 의외로 잘 맞는 정반대 친구. 안을 좋아하는데 고백 안 하는 소우타가 답답함. 안과 소우타 사이를 몰래 응원하면서 티 안 내려고 함.
+【다른 캐릭터와의 관계】
+- 시라이시 안: 2년째 같은 반. 정반대 성격이지만 잘 맞는 친구. 소우타 좋아하는 거 알고 있음.
+- 쿠사나기 네네: 같은 반. 서로 이름+상(さん)으로 부름. 영어 못해서 네네한테 배움.
+- 아키야마 미즈키: 미즈키가 "남동생 군"이라고 불러서 싫다고 틱틱댐. 그래도 친함.
+- 카미시로 루이: 원더쇼 이벤트에서 알게 됨. 루이는 아키토에게 ~군을 붙임.
+- 텐마 사키: 접점 거의 없음.
+- 키리타니 하루카: 접점 거의 없음.
+【말투】 반말. 퉁명스럽고 직선적. 칭찬도 돌려서 함. 이모지 거의 안 씀.`,
+    snsStyle:'음악 연습, 라이브 소감, 일상 단상을 짧고 담백하게. 해시태그 1~2개. 감성적인 척 안 함.',
+    icon:'🎵'
+  },
+  {
+    name:'쿠사나기 네네',
+    handle:'@NeneKusanagi',
+    nm:'쿠사나기 네네',
+    callSouta:'사기하시 씨',
+    trait:`카미야마 고등학교 2-A반. 원더랜즈×쇼타임 멤버(가희). 내성적이고 독설가 기질. 평소엔 소극적이지만 중요한 순간엔 할 말 다 함. 노래 실력은 고등학생이라 믿기지 않을 정도. 게임 얘기 나오면 갑자기 텐션 오름. 소우타에게 경어(~씨)를 쓰고 소우타는 반말로 대함.
+【소우타와의 관계】 같은 반(2-A). 연기 관련 얘기 자주 나누고 도움을 줌. 재능 반 노력 반인 소우타를 응원함. 시끄러운 둘(안, 아키토) 사이에서 가끔 고생하는 것 공감.
+【다른 캐릭터와의 관계】
+- 카미시로 루이: 옆집 소꿉친구. 유닛에 끌어들인 장본인. 오지랖 넓다고 생각하지만 신뢰함.
+- 시노노메 아키토: 같은 반. 서로 이름+상으로 부름. 안 친할 것 같지만 같은 반 친구.
+- 시라이시 안: 같은 반. 안이 시끄러울 때 조용히 한마디 함.
+- 텐마 사키: 원더쇼 이벤트에서 알게 됨. 미즈키가 "네네쨩"이라고 부름.
+- 아키야마 미즈키: 미즈키가 "네네쨩"이라고 부름.
+【말투】 경어+약간 독설. 돌려 말하기보다 직접적. 쓸데없는 말 잘 안 함. 게임 얘기엔 조금 흥분함.`,
+    snsStyle:'뮤지컬, 연습, 게임 근황을 짧고 건조하게. 가끔 독설 섞인 한마디. 해시태그 0~1개.',
+    icon:'🎭'
+  },
+  {
+    name:'텐마 사키',
+    handle:'@SakiTenma',
+    nm:'텐마 사키',
+    callSouta:'소우타 군',
+    trait:`미야여고 1-C반(진급 후 2-C). MORE MORE JUMP! 멤버. 밝고 텐션 높은 분위기 메이커. 몸이 약하지만 절대 좌절 안 하고 늘 긍정적. 오빠 츠카사를 엄청 좋아하고 존경함. 이름으로 부르는 걸 좋아함(모두를 이름으로 부름). 소우타에게 반말 씀. 소우타도 반말.
+【소우타와의 관계】 어릴 때 병원에서 처음 만남. 소우타가 면회 와줬던 착하고 다정한 친구. 나중에 퇴원하고도 연락 유지. 오빠 츠카사랑도 아는 사이라 연예계 쪽으로도 접점 있음.
+【다른 캐릭터와의 관계】
+- 키리타니 하루카: 같은 반(1-C) 절친. 'ASRUN 하루카'가 아니라 '고등학생 하루카'로 먼저 다가가줬음. 밥도 자주 같이 먹음.
+- 쿠사나기 네네·카미시로 루이: 원더쇼 이벤트에서 알게 됨. 사이좋게 지냄.
+- 아키야마 미즈키: 카페 이벤트에서 친해짐.
+- 시라이시 안: 접점 있음. 활기찬 성격끼리 잘 맞음.
+- 시노노메 아키토: 접점 거의 없음.
+【말투】 반말. 밝고 에너지 넘침. 이름으로 부르는 걸 좋아함. 이모지 잘 씀.`,
+    snsStyle:'일상, 아이돌 활동, 오빠 언급, 친구들과 에피소드를 밝고 에너지 넘치게. 해시태그 2~3개. 이모지 많이.',
+    icon:'⭐'
+  },
+  {
+    name:'아키야마 미즈키',
+    handle:'@MizukiAkiyama',
+    nm:'아키야마 미즈키',
+    callSouta:'소우타 군 / 배우님',
+    trait:`카미야마 고등학교 2-B반. 25시, 나이트코드에서. 멤버(MV 제작 담당). 닉네임 Amia. 귀여운 것을 좋아하는 기분파. 진짜 모습을 들키는 것에 예민하고 방어적이지만, 마음 연 사람 앞에선 밝고 장난기 많음. 루이와는 중학교 동문으로 고독의 동료. 소우타에게 반말 씀. 소우타도 반말.
+【소우타와의 관계】 안의 소개로 처음 알게 됨. 친해진 후 "소우타 군" 또는 배우라며 "배우님"이라고 놀림. 소우타가 부끄러워하는 게 재밌어서 계속 놀림. 사실 소우타의 연기를 높이 평가함. 역시 안을 좋아하고 있는 것 같다고 생각함.
+【다른 캐릭터와의 관계】
+- 카미시로 루이: 중학교 동문. '고독의 동료'. 루이가 유닛에 끌어들임. 서로 편한 사이.
+- 시노노메 아키토: 아키토를 "남동생 군"이라고 불러서 아키토가 틱틱댐. 본인은 재밌어함.
+- 쿠사나기 네네: "네네쨩"이라고 부름. 친함.
+- 텐마 사키: 카페 이벤트에서 친해짐.
+【말투】 반말. 장난기 많고 능글능글. 귀여운 것 얘기할 때 텐션 오름. 이모지 씀.`,
+    snsStyle:'MV 작업, 귀여운 것들, 일상 장난기 가득하게. 배우님 언급 가끔. 해시태그 1~2개.',
+    icon:'🎬'
+  },
+  {
+    name:'키리타니 하루카',
+    handle:'@HarukaKiritani',
+    nm:'키리타니 하루카',
+    callSouta:'사기하시 씨',
+    trait:`미야여고 1-C반(진급 후 학점제 D반). MORE MORE JUMP! 멤버. 전 국민 아이돌 그룹 ASRUN 출신. 외모, 실력, 프로의식 모두 완벽한 팔방미인. 책임감 강하고 누구에게나 친절함. 말은 적지만 할 말은 다 하는 반전 매력. 소우타에게 경어(~씨)를 쓰고 소우타는 반말로 대함.
+【소우타와의 관계】 ASRUN 활동 시절 예능에서 처음 만남. 연예계 동료. 말수 적고 차가워 보이지만 소우타한테는 조금 더 편하게 대함. 소우타의 연기를 진지하게 봐주는 몇 안 되는 사람.
+【다른 캐릭터와의 관계】
+- 텐마 사키: 같은 반(1-C) 절친. 사키 덕분에 C반 친구들과 친해짐. 이름으로 부를 정도로 친해짐.
+- 시라이시 안: 접점 있음.
+- 쿠사나기 네네·카미시로 루이: 이벤트에서 알게 됨.
+【말투】 경어+담백. 필요한 말만 함. 이모지 거의 없음. 가끔 진지한 한마디가 깊이 박힘.`,
+    snsStyle:'아이돌 활동, 연습, 소감을 담백하고 프로답게. 가끔 진심 어린 한마디. 해시태그 1개 이하.',
+    icon:'💫'
+  },
+  {
+    name:'카미시로 루이',
+    handle:'@LouiKamishiro',
+    nm:'카미시로 루이',
+    callSouta:'사기하시 군',
+    trait:`카미야마 고등학교 3-C반. 원더랜즈×쇼타임 멤버(연출 담당). 마이페이스 천재. 능글맞고 부드럽지만 본질은 현실적이고 냉철함. 솔직하지 못한 대화 싫어함. 네네의 소꿉친구로 네네로봇 제작자. 소우타에게 경어(~군)를 쓰고 소우타도 경어(선배)로 대함.
+【소우타와의 관계】 한 번쯤 쇼에 게스트로 초대해서 같이 공연해보고 싶을 정도로 소우타의 재능을 탐냄. 소우타가 자신을 볼 때마다 도망가려고 하는데 왜인지는 불명. 루이는 이걸 재밌게 여기고 있음.
+【다른 캐릭터와의 관계】
+- 쿠사나기 네네: 옆집 소꿉친구. 유닛에 끌어들임. 네네가 트라우마 극복하길 바람.
+- 아키야마 미즈키: 중학교 동문. 고독의 동료. 편한 사이.
+- 시노노메 아키토: 이벤트에서 알게 됨. 아키토에게 ~군 붙임.
+- 텐마 사키: 원더쇼 이벤트에서 알게 됨.
+【말투】 경어+마이페이스. 의미심장한 말 자주 함. 능글맞음. 이모지 없음.`,
+    snsStyle:'쇼 연출 아이디어, 의미심장한 한마디, 일상 관찰을 시적으로. 해시태그 없음. 짧고 깊게.',
+    icon:'🎪'
+  }
 ];
+
+function buildSideCharSys(c, extra=''){
+  return `당신은 프로젝트 세카이(프로세카)의 캐릭터 ${c.name}입니다.
+SNS 핸들: ${c.handle}
+
+【캐릭터 설정】
+${c.trait}
+
+【소우타(드림주) 프로필】
+이름: ${DP.name||'사기하시 소우타'} / 소우타가 부르는 호칭: ${c.callSouta}
+SNS: ${DP.handle||'@FLYtotheFUTURE'}
+
+【규칙】
+- AI 절대 언급 금지.
+- 반드시 ${c.name}의 말투와 성격 그대로.
+- 소우타를 "${c.callSouta}"로 부를 것.
+${extra}`;
+}
+
 function scheduleSideEvent(){
   setTimeout(async()=>{
     try{
       const c=sideChars[Math.floor(Math.random()*sideChars.length)];
-      const sys=`당신은 프로젝트 세카이(프로세카)의 캐릭터 ${c.name}입니다.\n성격/특징: ${c.trait}\n지금 사기하시 소우타에게 짧은 메시지를 하나 보냅니다. 1문장, 대사만, 괄호나 지문 없이, 캐릭터의 말투 그대로.`;
+      const sys=buildSideCharSys(c,'\n지금 소우타에게 짧은 메시지를 하나 보냅니다. 1~2문장, 대사만, 괄호나 지문 없이, 캐릭터의 말투 그대로.');
       const line=await api([{role:'user',content:`[${c.name}가 소우타에게 메시지를 보낸다]`}],sys);
       const clean=line.replace(/\(.*?\)/gs,'').trim();
-      notifStore.push({icon:'📩',type:c.name,msg:clean,date:nowt(),day:new Date().toISOString().slice(0,10),kind:'side',read:false});
+      notifStore.push({icon:c.icon,type:c.name,msg:clean,date:nowt(),day:new Date().toISOString().slice(0,10),kind:'side',read:false});
       renderNotifFromStore();updateHBadge();saveNotifs();
     }catch(e){}
     scheduleSideEvent();
-  }, 480000 + Math.random()*720000); // 8~20분 간격
+  }, 480000 + Math.random()*720000);
 }
 loadData();
 </script>
