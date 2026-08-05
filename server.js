@@ -17,7 +17,8 @@ const pool = new Pool({
 // Supabase Storage 클라이언트
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
+  process.env.SUPABASE_ANON_KEY,
+  { auth: { persistSession: false } }
 );
 
 // multer - 메모리에 저장 (최대 5MB)
