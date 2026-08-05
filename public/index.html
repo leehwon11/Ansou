@@ -380,12 +380,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
       <div class="chat-list">
         <button class="new-chat-btn" onclick="newChat()">✦ 안에게 먼저 연락하기</button>
         <div style="margin:4px 14px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-          <button onclick="newSideChat('시노노메 아키토')" style="background:linear-gradient(135deg,#ff8c00,#ffd700);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">彰 아키토</button>
-          <button onclick="newSideChat('쿠사나기 네네')" style="background:linear-gradient(135deg,#9b59b6,#d98ef7);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">寧 네네</button>
-          <button onclick="newSideChat('텐마 사키')" style="background:linear-gradient(135deg,#ff6b9d,#ffb347);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">咲 사키</button>
-          <button onclick="newSideChat('아키야마 미즈키')" style="background:linear-gradient(135deg,#ff69b4,#ff99cc);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">瑞 미즈키</button>
-          <button onclick="newSideChat('키리타니 하루카')" style="background:linear-gradient(135deg,#3498db,#74b9ff);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">春 하루카</button>
-          <button onclick="newSideChat('카미시로 루이')" style="background:linear-gradient(135deg,#a29bfe,#6c5ce7);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">類 루이</button>
+          <button onclick="newSideChat('시노노메 아키토')" style="background:linear-gradient(135deg,#FF7620,#ffaa55);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">彰 아키토</button>
+          <button onclick="newSideChat('쿠사나기 네네')" style="background:linear-gradient(135deg,#33dd99,#00c97a);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">寧 네네</button>
+          <button onclick="newSideChat('텐마 사키')" style="background:linear-gradient(135deg,#FFDE45,#ffc700);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">咲 사키</button>
+          <button onclick="newSideChat('아키야마 미즈키')" style="background:linear-gradient(135deg,#DDAACc,#cc88bb);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">瑞 미즈키</button>
+          <button onclick="newSideChat('키리타니 하루카')" style="background:linear-gradient(135deg,#99CDFF,#66aaee);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">春 하루카</button>
+          <button onclick="newSideChat('카미시로 루이')" style="background:linear-gradient(135deg,#bb88ee,#9955dd);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">類 루이</button>
         </div>
         <div class="sec-title" style="margin-top:2px;">채팅 기록</div>
         <div id="roomList"></div>
@@ -684,11 +684,12 @@ ${DP.extra?'추가: '+DP.extra:''}
 
 【채팅 포맷 — 반드시 지킬 것】
 대사를 먼저 쓰고, 한 줄 띄운 뒤 (괄호 안에 상황·심리·행동 서술):
+지문은 반드시 서술형으로 쓸 것. "~했다", "~이었다", "~느꼈다" 등으로 끝낼 것. "~함", "~됨" 같은 명사형 종결 절대 금지.
 
 예시:
 소우타, 오늘 연습 보러 올 수 있어?
 
-(설레는 마음을 숨기려 애쓰며 메시지를 보내는 안. 소우타가 있으면 왠지 더 잘 될 것 같다는 건 사실이었다.)
+(설레는 마음을 숨기려 애쓰며 메시지를 보냈다. 소우타가 있으면 왠지 더 잘 될 것 같다는 건 사실이었다.)
 
 【오늘 안의 컨디션】
 ${getTodayCondition()}
@@ -961,12 +962,12 @@ async function addCmt(id){
 }
 // 조연 캐릭터 아이콘 색상 매핑
 const sideCharColors={
-  '@AkitoSinonome':'linear-gradient(135deg,#ff8c00,#ffd700)',
-  '@NeneKusanagi':'linear-gradient(135deg,#9b59b6,#d98ef7)',
-  '@SakiTenma':'linear-gradient(135deg,#ff6b9d,#ffb347)',
-  '@MizukiAkiyama':'linear-gradient(135deg,#ff69b4,#ff99cc)',
-  '@HarukaKiritani':'linear-gradient(135deg,#3498db,#74b9ff)',
-  '@LouiKamishiro':'linear-gradient(135deg,#a29bfe,#6c5ce7)',
+  '@AkitoSinonome':'linear-gradient(135deg,#FF7620,#ffaa55)',
+  '@NeneKusanagi':'linear-gradient(135deg,#33dd99,#00c97a)',
+  '@SakiTenma':'linear-gradient(135deg,#FFDE45,#ffc700)',
+  '@MizukiAkiyama':'linear-gradient(135deg,#DDAACc,#cc88bb)',
+  '@HarukaKiritani':'linear-gradient(135deg,#99CDFF,#66aaee)',
+  '@LouiKamishiro':'linear-gradient(135deg,#bb88ee,#9955dd)',
 };
 const sideCharImages={
   '@AkitoSinonome':'https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/akito.jpg',
@@ -1143,13 +1144,29 @@ async function postMine(){
   }
   const p={id:'my-'+Date.now(),who:'me',nm:DP.name||'소우타',hl:DP.handle||'@FLYtotheFUTURE',ts:new Date(),time:'방금 전',body:txt,img:imgUrl,lk:0,liked:false,cmts:[]};
   myPosts.unshift(p);renderSNS();saveData();
-  // 안이 항상 댓글 달도록 수정 (랜덤 제거)
+  // 안이 항상 댓글
   setTimeout(async()=>{
     const myH=DP.handle||'@FLYtotheFUTURE';
-    const r=await api([{role:'user',content:`소우타(${myH})가 SNS에 글을 올렸어: "${txt}". 안이 댓글을 달아줘. 1-2문장, 반드시 맨 앞에 @${myH.replace('@','')} 태그 붙일 것. 대사만, 괄호 서술 없이.`}],buildSys('\n상황: 소우타 SNS 게시글에 안이 댓글. 반드시 맨 앞에 @태그 붙일 것. 괄호 서술 없이.'));
-    const sp=r.replace(/\(.*?\)/gs,'').trim();
-    p.cmts.push({who:'@LightUptheFire',txt:sp}); renderSNS();saveData();
+    const r2=await api([{role:'user',content:`소우타(${myH})가 SNS에 글을 올렸어: "${txt}". 안이 댓글을 달아줘. 1-2문장, 반드시 맨 앞에 @${myH.replace('@','')} 태그 붙일 것. 대사만, 괄호 서술 없이.`}],buildSys('\n상황: 소우타 SNS 게시글에 안이 댓글. 반드시 맨 앞에 @태그 붙일 것. 괄호 서술 없이.'));
+    const sp2=r2.replace(/\(.*?\)/gs,'').trim();
+    p.cmts.push({who:'@LightUptheFire',txt:sp2,ts:new Date()}); renderSNS();saveData();
   },2000+Math.random()*2000);
+  // 본문에 캐릭터 이름 언급 시 해당 캐릭터도 댓글
+  if(txt){
+    const mentionedChars=sideChars.filter(c=>txt.includes(c.nm)||txt.includes(c.name)||txt.includes(c.callSouta));
+    mentionedChars.slice(0,2).forEach((sc,idx)=>{
+      setTimeout(async()=>{
+        try{
+          const myH=DP.handle||'@FLYtotheFUTURE';
+          const csys=buildSideCharSys(sc,'\n소우타가 SNS에 자신을 언급한 글을 올렸다. 댓글로 반응해줘. 1문장. 반드시 맨 앞에 @'+myH.replace('@','')+' 태그. 대사만.');
+          const cr=await api([{role:'user',content:`[소우타 게시글: "${txt}"]`}],csys);
+          const csp=cr.replace(/\(.*?\)/gs,'').trim();
+          p.cmts.push({who:sc.handle,txt:csp,ts:new Date()});
+          renderSNS();saveData();
+        }catch(e){}
+      },4000+(idx*3000)+Math.random()*2000);
+    });
+  }
 }
 // 자동 포스트 — 하루 한 번, AI가 그때그때 새로 생성 (고정 문구 X)
 // 안의 SNS 포스트 생성 (slot: 'morning'|'lunch'|'evening')
@@ -1288,7 +1305,7 @@ function renderRooms(){
       const riAv=sc2?(sc2img?`<div class="ri-av" style="overflow:hidden;"><img src="${sc2img}" alt="${sc2.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`):`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
       const riName=sc2?sc2.nm+' '+sc2.icon:'시라이시 안 ⭐';
       d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
-      d.onclick=()=>{if(room.charName)openSideRoom(i);else openRoom(i);};list.appendChild(d);
+      d.onclick=()=>{if(r.charName)openSideRoom(i);else openRoom(i);};list.appendChild(d);
     });
   });
 }
@@ -1387,7 +1404,7 @@ async function sendSideMsg(){
   const sIni=sideCharInitials[c.handle]||c.nm[0];
   const tyAv=sImg?`<div class="m-av" style="overflow:hidden;"><img src="${sImg}" alt="${c.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="m-av" style="background:${sBg};font-size:11px;color:#fff;font-weight:700;">${sIni}</div>`;
   const ty=mkTyping(tyAv);el.appendChild(ty);el.scrollTop=el.scrollHeight;
-  const sys=buildSideCharSys(c,'\n【채팅 포맷】\n대사 먼저, 한 줄 띄고 (괄호 안에 상황·심리 서술). 반말/경어는 캐릭터 설정 따름.');
+  const sys=buildSideCharSys(c,'\n【채팅 포맷】\n대사 먼저, 한 줄 띄고 (괄호 안에 상황·심리 서술). 지문은 반드시 서술형(~했다, ~이었다)으로 끝낼 것. 명사형(~함, ~됨) 절대 금지. 반말/경어는 캐릭터 설정 따름.');
   const rep=await api(room.hist,sys);ty.remove();
   const parsed=parseMsg(rep);
   room.msgs.push({role:'assistant',content:rep,speech:parsed.speech,narr:parsed.narr,ts:nowt()});
@@ -2198,6 +2215,8 @@ function scheduleSideEvent(){
       const clean=line.replace(/\(.*?\)/gs,'').trim();
       notifStore.push({icon:c.icon,type:c.name,msg:clean,date:nowt(),day:new Date().toISOString().slice(0,10),kind:'side',read:false});
       renderNotifFromStore();updateHBadge();saveNotifs();
+      // 홈 탭 알림 뱃지도 갱신
+      addNotif(c.icon,c.name,clean,null);
     }catch(e){}
     scheduleSideEvent();
   }, 480000 + Math.random()*720000);
