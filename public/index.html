@@ -303,6 +303,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
     <button class="tb" onclick="sw('call',this)"><span class="ti">📞</span>통화</button>
     <button class="tb" onclick="sw('daily',this)"><span class="ti">🌟</span>일상</button>
     <button class="tb" onclick="sw('diary',this)"><span class="ti">📔</span>일기</button>
+    <button class="tb" onclick="sw('gallery',this)"><span class="ti">🖼️</span>사진첩</button>
     <button class="tb" onclick="sw('dream',this)"><span class="ti">⚙️</span>설정</button>
   </nav>
 
@@ -345,7 +346,16 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
           <div style="font-size:12px;color:var(--gray);" id="myHandleDisp">@FLYtotheFUTURE</div>
         </div>
         <textarea id="myPostTxt" rows="3" placeholder="지금 무슨 생각 하고 있어?"></textarea>
-        <div class="compose-footer"><button class="post-btn" onclick="postMine()">게시하기</button></div>
+        <div id="imgPreviewWrap" style="display:none;margin-bottom:8px;position:relative;">
+        <img id="imgPreview" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--mint-l);">
+        <button onclick="clearImg()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.5);border:none;color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;">✕</button>
+      </div>
+      <div class="compose-footer" style="justify-content:space-between;">
+        <label style="cursor:pointer;color:var(--mint);font-size:13px;display:flex;align-items:center;gap:4px;">
+          🖼️ <input type="file" id="imgInput" accept="image/*" style="display:none;" onchange="previewImg(this)">
+        </label>
+        <button class="post-btn" onclick="postMine()">게시하기</button>
+      </div>
       </div>
       <div id="snsFeed"></div>
     </div>
@@ -356,7 +366,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
     <div id="chatListWrap">
       <div class="chat-list">
         <button class="new-chat-btn" onclick="newChat()">✦ 안에게 먼저 연락하기</button>
-        <div class="sec-title" style="margin-top:6px;">채팅 기록</div>
+        <div style="margin:4px 14px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <button onclick="newSideChat('시노노메 아키토')" style="background:linear-gradient(135deg,#ff8c00,#ffd700);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">彰 아키토</button>
+          <button onclick="newSideChat('쿠사나기 네네')" style="background:linear-gradient(135deg,#9b59b6,#d98ef7);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">寧 네네</button>
+          <button onclick="newSideChat('텐마 사키')" style="background:linear-gradient(135deg,#ff6b9d,#ffb347);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">咲 사키</button>
+          <button onclick="newSideChat('아키야마 미즈키')" style="background:linear-gradient(135deg,#ff69b4,#ff99cc);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">瑞 미즈키</button>
+          <button onclick="newSideChat('키리타니 하루카')" style="background:linear-gradient(135deg,#3498db,#74b9ff);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">春 하루카</button>
+          <button onclick="newSideChat('카미시로 루이')" style="background:linear-gradient(135deg,#a29bfe,#6c5ce7);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">類 루이</button>
+        </div>
+        <div class="sec-title" style="margin-top:2px;">채팅 기록</div>
         <div id="roomList"></div>
       </div>
     </div>
@@ -447,6 +465,23 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
     </div>
   </div>
 
+
+  <!-- 사진첩 -->
+  <div class="tc" id="tab-gallery">
+    <div class="scroll" style="padding-bottom:30px;">
+      <div style="margin:12px 14px 8px;display:flex;align-items:center;justify-content:space-between;">
+        <div class="sec-title" style="padding:0;">🖼️ 사진첩</div>
+        <label style="background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">
+          + 사진 추가 <input type="file" id="galleryInput" accept="image/*" multiple style="display:none;" onchange="addGalleryImages(this)">
+        </label>
+      </div>
+      <div style="margin:0 14px 10px;">
+        <input id="galleryCaption" placeholder="캡션 입력 (선택)" style="width:100%;border:1px solid var(--mint-l);border-radius:var(--rs);padding:8px 12px;font-size:12px;font-family:'Noto Sans KR',sans-serif;color:var(--dark);background:var(--white);outline:none;margin-bottom:6px;">
+      </div>
+      <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 14px;"></div>
+    </div>
+  </div>
+
   <!-- 설정 -->
   <div class="tc" id="tab-dream">
     <div class="scroll" style="padding:12px 0 80px;">
@@ -519,8 +554,8 @@ async function dbLoad(key){
 // 별
 const IMG_AN='https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png';
 const IMG_SO='https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png';
-function avAn(size=''){return `<img src="${IMG_AN}" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;}
-function avSo(size=''){return `<img src="${IMG_SO}" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;}
+function avAn(size=''){return '<img src="'+IMG_AN+'" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';}
+function avSo(size=''){return '<img src="'+IMG_SO+'" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';}
 const sb=document.getElementById('sBg');
 for(let i=0;i<26;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*4+2;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*3+2).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;sb.appendChild(s);}
 
@@ -547,6 +582,33 @@ function saveDP(){
   saveData();
 }
 function v(id){const el=document.getElementById(id);return el?el.value:'';}
+
+
+// ══ 안의 컨디션 시스템 ══
+const conditions = [
+  {name:'라이브 전날', desc:'내일 라이브라 들뜨고 긴장됨. 에너지 넘치지만 살짝 불안함도 있음. 준비 얘기를 자주 꺼냄.'},
+  {name:'연습 힘든 날', desc:'오늘 연습이 잘 안 풀려서 지쳐있음. 평소보다 말수가 약간 적고 솔직하게 힘들다고 털어놓기도 함.'},
+  {name:'기분 좋은 날', desc:'특별한 이유 없이 기분이 좋음. 평소보다 더 활기차고 장난기 있음. 소우타에게도 더 다정하게 대함.'},
+  {name:'평범한 하루', desc:'평소와 같은 컨디션. 자연스럽고 편안한 안의 일상.'},
+  {name:'목표에 불타는 날', desc:'RAD WEEKEND 목표에 대한 의지가 불타오름. 진지하고 열정적임. 소우타에게도 꿈 얘기를 꺼냄.'},
+  {name:'조금 지친 날', desc:'바쁜 일정으로 살짝 지쳐있지만 내색은 잘 안 함. 가끔 한숨이 섞이거나 쉬고 싶다는 말이 나옴.'},
+];
+let todayCondition = null;
+function getTodayCondition(){
+  if(!todayCondition){
+    const saved = localStorage.getItem('todayCondition');
+    const today = new Date().toISOString().slice(0,10);
+    if(saved){
+      const parsed = JSON.parse(saved);
+      if(parsed.day === today){ todayCondition = parsed.cond; }
+    }
+    if(!todayCondition){
+      todayCondition = conditions[Math.floor(Math.random()*conditions.length)];
+      localStorage.setItem('todayCondition', JSON.stringify({day:today, cond:todayCondition}));
+    }
+  }
+  return todayCondition.name + ' — ' + todayCondition.desc;
+}
 
 // 시스템 프롬프트
 function buildSys(extra=''){
@@ -615,10 +677,15 @@ ${DP.extra?'추가: '+DP.extra:''}
 
 (설레는 마음을 숨기려 애쓰며 메시지를 보내는 안. 소우타가 있으면 왠지 더 잘 될 것 같다는 건 사실이었다.)
 
+【오늘 안의 컨디션】
+${getTodayCondition()}
+
 【기타 규칙】
 - 반말. 이모지는 꼭 필요할 때만 드물게 사용. 남발하지 않음. AI 절대 언급 금지.
 - SNS 포스트나 댓글에서 해시태그 자유롭게 다양하게 사용 가능.
+- 컨디션에 따라 말투와 에너지 레벨이 자연스럽게 달라짐.
 ${extra}`;
+
 }
 
 // API
@@ -805,6 +872,7 @@ function mkPost(p){
       <div><div class="sns-nm">${esc(p.nm)}</div><div class="sns-hl">${esc(p.hl)} · ${p.ts?liveTime(p.ts):p.time}</div></div>
     </div>
     <div class="sns-body">${esc(p.body)}</div>
+    ${p.img?`<img src="${p.img}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:8px;border:1px solid var(--mint-l);" onclick="window.open('${p.img}','_blank')">`:''}
     <div class="sns-acts">
       <button class="sa${p.liked?' liked':''}" onclick="toggleLk('${p.id}',this)">${p.liked?'💗':'🤍'} ${p.lk}</button>
       <button class="sa" onclick="togCmt('${p.id}')">💬 ${p.cmts.length}</button>
@@ -925,10 +993,38 @@ function renderCmtText(txt){
   // @태그 파란색으로 표시
   return esc(txt).replace(/@(\S+)/g,'<span style="color:var(--mint);font-weight:500;">@$1</span>');
 }
+let pendingImgFile=null;
+function previewImg(input){
+  const file=input.files[0];if(!file)return;
+  pendingImgFile=file;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('imgPreview').src=e.target.result;
+    document.getElementById('imgPreviewWrap').style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+function clearImg(){
+  pendingImgFile=null;
+  document.getElementById('imgInput').value='';
+  document.getElementById('imgPreviewWrap').style.display='none';
+  document.getElementById('imgPreview').src='';
+}
+async function uploadImg(file){
+  const fd=new FormData();fd.append('image',file);
+  const r=await fetch('/api/upload',{method:'POST',body:fd});
+  const d=await r.json();
+  return d.ok?d.url:null;
+}
 async function postMine(){
-  const txt=document.getElementById('myPostTxt').value.trim();if(!txt)return;
+  const txt=document.getElementById('myPostTxt').value.trim();if(!txt&&!pendingImgFile)return;
   document.getElementById('myPostTxt').value='';
-  const p={id:'my-'+Date.now(),who:'me',nm:DP.name||'소우타',hl:DP.handle||'@FLYtotheFUTURE',ts:new Date(),time:'방금 전',body:txt,lk:0,liked:false,cmts:[]};
+  let imgUrl=null;
+  if(pendingImgFile){
+    imgUrl=await uploadImg(pendingImgFile);
+    clearImg();
+  }
+  const p={id:'my-'+Date.now(),who:'me',nm:DP.name||'소우타',hl:DP.handle||'@FLYtotheFUTURE',ts:new Date(),time:'방금 전',body:txt,img:imgUrl,lk:0,liked:false,cmts:[]};
   myPosts.unshift(p);renderSNS();saveData();
   // 안이 항상 댓글 달도록 수정 (랜덤 제거)
   setTimeout(async()=>{
@@ -952,6 +1048,17 @@ async function scheduleAutoPost(){
         snsData.unshift(ap);renderSNS();
         addNotif('📱','SNS 새 글','杏이 새 글을 올렸어요.','snsTop');
         saveData();
+        // 조연 1~2명이 안의 게시글에 댓글
+        const commenters=sideChars.sort(()=>Math.random()-0.5).slice(0,1+Math.floor(Math.random()*2));
+        commenters.forEach((sc,ci)=>{
+          setTimeout(async()=>{
+            const csys=buildSideCharSys(sc,'\n안(@LightUptheFire)의 SNS 게시글에 짧은 댓글. 1문장. 반드시 맨 앞에 @LightUptheFire 태그. 대사만.');
+            const cr=await api([{role:'user',content:`[안의 글: "${clean}"]`}],csys);
+            const csp=cr.replace(/\(.*?\)/gs,'').trim();
+            ap.cmts.push({who:sc.handle,txt:csp});
+            renderSNS();saveData();
+          },5000+(ci*4000)+Math.random()*3000);
+        });
       }catch(e){}
     },9000+Math.random()*12000);
   }
@@ -1012,10 +1119,116 @@ function renderRooms(){
       const last=r.msgs[r.msgs.length-1];
       const{speech}=last?parseMsg(last.content):{speech:'...'};
       const d=document.createElement('div');d.className='room-item';
-      d.innerHTML=`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="ri-info"><div class="ri-name">시라이시 안 ⭐</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
-      d.onclick=()=>openRoom(i);list.appendChild(d);
+      const sc2=room.charName?sideChars.find(s=>s.name===room.charName):null;
+      const riAv=sc2?`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`:`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%95%88.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+      const riName=sc2?sc2.nm+' '+sc2.icon:'시라이시 안 ⭐';
+      d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
+      d.onclick=()=>{if(room.charName)openSideRoom(i);else openRoom(i);};list.appendChild(d);
     });
   });
+}
+
+async function newSideChat(charName){
+  const c = sideChars.find(s=>s.name===charName);
+  if(!c) return;
+  const room={id:Date.now(),st:nowt(),msgs:[],hist:[],ended:false,charName:c.name,charHandle:c.handle};
+  rooms.unshift(room);
+  openSideRoom(0);
+  renderRooms();
+  setTimeout(()=>{const inp=document.getElementById('rvInp');if(inp)inp.focus();},200);
+}
+
+function openSideRoom(i){
+  curRoom=i;const room=rooms[i];
+  const c=sideChars.find(s=>s.name===room.charName);
+  if(!c){openRoom(i);return;}
+  const bg=sideCharColors[c.handle]||'linear-gradient(135deg,#aaa,#ccc)';
+  const ini=sideCharInitials[c.handle]||c.nm[0];
+  document.getElementById('chatListWrap').style.display='none';
+  const rv=document.getElementById('roomView');rv.classList.add('open');
+  rv.innerHTML=`
+    <div class="rv-hdr">
+      <button class="rv-back" onclick="closeRoom()">‹</button>
+      <div class="rv-av" style="background:${bg};font-size:14px;color:#fff;font-weight:700;">${ini}</div>
+      <div class="rv-info"><div class="rv-name">${esc(c.nm)}</div><div class="rv-sub">${room.st} 시작${room.ended?' · 종료됨':' · 진행 중'}</div></div>
+      ${!room.ended?`<button class="end-btn" onclick="endRoom(${i})">채팅 종료</button>`:''}
+    </div>
+    <div class="rv-msgs" id="rvMsgs"></div>
+    ${!room.ended?`<div class="rv-input-area" style="flex-direction:column;gap:6px;padding:10px 14px 14px;">
+  <div class="input-tabs">
+    <button class="itab active" id="tabSpeech" onclick="switchInputTab('speech')">대사</button>
+    <button class="itab" id="tabNarr" onclick="switchInputTab('narr')">지문</button>
+    <button class="itab" id="tabBoth" onclick="switchInputTab('both')">둘 다</button>
+  </div>
+  <div style="display:flex;gap:8px;align-items:flex-end;width:100%;">
+    <div class="input-wrap">
+      <textarea class="rv-input" id="rvInp" rows="1" placeholder="대사 입력..." onkeydown="handleRK(event)" oninput="ar(this)"></textarea>
+      <textarea class="narr-input" id="rvNarr" rows="1" placeholder="지문 입력..." oninput="ar(this)"></textarea>
+    </div>
+    <button class="rv-send" id="rvSnd" onclick="sendSideMsg()" style="flex-shrink:0;align-self:flex-end;">➤</button>
+  </div>
+</div>`:`<div class="ended-bar">이 채팅은 종료되었어요.</div>`}`;
+  const el=document.getElementById('rvMsgs');
+  room.msgs.forEach(m=>{
+    const isU=m.role==='user';
+    const wrap=document.createElement('div');wrap.className='msg-wrap'+(isU?' u':'');
+    const avU=`<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+    const avC=`<div class="m-av" style="background:${bg};font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
+    const av=isU?avU:avC;
+    const parsed=parseMsg(m.content);
+    const sp=m.speech!==undefined?m.speech:parsed.speech;
+    const nr=m.narr!==undefined?m.narr:parsed.narr;
+    if(sp){const d=document.createElement('div');d.className='mb'+(isU?' u':'');d.innerHTML=`${av}<div class="m-content"><div class="m-speech">${esc(sp)}</div>${!nr?`<div class="m-time">${m.ts||room.st}</div>`:''}</div>`;wrap.appendChild(d);}
+    if(nr){const nd=document.createElement('div');nd.className='narr-block'+(isU?' u':'');nd.innerHTML=`<div class="m-narr-standalone">${esc(nr)}</div><div class="m-time"${isU?' style="text-align:right"':''}>${m.ts||room.st}</div>`;wrap.appendChild(nd);}
+    if(!sp&&!nr){const d=document.createElement('div');d.className='mb'+(isU?' u':'');d.innerHTML=`${av}<div class="m-content"><div class="m-speech">${esc(m.content)}</div><div class="m-time">${m.ts||room.st}</div></div>`;wrap.appendChild(d);}
+    el.appendChild(wrap);
+  });
+  if(room.ended){const lb=document.createElement('div');lb.className='ended-lbl';lb.textContent='── 채팅 종료 ──';el.appendChild(lb);}
+  el.scrollTop=el.scrollHeight;
+}
+
+async function sendSideMsg(){
+  if(chatLk||curRoom===null)return;
+  const room=rooms[curRoom];if(room.ended||!room.charName)return;
+  const c=sideChars.find(s=>s.name===room.charName);if(!c)return;
+  const inp=document.getElementById('rvInp');
+  const narrInp=document.getElementById('rvNarr');
+  const speechTxt=inp?inp.value.trim():'';
+  const narrTxt=narrInp?narrInp.value.trim():'';
+  if(!speechTxt&&!narrTxt)return;
+  let apiTxt=speechTxt;
+  if(narrTxt) apiTxt+=(speechTxt?'\n\n':'')+'('+narrTxt+')';
+  if(inp){inp.value='';inp.style.height='auto';}
+  if(narrInp){narrInp.value='';narrInp.style.height='auto';}
+  chatLk=true;
+  const snd=document.getElementById('rvSnd');if(snd)snd.disabled=true;
+  const ts=nowt();
+  room.msgs.push({role:'user',content:apiTxt,speech:speechTxt,narr:narrTxt,ts});
+  room.hist.push({role:'user',content:apiTxt});
+  const bg=sideCharColors[c.handle]||'linear-gradient(135deg,#aaa,#ccc)';
+  const ini=sideCharInitials[c.handle]||c.nm[0];
+  const el=document.getElementById('rvMsgs');
+  // 유저 메시지 표시
+  const wrap=document.createElement('div');wrap.className='msg-wrap u';
+  const avU=`<div class="m-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/3ff0f89bd72e0674da0f1faa21b1ffc0360bd461/%EC%86%8D%EB%8F%84%EB%B9%BC%EB%A9%B4%EC%8B%9C%EC%B2%B4_%EC%86%8C%EC%9A%B0%ED%83%80.png" alt="소우타" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+  if(speechTxt){const d=document.createElement('div');d.className='mb u';d.innerHTML=`${avU}<div class="m-content"><div class="m-speech">${esc(speechTxt)}</div>${!narrTxt?`<div class="m-time">${ts}</div>`:''}</div>`;wrap.appendChild(d);}
+  if(narrTxt){const nd=document.createElement('div');nd.className='narr-block u';nd.innerHTML=`<div class="m-narr-standalone">${esc(narrTxt)}</div><div class="m-time" style="text-align:right">${ts}</div>`;wrap.appendChild(nd);}
+  el.appendChild(wrap);el.scrollTop=el.scrollHeight;
+  // 타이핑
+  const ty=mkTyping();el.appendChild(ty);el.scrollTop=el.scrollHeight;
+  const sys=buildSideCharSys(c,'\n【채팅 포맷】\n대사 먼저, 한 줄 띄고 (괄호 안에 상황·심리 서술). 반말/경어는 캐릭터 설정 따름.');
+  const rep=await api(room.hist,sys);ty.remove();
+  const parsed=parseMsg(rep);
+  room.msgs.push({role:'assistant',content:rep,speech:parsed.speech,narr:parsed.narr,ts:nowt()});
+  room.hist.push({role:'assistant',content:rep});
+  // AI 메시지 표시
+  const wrap2=document.createElement('div');wrap2.className='msg-wrap';
+  const avC=`<div class="m-av" style="background:${bg};font-size:11px;color:#fff;font-weight:700;">${ini}</div>`;
+  if(parsed.speech){const d=document.createElement('div');d.className='mb';d.innerHTML=`${avC}<div class="m-content"><div class="m-speech">${esc(parsed.speech)}</div>${!parsed.narr?`<div class="m-time">${nowt()}</div>`:''}</div>`;wrap2.appendChild(d);}
+  if(parsed.narr){const nd=document.createElement('div');nd.className='narr-block';nd.innerHTML=`<div class="m-narr-standalone">${esc(parsed.narr)}</div><div class="m-time">${nowt()}</div>`;wrap2.appendChild(nd);}
+  el.appendChild(wrap2);el.scrollTop=el.scrollHeight;
+  chatLk=false;if(snd)snd.disabled=false;
+  renderRooms();saveData();
 }
 async function newChat(){
   // 내가 먼저 연락하는 것 — 빈 채팅방 열고 입력 대기
@@ -1423,14 +1636,33 @@ async function generateDiary(){
   loading.className='diary-generating';
   loading.innerHTML='<div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px;"><div class="td"></div><div class="td"></div><div class="td"></div></div>일기를 쓰는 중...';
   list.prepend(loading);
+  // 오늘 채팅/일상 대화 요약 추출
+  const today2=new Date().toISOString().slice(0,10);
+  const todayRooms=rooms.filter(r=>{
+    const d=r.id?new Date(r.id).toISOString().slice(0,10):'';
+    return d===today2;
+  });
+  const todayDlogs=dLogs.filter(l=>{
+    const d=l.id?new Date(l.id).toISOString().slice(0,10):'';
+    return d===today2;
+  });
+  let todayContext='';
+  if(todayRooms.length){
+    const msgs=todayRooms.flatMap(r=>r.msgs.slice(0,4));
+    todayContext+='\n[오늘 소우타와 나눈 채팅 일부]\n'+msgs.map(m=>(m.role==='user'?'소우타: ':'안: ')+((m.speech||m.content||'').slice(0,60))).join('\n');
+  }
+  if(todayDlogs.length){
+    const scene=todayDlogs[0];
+    todayContext+=`\n[오늘 일상 씬: ${scene.title||''} — ${scene.sit||''}]`;
+  }
   const sys=buildSys(`
 오늘(${dateStr}) 시라이시 안의 일기를 써줘.
 - 1인칭 안의 시점으로
-- 오늘 있었던 일, 연습, 소우타에 대한 생각 등 자연스럽게
 - 300~400자 분량
 - 일기체로. 말투는 안답게 솔직하고 직설적으로
 - 괄호 서술 없이 일기 본문만
-- 마지막 줄에 짧은 한 마디로 마무리`);
+- 마지막 줄에 짧은 한 마디로 마무리
+${todayContext?'- 아래 오늘 있었던 일을 자연스럽게 반영해줘:'+todayContext:''}`);
   const rep=await api([{role:'user',content:'[오늘 일기를 써줘]'}],sys);
   loading.remove();
   const entry={type:'diary',date:dateStr,content:rep.trim(),ts:Date.now()};
@@ -1554,7 +1786,7 @@ setTimeout(sendAutoTalk, 30000 + Math.random()*150000);
 // ══ 데이터 영속화 (Supabase) ══
 let firstMet='2023-12-21T00:00:00';
 async function saveData(){
-  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, snsData, callLogs, firstMet, DP});
+  await dbSave('appState', {rooms, dLogs, diaryList, myPosts, snsData, callLogs, firstMet, DP, galleryItems});
 }
 async function loadData(){
   const d=await dbLoad('appState');
@@ -1567,12 +1799,14 @@ async function loadData(){
     if(d.callLogs) callLogs=d.callLogs;
     if(d.firstMet) firstMet=d.firstMet;
     if(d.DP){ DP=d.DP; localStorage.setItem('dp',JSON.stringify(DP)); applyDP(); }
+    if(d.galleryItems) galleryItems=d.galleryItems;
   }
   if(!firstMet) firstMet=new Date().toISOString();
   renderRooms();
   renderDiaryList();
   renderSNS();
   renderCallLogs();
+  renderGallery();
   updateMetBadge();
   saveData();
   loadNotifs();
@@ -1924,6 +2158,71 @@ function openDiaryDay(y,m,d){
   });
   ovl.classList.add('open');
 }
+
+// ══ 사진첩 ══
+let galleryItems = [];
+
+function renderGallery(){
+  const grid = document.getElementById('galleryGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  if(!galleryItems.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;font-size:12px;color:var(--gray);">사진을 추가해봐요!</div>';
+    return;
+  }
+  [...galleryItems].reverse().forEach((item,i)=>{
+    const idx = galleryItems.length-1-i;
+    const el = document.createElement('div');
+    el.style.cssText='position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;cursor:pointer;';
+    el.innerHTML=`<img src="${item.url}" style="width:100%;height:100%;object-fit:cover;" onclick="openGalleryItem(${idx})">`;
+    grid.appendChild(el);
+  });
+}
+
+function openGalleryItem(idx){
+  const item = galleryItems[idx];
+  if(!item) return;
+  let ovl = document.getElementById('galleryOvl');
+  if(!ovl){
+    ovl = document.createElement('div');
+    ovl.id = 'galleryOvl';
+    ovl.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;';
+    ovl.onclick=e=>{if(e.target===ovl)ovl.remove();};
+    document.body.appendChild(ovl);
+  }
+  ovl.innerHTML=`
+    <button onclick="document.getElementById('galleryOvl').remove()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;">✕</button>
+    <img src="${item.url}" style="max-width:90vw;max-height:75vh;object-fit:contain;border-radius:8px;">
+    ${item.caption?`<div style="color:#fff;font-size:13px;margin-top:12px;text-align:center;padding:0 20px;">${esc(item.caption)}</div>`:''}
+    <div style="color:rgba(255,255,255,.5);font-size:11px;margin-top:6px;">${item.date||''}</div>
+    <button onclick="deleteGalleryItem(${idx})" style="margin-top:16px;background:rgba(255,92,92,.2);border:1px solid #ff5c5c;color:#ff5c5c;border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">삭제</button>
+  `;
+}
+
+function deleteGalleryItem(idx){
+  if(!confirm('이 사진을 삭제할까요?')) return;
+  galleryItems.splice(idx,1);
+  renderGallery();
+  saveData();
+  const ovl=document.getElementById('galleryOvl');
+  if(ovl) ovl.remove();
+}
+
+async function addGalleryImages(input){
+  const files = Array.from(input.files);
+  const caption = document.getElementById('galleryCaption').value.trim();
+  document.getElementById('galleryCaption').value='';
+  for(const file of files){
+    const url = await uploadImg(file);
+    if(url){
+      galleryItems.push({url, caption, date:nowt(), id:'g-'+Date.now()+Math.random()});
+      renderGallery();
+      saveData();
+    }
+  }
+  input.value='';
+}
+
 loadData();
 </script>
 <script>
