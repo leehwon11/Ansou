@@ -1,15 +1,33 @@
 const express = require('express');
 const { Pool } = require('pg');
+const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// DB 연결 (연결이 안 될 때 무한 대기하지 않도록 타임아웃 설정)
+// DB 연결
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
   connectionTimeoutMillis: 10000
+});
+
+// Supabase Storage 클라이언트
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
+
+// multer - 메모리에 저장 (최대 5MB)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) cb(null, true);
+    else cb(new Error('이미지 파일만 업로드 가능해요'));
+  }
 });
 
 // DB 테이블 초기화
@@ -53,6 +71,29 @@ app.post('/api/chat', async (req, res) => {
   } catch (e) {
     console.error('API 에러:', e);
     res.status(500).json({ content: '...' });
+  }
+});
+
+// ── 이미지 업로드 ──
+app.post('/api/upload', upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ ok: false, error: '파일 없음' });
+    const ext = req.file.originalname.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { data, error } = await supabase.storage
+      .from('ansou-images')
+      .upload(fileName, req.file.buffer, {
+        contentType: req.file.mimetype,
+        upsert: false
+      });
+    if (error) throw error;
+    const { data: urlData } = supabase.storage
+      .from('ansou-images')
+      .getPublicUrl(fileName);
+    res.json({ ok: true, url: urlData.publicUrl });
+  } catch (e) {
+    console.error('업로드 에러:', e);
+    res.status(500).json({ ok: false, error: e.message });
   }
 });
 
