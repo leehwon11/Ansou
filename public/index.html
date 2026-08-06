@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>白石 杏</title>
+<title>白石 杏 — 개인 공간</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00bbdc">
 <link rel="apple-touch-icon" href="/icon.svg">
@@ -950,10 +950,11 @@ async function addCmt(id){
     }
   }
   const myComment=`@${postOwnerHandle.replace('@','')} ${txt}`;
-  if(p)p.cmts.push({who:myHandle,txt:myComment,ts:new Date()});
-  cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:myHandle,txt:myComment}));
+  const myCmt={who:myHandle,txt:myComment,ts:new Date(),replies:[]};
+  if(p)p.cmts.push(myCmt);
+  cl.insertAdjacentHTML('beforeend', makeCmtHTML(myCmt));
   saveData();
-  // 게시글 주인이 답댓글
+  // 게시글 주인이 소우타 댓글의 replies에 답달기
   setTimeout(async()=>{
     let sys2,prompt2;
     if(postOwnerWho==='an'){
@@ -966,8 +967,17 @@ async function addCmt(id){
     } else return;
     const r=await api([{role:'user',content:prompt2}],sys2);
     const sp=r.replace(/\(.*?\)/gs,'').trim();
-    cl.insertAdjacentHTML('beforeend', makeCmtHTML({who:postOwnerHandle,txt:sp}));
-    if(p)p.cmts.push({who:postOwnerHandle,txt:sp});
+    if(!sp) return;
+    const ownerReply={who:postOwnerHandle,txt:sp,ts:new Date()};
+    if(!myCmt.replies) myCmt.replies=[];
+    myCmt.replies.push(ownerReply);
+    const cmtId=Object.keys(cmtMap).find(k=>cmtMap[k]===myCmt);
+    if(cmtId){
+      const repliesEl=document.getElementById('replies-'+cmtId);
+      if(repliesEl){repliesEl.style.display='';repliesEl.insertAdjacentHTML('beforeend',makeReplyHTML(ownerReply));}
+    } else {
+      renderSNS();
+    }
     saveData();
   },1200+Math.random()*1500);
 }
@@ -1191,6 +1201,27 @@ async function postMine(){
       };
       setTimeout(()=>postSideCmt(),5000+(idx*3000)+Math.random()*2000);
     });
+
+    // 태그 없을 때 랜덤 조연 1명 추가 반응 (50% 확률)
+    if(mentionedChars.length===0 && Math.random()>0.5){
+      const randomSide=sideChars[Math.floor(Math.random()*sideChars.length)];
+      const postRandomCmt=async(retry=0)=>{
+        try{
+          const csys=buildSideCharSys(randomSide,'\n소우타의 SNS 게시글을 보고 짧게 반응해줘. 1문장. 반드시 맨 앞에 @'+myTag+' 태그. 대사만.');
+          const cr=await api([{role:'user',content:`[소우타 게시글: "${txt}"]`}],csys);
+          const csp=cr.replace(/\(.*?\)/gs,'').trim();
+          if(!csp && retry<2){setTimeout(()=>postRandomCmt(retry+1),3000);return;}
+          if(p.cmts.length>0){
+            if(!p.cmts[0].replies) p.cmts[0].replies=[];
+            p.cmts[0].replies.push({who:randomSide.handle,txt:csp,ts:new Date()});
+          } else {
+            p.cmts.push({who:randomSide.handle,txt:csp,ts:new Date()});
+          }
+          renderSNS();saveData();
+        }catch(e){if(retry<2)setTimeout(()=>postRandomCmt(retry+1),3000);}
+      };
+      setTimeout(()=>postRandomCmt(),6000+Math.random()*4000);
+    }
   }
 }
 // 자동 포스트 — 하루 한 번, AI가 그때그때 새로 생성 (고정 문구 X)
