@@ -610,7 +610,7 @@ let todayCondition = null;
 function getTodayCondition(){
   if(!todayCondition){
     const saved = localStorage.getItem('todayCondition');
-    const today = new Date().toISOString().slice(0,10);
+    const _kst=new Date(Date.now()+9*3600000); const today=_kst.toISOString().slice(0,10);
     if(saved){
       const parsed = JSON.parse(saved);
       if(parsed.day === today){ todayCondition = parsed.cond; }
@@ -1150,23 +1150,31 @@ async function postMine(){
   }
   const p={id:'my-'+Date.now(),who:'me',nm:DP.name||'소우타',hl:DP.handle||'@FLYtotheFUTURE',ts:new Date(),time:'방금 전',body:txt,img:imgUrl,lk:0,liked:false,cmts:[]};
   myPosts.unshift(p);renderSNS();saveData();
-  // 안이 항상 댓글
-  setTimeout(async()=>{
-    const myH=DP.handle||'@FLYtotheFUTURE';
-    const r2=await api([{role:'user',content:`소우타(${myH})가 SNS에 글을 올렸어: "${txt}". 안이 댓글을 달아줘. 1-2문장, 반드시 맨 앞에 @${myH.replace('@','')} 태그 붙일 것. 대사만, 괄호 서술 없이.`}],buildSys('\n상황: 소우타 SNS 게시글에 안이 댓글. 반드시 맨 앞에 @태그 붙일 것. 괄호 서술 없이.'));
-    const sp2=r2.replace(/\(.*?\)/gs,'').trim();
-    p.cmts.push({who:'@LightUptheFire',txt:sp2,ts:new Date()}); renderSNS();saveData();
-  },2000+Math.random()*2000);
-  // 본문에 캐릭터 이름 언급 시 해당 캐릭터도 댓글
+  const myH=DP.handle||'@FLYtotheFUTURE';
+  const myTag=myH.replace('@','');
+
+  // 안은 무조건 첫 댓글 (retry 포함)
+  const postAnCmt=async(retry=0)=>{
+    try{
+      const r2=await api([{role:'user',content:`소우타(${myH})가 SNS에 글을 올렸어: "${txt}". 안이 댓글을 달아줘. 1-2문장, 반드시 맨 앞에 @${myTag} 태그 붙일 것. 대사만, 괄호 서술 없이.`}],buildSys('\n상황: 소우타 SNS 게시글에 안이 댓글. 반드시 맨 앞에 @태그 붙일 것. 괄호 서술 없이.'));
+      const sp2=r2.replace(/\(.*?\)/gs,'').trim();
+      if(!sp2 && retry<2){setTimeout(()=>postAnCmt(retry+1),3000);return;}
+      p.cmts.push({who:'@LightUptheFire',txt:sp2,ts:new Date()});
+      renderSNS();saveData();
+    }catch(e){if(retry<2)setTimeout(()=>postAnCmt(retry+1),3000);}
+  };
+  setTimeout(()=>postAnCmt(),2000+Math.random()*2000);
+
+  // 멘션된 캐릭터 무조건 댓글 (replies에)
   if(txt){
-    const mentionedChars=sideChars.filter(c=>txt.includes(c.nm)||txt.includes(c.name)||txt.includes(c.callSouta));
-    mentionedChars.slice(0,2).forEach((sc,idx)=>{
-      setTimeout(async()=>{
+    const mentionedChars=sideChars.filter(c=>txt.includes(c.nm)||txt.includes(c.name)||txt.includes(c.handle));
+    mentionedChars.forEach((sc,idx)=>{
+      const postSideCmt=async(retry=0)=>{
         try{
-          const myH=DP.handle||'@FLYtotheFUTURE';
-          const csys=buildSideCharSys(sc,'\n소우타가 SNS에 자신을 언급한 글을 올렸다. 댓글로 반응해줘. 1문장. 반드시 맨 앞에 @'+myH.replace('@','')+' 태그. 대사만.');
+          const csys=buildSideCharSys(sc,'\n소우타가 SNS에 자신을 언급한 글을 올렸다. 댓글로 반응해줘. 1문장. 반드시 맨 앞에 @'+myTag+' 태그. 대사만.');
           const cr=await api([{role:'user',content:`[소우타 게시글: "${txt}"]`}],csys);
           const csp=cr.replace(/\(.*?\)/gs,'').trim();
+          if(!csp && retry<2){setTimeout(()=>postSideCmt(retry+1),3000);return;}
           if(p.cmts.length>0){
             if(!p.cmts[0].replies) p.cmts[0].replies=[];
             p.cmts[0].replies.push({who:sc.handle,txt:csp,ts:new Date()});
@@ -1174,8 +1182,9 @@ async function postMine(){
             p.cmts.push({who:sc.handle,txt:csp,ts:new Date()});
           }
           renderSNS();saveData();
-        }catch(e){}
-      },4000+(idx*3000)+Math.random()*2000);
+        }catch(e){if(retry<2)setTimeout(()=>postSideCmt(retry+1),3000);}
+      };
+      setTimeout(()=>postSideCmt(),5000+(idx*3000)+Math.random()*2000);
     });
   }
 }
@@ -1219,34 +1228,60 @@ async function generateAnPost(slot, today){
 }
 
 // 조연 SNS 포스트 생성
-async function generateSidePost(c, today){
+async function generateSidePost(c, today, sideSlot){
   try{
     const sys=buildSideCharSys(c,`\nSNS에 짧은 글을 올린다. ${c.snsStyle} 게시물 본문만 출력. 다른 설명 붙이지 말 것.`);
     const t=await api([{role:'user',content:`[${c.name}가 SNS에 글을 올린다]`}],sys);
     const clean=t.replace(/\(.*?\)/gs,'').trim();
-    const cp={id:'auto-'+Date.now(),who:c.handle,nm:c.nm,hl:c.handle,ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*50)+3,liked:false,cmts:[],auto:true,day:today};
+    const cp={id:'auto-'+Date.now(),who:c.handle,nm:c.nm,hl:c.handle,ts:new Date(),time:'방금 전',body:clean,lk:Math.floor(Math.random()*50)+3,liked:false,cmts:[],auto:true,day:today,sideSlot:sideSlot||'morning'};
     snsData.push(cp);renderSNS();
     addNotif(c.icon,'SNS 새 글',(c.nm.slice(-1).charCodeAt(0)>44031&&(c.nm.charCodeAt(c.nm.length-1)-44032)%28!==0?c.nm+'이 ':c.nm+'가 ')+'새 글을 올렸어요.','snsTop');
     saveData();
-    if(Math.random()>0.5){
-      setTimeout(async()=>{
+    // 접점 있는 캐릭터 중 랜덤 1명 댓글 (무조건)
+    const validCommenters=sideChars.filter(x=>x.handle!==c.handle && !hasNoInteraction(x.handle,c.handle));
+    if(validCommenters.length){
+      const commenter=validCommenters[Math.floor(Math.random()*validCommenters.length)];
+      const postSideInteract=async(retry=0)=>{
         try{
-          const commenter=sideChars.filter(x=>x.handle!==c.handle)[Math.floor(Math.random()*5)];
           const csys=buildSideCharSys(commenter,`\n${c.name}(${c.handle})의 SNS 게시글에 짧은 댓글. 1문장. 반드시 맨 앞에 @${c.handle.replace('@','')} 태그. 대사만.`);
           const cr=await api([{role:'user',content:`[게시글: "${clean}"]`}],csys);
           const csp=cr.replace(/\(.*?\)/gs,'').trim();
-          cp.cmts.push({who:commenter.handle,txt:csp});
+          if(!csp && retry<2){setTimeout(()=>postSideInteract(retry+1),3000);return;}
+          // 첫 댓글이면 cmts에, 이미 있으면 replies에
+          if(cp.cmts.length>0){
+            if(!cp.cmts[0].replies) cp.cmts[0].replies=[];
+            cp.cmts[0].replies.push({who:commenter.handle,txt:csp,ts:new Date()});
+          } else {
+            cp.cmts.push({who:commenter.handle,txt:csp,ts:new Date()});
+          }
           renderSNS();saveData();
-        }catch(e){}
-      },3000+Math.random()*5000);
+          // 50% 확률로 게시글 주인도 답댓글 (replies에)
+          if(Math.random()>0.5){
+            setTimeout(async()=>{
+              try{
+                const sys2=buildSideCharSys(c,'\n내 게시글에 댓글이 달렸다. 1문장. 반드시 맨 앞에 @'+commenter.handle.replace('@','')+' 태그. 대사만.');
+                const r2=await api([{role:'user',content:`[${commenter.nm}이 댓글: "${csp}"]`}],sys2);
+                const sp2=r2.replace(/\(.*?\)/gs,'').trim();
+                if(sp2){
+                  if(!cp.cmts[0].replies) cp.cmts[0].replies=[];
+                  cp.cmts[0].replies.push({who:c.handle,txt:sp2,ts:new Date()});
+                  renderSNS();saveData();
+                }
+              }catch(e){}
+            },3000+Math.random()*3000);
+          }
+        }catch(e){if(retry<2)setTimeout(()=>postSideInteract(retry+1),3000);}
+      };
+      setTimeout(()=>postSideInteract(),3000+Math.random()*4000);
     }
   }catch(e){}
 }
 
 async function scheduleAutoPost(){
   const now=new Date();
-  const today=now.toISOString().slice(0,10);
-  const hour=now.getHours();
+  const kst=new Date(now.getTime()+9*60*60*1000);
+  const today=kst.toISOString().slice(0,10);
+  const hour=kst.getUTCHours();
 
   // ── 안의 아침/점심/저녁 포스트 ──
   // 각 슬롯별로 오늘 이미 올렸는지 확인
@@ -1265,29 +1300,25 @@ async function scheduleAutoPost(){
     }
   }
 
-  // ── 조연 포스트 (하루 3명, 각 시간대별) ──
-  const postedChars=snsData.filter(p=>p.auto && p.day===today && p.who!=='an' && p.who!=='me').map(p=>p.who);
-  // 아침(7~): 2명, 저녁(18~): 1명
-  const morningChars=sideChars.filter(c=>!postedChars.includes(c.handle));
-  if(hour>=7 && morningChars.length){
-    const pick=[...morningChars].sort(()=>Math.random()-0.5).slice(0,2);
-    const alreadyMorning=snsData.filter(p=>p.auto && p.day===today && p.who!=='an' && p.who!=='me');
-    // 2명까지만
-    const need=2-alreadyMorning.filter(p=>['morning','m'].includes(p.sideSlot)).length;
-    if(need>0){
-      pick.slice(0,need).forEach((c,i)=>{
-        setTimeout(()=>generateSidePost(c,today), delay+(i*10000));
-      });
-      delay+=pick.length*10000;
-    }
-  }
-  if(hour>=18){
-    const eveningChars=sideChars.filter(c=>!snsData.some(p=>p.auto && p.day===today && p.who===c.handle));
-    if(eveningChars.length){
-      const pick=[...eveningChars].sort(()=>Math.random()-0.5).slice(0,1);
-      pick.forEach((c,i)=>{
-        setTimeout(()=>generateSidePost(c,today), delay+(i*10000));
-      });
+  // ── 조연 포스트 — 아침(7~9시) 2명, 점심(12~14시) 2명, 저녁(18~21시) 2명 ──
+  const sideSlots=[
+    {slot:'morning', minHour:7,  maxHour:9,  count:2},
+    {slot:'lunch',   minHour:12, maxHour:14, count:2},
+    {slot:'evening', minHour:18, maxHour:21, count:2},
+  ];
+  for(const ss of sideSlots){
+    if(hour>=ss.minHour && hour<ss.maxHour){
+      const alreadySlot=snsData.filter(p=>p.auto && p.day===today && p.who!=='an' && p.sideSlot===ss.slot);
+      const need=ss.count-alreadySlot.length;
+      if(need>0){
+        const postedHandles=snsData.filter(p=>p.auto && p.day===today && p.who!=='an').map(p=>p.who);
+        const available=sideChars.filter(c=>!postedHandles.includes(c.handle));
+        const pick=[...available].sort(()=>Math.random()-0.5).slice(0,need);
+        pick.forEach((c,i)=>{
+          setTimeout(()=>generateSidePost(c,today,ss.slot), delay+(i*10000));
+        });
+        delay+=pick.length*10000;
+      }
     }
   }
 }
@@ -2096,7 +2127,7 @@ async function genDailyNotif(today){
 async function loadNotifs(){
   const d=await dbLoad('notifications');
   if(d && Array.isArray(d)) notifStore=d;
-  const today=new Date().toISOString().slice(0,10);
+  const _kst2=new Date(Date.now()+9*3600000); const today=_kst2.toISOString().slice(0,10);
   if(!notifStore.some(n=>n.day===today && n.kind==='daily')){
     await genDailyNotif(today);
   }
@@ -2367,7 +2398,7 @@ function deletePost(id){
 // ══ 안이 먼저 통화 걸어오기 ══
 function scheduleAutoCall(){
   // 하루 한 번만, 30~90분 사이 랜덤
-  const today=new Date().toISOString().slice(0,10);
+  const _kst3=new Date(Date.now()+9*3600000); const today=_kst3.toISOString().slice(0,10);
   const calledKey='autoCall_'+today;
   dbLoad(calledKey).then(v=>{
     if(v) return; // 오늘 이미 걸었으면 스킵
