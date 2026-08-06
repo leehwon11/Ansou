@@ -558,8 +558,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 <script>
 // ── DB API ──
-async function dbSave(key, value){
-  try{await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,value})});}catch(e){}
+async function dbSave(key, value, retry=0){
+  try{
+    const r=await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,value})});
+    if(!r.ok) throw new Error('save failed');
+  }catch(e){
+    if(retry<3) setTimeout(()=>dbSave(key,value,retry+1), 2000*(retry+1));
+  }
 }
 async function dbLoad(key){
   try{const r=await fetch('/api/data/'+key);if(r.ok){const d=await r.json();return d.value;}return null;}catch(e){return null;}
@@ -1636,12 +1641,12 @@ function rejectCall(){
     </div>`;
 }
 
-function endCall(){
+async function endCall(){
   callOn=false;clearInterval(callInt);
   const dur=document.getElementById('callTmr').textContent;
   // 통화 중 메시지 저장
   const logMsgs=[...callHistory];
-  callLogs.unshift({nm:'시라이시 안',time:nowt(),dur,msgs:logMsgs,dir:callDirection});renderCallLogs();saveData();
+  callLogs.unshift({nm:'시라이시 안',time:nowt(),dur,msgs:logMsgs,dir:callDirection});renderCallLogs();await saveData();
   callSec=0;document.getElementById('callTmr').textContent='00:00';document.getElementById('callTmr').classList.remove('vis');
   document.getElementById('callStxt').textContent='통화를 시작해보세요';
   document.getElementById('callBtns').innerHTML=`<button class="cbtn start" onclick="startCall()">📞</button>`;
@@ -2363,7 +2368,7 @@ ${c.name}과 소우타의 관계: ${c.trait.includes('소우타와의 관계') ?
 ${extra}`;
 }
 
-function scheduleSideEvent(){
+async function scheduleSideEvent(){
   setTimeout(async()=>{
     try{
       const c=sideChars[Math.floor(Math.random()*sideChars.length)];
@@ -2396,7 +2401,7 @@ function deletePost(id){
 }
 
 // ══ 안이 먼저 통화 걸어오기 ══
-function scheduleAutoCall(){
+async function scheduleAutoCall(){
   // 하루 한 번만, 30~90분 사이 랜덤
   const _kst3=new Date(Date.now()+9*3600000); const today=_kst3.toISOString().slice(0,10);
   const calledKey='autoCall_'+today;
@@ -2582,7 +2587,7 @@ async function addGalleryImages(input){
 
 
 // ══ 캐릭터 자동 SNS 상호작용 (5~10분마다) ══
-function scheduleAutoInteract(){
+async function scheduleAutoInteract(){
   setTimeout(async()=>{
     try{
       const allPosts=[...snsData,...myPosts].filter(p=>p.cmts!==undefined);
