@@ -1092,7 +1092,8 @@ async function sendReply(cmtId){
   const myHandle=DP.handle||'@FLYtotheFUTURE';
   // 답글 저장
   if(!c.replies) c.replies=[];
-  const reply={who:myHandle,txt,ts:new Date()};
+  const taggedTxt=`@${c.who.replace('@','')} ${txt}`;
+  const reply={who:myHandle,txt:taggedTxt,ts:new Date()};
   c.replies.push(reply);
   const repliesEl=document.getElementById('replies-'+cmtId);
   if(repliesEl){
