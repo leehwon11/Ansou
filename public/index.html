@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>白石 杏 — 개인 공간</title>
 <link rel="manifest" href="/manifest.json">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
-<meta name="theme-color" content="#f4fbfd" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0d151d" media="(prefers-color-scheme: dark)">
-<meta name="color-scheme" content="light dark">
+
+<meta name="theme-color" content="#0B0C10">
+<meta name="color-scheme" content="dark">
 <link rel="apple-touch-icon" href="/icon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--mint:#00bbdc;--mint-l:#b3eaf5;--mint-p:#e8f9fd;--dark:#1a2a3a;--gray:#8899aa;--white:#fff;--bg:#f0f9fc;--r:16px;--rs:10px;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;overflow-x:hidden;}
+body{font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;overflow-x:hidden;}
 .stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;background:var(--mint);border-radius:50%;animation:twinkle var(--d,3s) ease-in-out infinite alternate;opacity:.15;}
 @keyframes twinkle{from{opacity:.05;transform:scale(.8)}to{opacity:.3;transform:scale(1.2)}}
@@ -25,7 +24,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .dot{width:7px;height:7px;border-radius:50%;background:#4cde80;animation:pdot 2s ease-in-out infinite;}
 @keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(76,222,128,.4)}50%{box-shadow:0 0 0 4px rgba(76,222,128,0)}}
 .tab-nav{background:var(--white);border-bottom:1px solid var(--mint-l);display:flex;position:sticky;top:53px;z-index:99;}
-.tb{flex:1;padding:9px 2px 7px;background:none;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--gray);display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .2s;position:relative;}
+.tb{flex:1;padding:9px 2px 7px;background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;font-size:10px;color:var(--gray);display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .2s;position:relative;}
 .tb .ti{font-size:16px;}
 .tb.active{color:var(--mint);}
 .tb.active::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:2px;background:var(--mint);border-radius:2px 2px 0 0;}
@@ -57,9 +56,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 /* SNS */
 .compose-box{margin:12px 14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:12px;}
-.compose-box textarea{width:100%;border:none;outline:none;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--dark);resize:none;line-height:1.6;background:transparent;}
+.compose-box textarea{width:100%;border:none;outline:none;font-family:'IBM Plex Sans KR',sans-serif;font-size:13px;color:var(--dark);resize:none;line-height:1.6;background:transparent;}
 .compose-footer{display:flex;justify-content:flex-end;margin-top:8px;padding-top:8px;border-top:1px solid var(--mint-p);}
-.post-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.post-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;}
 .post-btn:hover{background:#0090b8;}
 .sns-post{margin:0 14px 10px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;}
 .sns-ph{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
@@ -77,9 +76,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-area.open{display:block;}
 .cmt-ir{display:flex;gap:8px;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid var(--mint-p);}
 .cmt-ir-av{overflow:hidden;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#556677,#334455);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;flex-shrink:0;}
-.cmt-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:5px 2px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--gray);outline:none;}
+.cmt-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:5px 2px;font-size:12px;font-family:'IBM Plex Sans KR',sans-serif;background:transparent;color:var(--gray);outline:none;}
 .cmt-inp::placeholder{color:var(--mint-l);}
-.cmt-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;white-space:nowrap;}
+.cmt-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;padding:0 4px;white-space:nowrap;}
 .cmt-send:hover{opacity:.7;}
 .cmt-list{display:flex;flex-direction:column;gap:0;}
 .cmt-item{display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--mint-p);}
@@ -103,11 +102,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-reply-meta{font-size:10px;color:var(--gray);margin-top:2px;display:flex;align-items:center;gap:8px;}
 .reply-inp-area{display:none;margin-top:6px;padding-left:36px;}
 .reply-inp-area.open{display:flex;gap:6px;align-items:center;}
-.reply-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:4px 2px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--dark);outline:none;}
-.reply-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.reply-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:4px 2px;font-size:12px;font-family:'IBM Plex Sans KR',sans-serif;background:transparent;color:var(--dark);outline:none;}
+.reply-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;}
 /* 채팅 */
 .chat-list{overflow-y:auto;padding-bottom:20px;max-height:calc(100dvh - 110px);}
-.new-chat-btn{margin:12px 14px 4px;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;width:calc(100% - 28px);font-size:13px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.new-chat-btn{margin:12px 14px 4px;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;width:calc(100% - 28px);font-size:13px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
 .new-chat-btn:hover{background:#0090b8;}
 .room-item{margin:0 14px 9px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:transform .15s;}
 .room-item:hover{transform:translateY(-1px);}
@@ -126,7 +125,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .rv-info{flex:1;}
 .rv-name{font-size:13px;font-weight:700;}
 .rv-sub{font-size:10px;color:var(--gray);}
-.end-btn{background:none;border:1px solid #ff5c5c;color:#ff5c5c;border-radius:var(--rs);padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.end-btn{background:none;border:1px solid #ff5c5c;color:#ff5c5c;border-radius:var(--rs);padding:5px 10px;font-size:11px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;white-space:nowrap;}
 .rv-msgs{flex:1;overflow-y:auto;padding:clamp(10px,3vw,16px);display:flex;flex-direction:column;gap:14px;background:var(--bg);}
 .rv-msgs::-webkit-scrollbar{width:4px;}
 .rv-msgs::-webkit-scrollbar-thumb{background:var(--mint-l);border-radius:2px;}
@@ -152,7 +151,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
 @keyframes typ{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
 .rv-input-area{background:var(--white);border-top:1px solid var(--mint-l);padding:10px 14px;display:flex;gap:8px;align-items:flex-end;}
-.rv-input{flex:1;border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:clamp(12px,3.5vw,14px);font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;min-height:40px;max-height:30vh;line-height:1.6;transition:border-color .2s;width:100%;box-sizing:border-box;}
+.rv-input{flex:1;border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:clamp(12px,3.5vw,14px);font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;min-height:40px;max-height:30vh;line-height:1.6;transition:border-color .2s;width:100%;box-sizing:border-box;}
 .rv-input:focus{border-color:var(--mint);}
 .narr-input{font-size:clamp(12px,3.5vw,14px)!important;}
 .rv-send{width:38px;height:38px;border-radius:50%;background:var(--mint);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;transition:transform .15s;flex-shrink:0;}
@@ -179,7 +178,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .ccb-title{background:var(--mint-p);padding:9px 14px;font-size:11px;font-weight:700;color:var(--mint);}
 .ccb-msgs{padding:10px;max-height:170px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;}
 .ccb-ir{padding:9px 10px;border-top:1px solid var(--mint-l);display:flex;gap:7px;}
-.ccb-input{flex:1;border:1px solid var(--mint-l);border-radius:14px;padding:7px 11px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:var(--white);color:var(--dark);outline:none;}
+.ccb-input{flex:1;border:1px solid var(--mint-l);border-radius:14px;padding:7px 11px;font-size:12px;font-family:'IBM Plex Sans KR',sans-serif;background:var(--white);color:var(--dark);outline:none;}
 .ccb-send{background:var(--mint);border:none;border-radius:12px;padding:7px 12px;color:#fff;font-size:12px;cursor:pointer;}
 .cli{background:var(--white);border:1px solid var(--mint-l);border-radius:var(--rs);padding:12px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px;}
 .cli-icon{font-size:18px;}
@@ -190,7 +189,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 /* 일상 */
 .daily-btns{margin:12px 14px 0;display:flex;flex-direction:column;gap:8px;}
-.dbtn{background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;font-size:13px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.dbtn{background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;font-size:13px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
 .dbtn.outline{background:var(--white);color:var(--mint);border:1.5px solid var(--mint);}
 .dbtn:hover{opacity:.9;}
 .dli{margin:0 14px 9px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;cursor:pointer;transition:transform .15s;}
@@ -205,10 +204,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .dream-card{margin:12px 14px;background:linear-gradient(135deg,#0d1f2d,#1a3040);border-radius:var(--r);padding:18px;color:#fff;}
 .df{margin-bottom:12px;}
 .df label{font-size:11px;opacity:.65;display:block;margin-bottom:4px;}
-.df input,.df textarea{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rs);padding:8px 12px;color:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none;}
+.df input,.df textarea{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rs);padding:8px 12px;color:#fff;font-size:13px;font-family:'IBM Plex Sans KR',sans-serif;outline:none;}
 .df textarea{resize:none;line-height:1.6;}
 .df input::placeholder,.df textarea::placeholder{color:rgba(255,255,255,.35);}
-.save-btn{width:100%;background:var(--mint);border:none;border-radius:var(--rs);padding:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.save-btn{width:100%;background:var(--mint);border:none;border-radius:var(--rs);padding:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;}
 .save-btn:hover{background:#0090b8;}
 .saved-ok{text-align:center;font-size:12px;color:#4cde80;margin-top:8px;display:none;}
 
@@ -222,10 +221,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 /* 입력창 탭 */
 .input-tabs{display:flex;gap:0;margin-bottom:8px;background:var(--mint-p);border-radius:20px;padding:3px;}
-.itab{flex:1;padding:5px 8px;background:none;border:none;border-radius:16px;font-size:11px;color:var(--gray);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;white-space:nowrap;line-height:1.3;}
+.itab{flex:1;padding:5px 8px;background:none;border:none;border-radius:16px;font-size:11px;color:var(--gray);cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;transition:all .2s;white-space:nowrap;line-height:1.3;}
 .itab.active{background:var(--white);color:var(--mint);font-weight:700;box-shadow:0 1px 4px rgba(0,187,220,.15);}
 .input-wrap{display:flex;flex-direction:column;gap:6px;flex:1;}
-.narr-input{border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;max-height:70px;line-height:1.5;font-style:italic;display:none;transition:border-color .2s;}
+.narr-input{border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:13px;font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;max-height:70px;line-height:1.5;font-style:italic;display:none;transition:border-color .2s;}
 .narr-input:focus{border-color:var(--mint);}
 .narr-input.show{display:block;}
 
@@ -307,11 +306,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 /* AI 상태 */
 .ai-card{margin:12px 14px;background:var(--white);border:1px solid var(--mint-l);border-radius:var(--r);padding:14px 16px;}
 .ai-card-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.ai-test-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.ai-test-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;white-space:nowrap;}
 .ai-test-btn:disabled{background:var(--mint-l);cursor:wait;}
 .ai-result{font-size:12px;line-height:1.7;margin-top:10px;color:var(--dark);display:none;word-break:break-all;}
-.ai-result.ok{display:block;color:#1d9a52;}
-.ai-result.fail{display:block;color:#d64545;}
+.ai-result.ok{display:block;color:#C6F432;}
+.ai-result.fail{display:block;color:#FF7A7A;}
 .tb:focus-visible,.cbtn:focus-visible,.rv-send:focus-visible{outline:2px solid var(--mint);outline-offset:2px;}
 /* 일기 상세 오버레이 */
 .diary-detail{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4);display:none;align-items:flex-end;}
@@ -345,7 +344,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 }
 html{background:var(--bg);}
 body{font-size:14px;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;letter-spacing:-.01em;transition:background .25s,color .25s;}
-button{font-family:'Noto Sans KR',sans-serif;}
+button{font-family:'IBM Plex Sans KR',sans-serif;}
 .star{opacity:.12;}
 .app{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 8px);}
 
@@ -507,20 +506,190 @@ body.in-room .tab-nav{display:none;}
   .app{margin-top:0;border-radius:0;min-height:100vh;box-shadow:0 0 0 1px var(--line-soft),0 0 60px rgba(0,150,190,.08);}
 }
 @media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+/* ══════════ A 스테이지 ══════════ */
+:root,:root[data-theme]{
+  --mint:#19C6E6;--mint-d:#19C6E6;--mint-l:#262A33;--mint-p:#1C2029;
+  --dark:#F2F4F7;--gray:#9AA3AE;--white:#16181F;--bg:#0B0C10;
+  --line-soft:#262A33;--hdr-bg:rgba(11,12,16,.9);--shadow:none;--shadow-lg:none;
+  --lime:#C6F432;--ink:#0B0C10;--sub:#B8C0CA;--faint:#6B7480;--hot:#FF5C8A;
+  --disp:'Black Han Sans',sans-serif;
+}
+body{font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);}
+.stars-bg{display:none;}
+.app{padding-bottom:calc(66px + 30px + env(safe-area-inset-bottom));}
+
+/* 헤더 */
+.hdr{height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0 20px;background:var(--hdr-bg);border-bottom:1px solid transparent;}
+.hdr-logo{font-family:var(--disp);font-weight:400;font-size:20px;letter-spacing:.08em;color:var(--dark);}
+.icon-btn{width:44px;height:44px;border-radius:22px;border:1px solid var(--line-soft);background:var(--white);color:var(--dark);position:relative;}
+.icon-btn svg{width:20px;height:20px;}
+.bell-dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:4px;background:var(--lime);display:none;}
+
+/* 떠 있는 하단 메뉴 */
+.tab-nav{left:12px;right:12px;width:auto;max-width:456px;margin:0 auto;transform:none;bottom:calc(14px + env(safe-area-inset-bottom));height:66px;padding:0;border:1px solid var(--line-soft);border-radius:22px;background:var(--white);-webkit-backdrop-filter:none;backdrop-filter:none;}
+.tb{color:var(--gray);font-weight:400;}
+.tb.active{color:var(--mint);font-weight:700;}
+.tb .ic,.tb.active .ic{background:none;width:auto;height:24px;}
+.nb{background:var(--lime);color:var(--ink);box-shadow:0 0 0 2px var(--white);right:calc(50% - 20px);}
+
+/* 페이지 제목 */
+.page-hd{padding:14px 20px 4px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;}
+.page-hd h2{margin:0;font-family:var(--disp);font-weight:400;font-size:34px;letter-spacing:.04em;line-height:1;}
+.page-hd p{margin:6px 0 0;font-size:13px;color:var(--gray);}
+.sec-title,.sec-a{font-family:var(--disp);font-weight:400;font-size:16px;letter-spacing:.06em;color:var(--sub);padding:22px 20px 10px;}
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;padding:22px 16px 10px 20px;}
+.sec-row .sec-a{padding:0;}
+.link-btn{background:none;border:none;color:var(--mint);font-size:13px;cursor:pointer;padding:6px 4px;font-family:inherit;}
+
+/* 공통 버튼·카드 */
+.btn-a,.post-btn,.save-btn,.ai-test-btn,.nc-go,.dbtn:not(.outline){background:var(--mint);color:var(--ink);font-weight:700;border:none;}
+.btn-a,.btn-ghost{height:48px;border-radius:16px;font-size:14px;cursor:pointer;font-family:inherit;flex:1;}
+.btn-ghost{background:var(--white);color:var(--dark);border:1px solid var(--line-soft);}
+.post-btn:hover,.save-btn:hover{background:var(--mint);opacity:.9;}
+.notif-card,.sns-post,.diary-card,.cli,.compose-box,.ai-card,.dli,.new-chat-btn,.qa,.cal-card,.story-card{background:var(--white);border:1px solid var(--line-soft);border-radius:20px;box-shadow:none;}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--line-soft);color:var(--gray);white-space:nowrap;}
+.chip.live{background:var(--lime);color:var(--ink);border-color:var(--lime);font-weight:700;}
+.tag{color:var(--mint);}
+
+/* 홈 */
+.hero{margin:4px 16px 0;height:290px;border-radius:22px;overflow:hidden;position:relative;background:var(--white);}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;}
+.sticker{position:absolute;left:14px;top:14px;background:var(--lime);color:var(--ink);font-size:12px;font-weight:700;padding:5px 10px;border-radius:8px;transform:rotate(-3deg);letter-spacing:.04em;}
+.hero-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 18px 16px;background:rgba(11,12,16,.8);}
+.hero-name{font-family:var(--disp);font-size:40px;line-height:1;letter-spacing:.02em;}
+.hero-sub{font-size:13px;color:var(--sub);margin-top:6px;}
+.stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 16px 0;}
+.stat{background:var(--white);border:1px solid var(--line-soft);border-radius:16px;padding:14px;text-align:left;color:var(--dark);cursor:pointer;font-family:inherit;display:flex;flex-direction:column;gap:4px;min-height:84px;}
+.stat-l{font-size:12px;color:var(--gray);}
+.stat-big{font-family:var(--disp);font-size:30px;color:var(--mint);line-height:1.1;}
+.stat-mood{font-size:15px;font-weight:700;line-height:1.35;}
+.quick-grid{margin:10px 16px 0;}
+.qa{color:var(--dark);border-radius:16px;}
+.qa-ic{background:var(--mint-p);color:var(--mint);font-size:0;}
+.qa-ic svg{width:22px;height:22px;}
+.notif-card{padding:14px 16px;}
+.notif-card::before{display:none;}
+.notif-card.read{opacity:.5;}
+.notif-type{color:var(--gray);font-weight:500;}
+.nbadge{background:var(--lime);color:var(--ink);}
+
+/* 채팅 목록 */
+.new-chat-btn{color:var(--dark);}
+.nc-av{box-shadow:0 0 0 2px var(--mint);width:56px;height:56px;}
+.cs-av{background:none;padding:0;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--c);width:50px;height:50px;margin:4px;}
+.cs-av img{border:none;}
+.room-item{margin:0 16px;padding:12px 4px;border:none;border-bottom:1px solid #1E2129;border-radius:0;background:none;box-shadow:none;}
+.room-item:hover{box-shadow:none;background:none;}
+.ri-name{font-size:15px;}
+.ri-prev{font-size:14px;color:var(--gray);}
+
+/* 채팅방 */
+.room-view{background:var(--bg);}
+.rv-hdr,.ovl-hdr{background:var(--bg);border-bottom:1px solid var(--line-soft);}
+.rv-av{box-shadow:0 0 0 2px var(--mint);}
+.end-btn{background:var(--white);border:1px solid var(--line-soft);color:var(--sub);border-radius:18px;padding:8px 14px;font-size:13px;}
+.mb:not(.u) .m-speech{background:var(--white);border:1px solid var(--line-soft);color:var(--dark);border-radius:20px 20px 20px 6px;}
+.mb.u .m-speech{background:var(--mint);color:var(--ink);font-weight:500;border-radius:20px 20px 6px 20px;}
+.m-narr-standalone{font-style:normal;color:var(--gray);font-size:13px!important;}
+.sit-lbl{background:var(--lime);color:var(--ink);font-weight:700;border-radius:8px;transform:rotate(-1.5deg);}
+.ended-lbl{background:var(--white);color:var(--gray);border:1px solid var(--line-soft);border-radius:8px;}
+.typ-bub{background:var(--white);border-color:var(--line-soft);}
+.td{background:var(--mint);}
+.rv-input-area{background:var(--bg);border-top:1px solid var(--line-soft);}
+.rv-input,.narr-input{background:var(--white)!important;border:1px solid var(--line-soft)!important;color:var(--dark);border-radius:24px!important;}
+.rv-send{background:var(--mint);color:var(--ink);box-shadow:none;width:46px;height:46px;}
+.rv-send:hover{background:var(--mint);}
+.input-tabs{background:none;padding:0;gap:6px;}
+.itab{flex:none;padding:0 14px;height:32px;border-radius:16px;border:1px solid var(--line-soft);color:var(--sub);font-size:13px;}
+.itab.active{background:var(--dark);color:var(--ink);border-color:var(--dark);box-shadow:none;}
+.ended-bar{background:var(--bg);color:var(--gray);border-top:1px solid var(--line-soft);}
+
+/* SNS */
+.compose-box textarea{color:var(--dark);}
+.compose-footer{border-top-color:var(--line-soft);}
+.sns-av{box-shadow:0 0 0 2px var(--mint);}
+.sns-av.u{box-shadow:none;}
+.sns-acts{border-top-color:var(--line-soft);}
+.sa{color:var(--sub);}
+.sa.liked{color:var(--hot);}
+.cmt-area,.cmt-ir{border-top-color:var(--line-soft);}
+.cmt-item{border-bottom-color:#1E2129;}
+.cmt-replies{border-left-color:var(--line-soft);}
+
+/* 통화 */
+.call-main{background:none;border:none;padding:24px 16px 8px;margin:0;}
+.call-av{width:144px;height:144px;background:var(--white);box-shadow:0 0 0 10px var(--bg),0 0 0 12px var(--mint);margin:14px 0 22px;}
+.call-av.ring{animation:none;box-shadow:0 0 0 10px var(--bg),0 0 0 12px var(--lime);}
+.call-name-b{font-family:var(--disp);font-weight:400;font-size:30px;letter-spacing:.02em;}
+.call-stxt{color:var(--gray);font-size:14px;}
+.call-tmr{font-family:var(--disp);font-weight:400;font-size:24px;color:var(--mint);letter-spacing:.08em;}
+.cbtn svg{width:26px;height:26px;}
+.cbtn.start{width:68px;height:68px;background:#22C55E;}
+.cbtn.end{width:76px;height:76px;background:#FF4D4D;}
+.cbtn.end svg{transform:rotate(135deg);}
+.cbtn.sm{width:60px;height:60px;background:var(--white);border:1px solid var(--line-soft);color:var(--dark);}
+.cbtn.sm.on{background:var(--dark);color:var(--ink);}
+.call-chat-box{background:var(--white);border:1px solid var(--line-soft);border-radius:20px;}
+.ccb-title{background:none;color:var(--dark);font-size:12px;letter-spacing:.06em;border-bottom:1px solid var(--line-soft);}
+.rec-dot{background:#FF5C5C;}
+.ccb-ir{border-top-color:var(--line-soft);}
+.ccb-input{background:var(--bg);border-color:var(--line-soft);color:var(--dark);border-radius:22px;padding:10px 16px;font-size:15px;}
+.ccb-send{background:var(--mint);color:var(--ink);border-radius:20px;font-weight:700;padding:0 16px;}
+.call-chat-box{box-sizing:border-box;}
+.ccb-input{min-width:0;width:auto;}
+.ccb-send{flex-shrink:0;height:42px;}
+.cli{margin-bottom:10px;}
+.cli-dur{color:var(--mint);}
+
+/* 일상 */
+.daily-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 16px 0;}
+.dtile{height:132px;border-radius:20px;border:1px solid var(--line-soft);background:var(--white);color:var(--dark);padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;font-family:inherit;cursor:pointer;}
+.dtile.on{background:var(--mint);color:var(--ink);border-color:var(--mint);}
+.dtile b{display:block;font-family:var(--disp);font-weight:400;font-size:20px;}
+.dtile small{font-size:13px;opacity:.85;}
+.dli-ttl{font-size:16px;}
+.dli-time{color:var(--gray);}
+.dli-prev{font-size:14px;color:var(--sub);}
+
+/* 일기 */
+.mood-card{margin:16px 16px 0;background:var(--white);border:1px solid var(--line-soft);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:14px;}
+.mood-tile{width:46px;height:46px;border-radius:14px;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.cal-card{margin:12px 16px 0;padding:12px;}
+.cal-day{color:var(--dark);}
+.cal-day.today{background:var(--mint);color:var(--ink);}
+.cal-day.has-entry::after{background:var(--lime);}
+.cal-day.other-month{color:#3A3F4A;}
+.cal-day.sun{color:#FF7A7A;}
+.cal-day.sat{color:#7AB8FF;}
+.diary-card{margin-bottom:12px;}
+.diary-card-hdr{border-bottom-color:var(--line-soft);}
+.diary-card-body.note{background:var(--mint-p);}
+
+/* 설정 */
+.dream-card{background:var(--white);border:1px solid var(--line-soft);color:var(--dark);}
+.df label{color:var(--gray);opacity:1;font-size:12px;}
+.df input,.df textarea{background:var(--bg);border:1px solid var(--line-soft);color:var(--dark);}
+.df input::placeholder,.df textarea::placeholder{color:var(--faint);}
+.story-card{margin:0 16px;padding:2px 16px;}
+.row-btn{width:100%;display:flex;align-items:center;gap:12px;padding:14px 0;border:none;background:none;color:var(--dark);font-family:inherit;font-size:15px;cursor:pointer;text-align:left;}
+.row-btn span{margin-left:auto;font-size:13px;color:var(--gray);}
+.row-btn svg{color:var(--gray);}
+
+/* 시트·오버레이 */
+.ovl-panel,.dd-panel,.cld-panel{background:var(--bg);border:1px solid var(--line-soft);border-bottom:none;}
+.more-item .qa-ic{background:var(--mint-p);color:var(--mint);}
+.sheet-grip{background:var(--line-soft);}
+.toast{background:var(--dark);color:var(--ink);}
+.toast.err{background:#FF4D4D;color:#fff;}
 </style>
 </head>
 <body>
 <div class="stars-bg" id="sBg"></div>
 <div class="app">
   <header class="hdr">
-    <div class="hdr-id">
-      <div class="hdr-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt=""></div>
-      <div>
-        <div class="hdr-logo">白石 杏</div>
-        <div class="hdr-status"><div class="dot"></div>온라인</div>
-      </div>
-    </div>
-    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="화면 테마 바꾸기"></button>
+    <div class="hdr-logo">ANSOU</div>
+    <button class="icon-btn" onclick="sw('home')" aria-label="알림"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="bell-dot" id="bellDot"></span></button>
   </header>
   <nav class="tab-nav" aria-label="메뉴">
     <button class="tb active" data-tab="home" onclick="sw('home')"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></span>홈<span class="nb" id="hBadge" style="display:none;"></span></button>
@@ -533,31 +702,25 @@ body.in-room .tab-nav{display:none;}
   <!-- 홈 -->
   <div class="tc active" id="tab-home">
     <div class="scroll">
-      <div class="prof-card">
-        <div class="prof-top">
-          <div class="prof-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="시라이시 안"></div>
-          <div>
-            <div class="prof-name">白石 杏</div>
-            <div class="prof-sub">Shiraishi An · @LightUptheFire</div>
-            <div class="prof-tag">✦ 찬란한 비너스, 노래하는 소녀</div>
-          </div>
+      <div class="hero">
+        <img class="hero-img" src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="시라이시 안">
+        <span class="sticker">ONLINE</span>
+        <div class="hero-cap">
+          <div class="hero-name">白石 杏</div>
+          <div class="hero-sub">시라이시 안 · Vivid BAD SQUAD · @LightUptheFire</div>
         </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.2);font-size:11px;opacity:.85;display:flex;align-items:center;gap:6px;">
-          <span style="opacity:.7;">오늘의 상태</span>
-          <span id="homeMoodBadge" style="background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;">일기 탭에서 확인해봐요</span>
-        </div>
-        <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-size:11px;">
-          <span id="metBadge" style="opacity:.9;">만난 지 계산 중...</span>
-          <button onclick="openTimeline()" style="background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:20px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">타임라인 ›</button>
-        </div>
+      </div>
+      <div class="stat-row">
+        <button class="stat" onclick="openTimeline()"><span class="stat-l">만난 지</span><span class="stat-big" id="metBadge">D+0</span></button>
+        <button class="stat" onclick="sw('diary')"><span class="stat-l">오늘의 안</span><span class="stat-mood" id="homeMoodBadge">일기 탭에서 확인해봐요</span></button>
       </div>
       <div class="quick-grid">
-        <button class="qa" onclick="quick('chat')"><span class="qa-ic">💬</span>연락하기</button>
-        <button class="qa" onclick="quick('call')"><span class="qa-ic">📞</span>전화</button>
-        <button class="qa" onclick="quick('daily')"><span class="qa-ic">🌟</span>일상</button>
-        <button class="qa" onclick="quick('diary')"><span class="qa-ic">📔</span>일기</button>
+        <button class="qa" onclick="quick('chat')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.8A8 8 0 1 1 21 12z"/></svg></span>연락하기</button>
+        <button class="qa" onclick="quick('call')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>전화</button>
+        <button class="qa" onclick="quick('daily')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-4.9 3.6 1.9-5.8L4 8.8h6.1z"/></svg></span>일상</button>
+        <button class="qa" onclick="quick('diary')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>일기</button>
       </div>
-      <div class="sec-title" style="display:flex;align-items:center;justify-content:space-between;padding-right:16px;">새로운 알림 <button onclick="markAllRead()" style="background:none;border:none;font-size:12px;color:var(--mint-d);cursor:pointer;font-weight:500;padding:4px;">모두 읽음</button></div>
+      <div class="sec-row"><div class="sec-a">NOW</div><button class="link-btn" onclick="markAllRead()">모두 읽음</button></div>
       <div id="notifList">
 
 
@@ -569,6 +732,7 @@ body.in-room .tab-nav{display:none;}
   <!-- SNS -->
   <div class="tc" id="tab-sns">
     <div class="scroll">
+      <div class="page-hd"><div><h2>SNS</h2><p>다들 오늘 뭐 했을까</p></div></div>
       <div class="compose-box">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">
           <div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타"></div>
@@ -594,14 +758,15 @@ body.in-room .tab-nav{display:none;}
   <div class="tc" id="tab-chat">
     <div id="chatListWrap">
       <div class="chat-list">
+        <div class="page-hd"><div><h2>CHAT</h2><p>누구랑 이야기할까?</p></div></div>
         <button class="new-chat-btn" onclick="newChat()">
           <img class="nc-av" src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="">
           <span class="nc-txt"><b>시라이시 안</b><small>먼저 연락해볼까?</small></span>
           <span class="nc-go">새 대화</span>
         </button>
-        <div class="sec-title" style="padding-top:4px;">다른 친구들</div>
+        <div class="sec-title">FRIENDS</div>
         <div class="char-strip" id="charStrip"></div>
-        <div class="sec-title">채팅 기록</div>
+        <div class="sec-title">HISTORY</div>
         <div id="roomList"></div>
       </div>
     </div>
@@ -610,7 +775,8 @@ body.in-room .tab-nav{display:none;}
 
   <!-- 통화 -->
   <div class="tc" id="tab-call">
-    <div class="scroll" style="padding:14px 0 80px;">
+    <div class="scroll">
+      <div class="page-hd"><div><h2>CALL</h2><p>목소리가 듣고 싶을 때</p></div></div>
       <div class="call-main">
         <div class="call-av" id="callAv"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="시라이시 안"></div>
         <div class="call-name-b">시라이시 안</div>
@@ -618,11 +784,11 @@ body.in-room .tab-nav{display:none;}
         <div class="call-tmr" id="callTmr">00:00</div>
         <div class="call-btns" id="callBtns">
           <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-            <button class="cbtn start" onclick="startCall('out')" title="내가 전화 걸기">📞</button>
+            <button class="cbtn start" onclick="startCall('out')" title="내가 전화 걸기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
             <div style="font-size:11px;color:var(--gray);">전화 걸기</div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-            <button class="cbtn start" style="background:var(--mint-l);animation:rp 2s ease-out infinite;" onclick="startCall('in')" title="안에게 전화 받기">📲</button>
+            <button class="cbtn start" style="background:var(--lime);color:var(--ink);" onclick="startCall('in')" title="안에게 전화 받기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v6h6"/><path d="m22 2-6 6"/><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
             <div style="font-size:11px;color:var(--gray);">전화 받기</div>
           </div>
         </div>
@@ -635,8 +801,8 @@ body.in-room .tab-nav{display:none;}
           </div>
         </div>
       </div>
-      <div style="padding:0 14px;">
-        <div class="sec-title" style="padding:0 0 8px;">📋 통화 기록</div>
+      <div style="padding:0 16px;">
+        <div class="sec-title" style="padding:14px 4px 10px;">HISTORY</div>
         <div id="callLogList"><div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">통화 기록이 없어요</div></div>
       </div>
     </div>
@@ -645,11 +811,12 @@ body.in-room .tab-nav{display:none;}
   <!-- 일상 -->
   <div class="tc" id="tab-daily">
     <div class="scroll">
-      <div class="daily-btns">
-        <button class="dbtn" onclick="startDailyAI()">✦ 안이 먼저 말 걸어오기</button>
-        <button class="dbtn outline" onclick="startDailyMe()">내가 먼저 말 걸기</button>
+<div class="page-hd"><div><h2>DAILY</h2><p>안과 함께하는 장면 속으로</p></div></div>
+      <div class="daily-tiles">
+        <button class="dtile on" onclick="startDailyAI()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-4.9 3.6 1.9-5.8L4 8.8h6.1z"/></svg><span><b>안이 먼저</b><small>랜덤 장면에서 말을 걸어와</small></span></button>
+        <button class="dtile" onclick="startDailyMe()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span><b>내가 먼저</b><small>첫 마디는 소우타가</small></span></button>
       </div>
-      <div class="sec-title" style="margin-top:10px;">일상 기록</div>
+      <div class="sec-title">SCENES</div>
       <div id="dailyList"><div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">아직 기록이 없어요</div></div>
     </div>
   </div>
@@ -657,25 +824,24 @@ body.in-room .tab-nav{display:none;}
   <!-- 일기/노트 -->
   <div class="tc" id="tab-diary">
     <div class="scroll" style="padding-bottom:30px;">
-      <!-- 감정 상태 카드 -->
-      <div id="diaryMoodCard" style="margin:14px;background:linear-gradient(135deg,var(--mint-p),var(--white));border-radius:var(--r);border:1px solid var(--line-soft);box-shadow:var(--shadow);padding:16px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:32px;" id="moodEmoji">✨</div>
+<div class="page-hd"><div><h2>DIARY</h2><p>안의 일기장, 몰래 펼쳐보기</p></div></div>
+      <div class="mood-card" id="diaryMoodCard">
+        <div class="mood-tile" id="moodEmoji">✨</div>
         <div>
-          <div style="font-size:11px;color:var(--gray);margin-bottom:3px;">오늘 杏의 상태</div>
-          <div style="font-size:13px;font-weight:500;color:var(--dark);" id="moodText">불러오는 중...</div>
+          <div style="font-size:12px;color:var(--gray);">오늘 杏의 상태</div>
+          <div style="font-size:16px;font-weight:700;margin-top:2px;" id="moodText">불러오는 중...</div>
         </div>
       </div>
-      <div class="sec-title">📔 일기</div>
-      <div style="margin:0 14px 10px;display:flex;gap:8px;">
-        <button onclick="generateDiary()" style="flex:1;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:11px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">✦ 오늘 일기 생성</button>
-        <button onclick="generateNote()" style="flex:1;background:var(--white);color:var(--mint);border:1.5px solid var(--mint);border-radius:var(--rs);padding:11px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">📝 메모/노트</button>
+      <div style="margin:10px 16px 0;display:flex;gap:10px;">
+        <button class="btn-a" onclick="generateDiary()">오늘 일기 쓰기</button>
+        <button class="btn-ghost" onclick="generateNote()">메모 남기기</button>
       </div>
       <!-- 달력 뷰 -->
-      <div style="margin:0 14px 10px;">
+      <div class="cal-card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <button onclick="calPrev()" style="background:none;border:none;color:var(--mint);font-size:18px;cursor:pointer;padding:4px 8px;">‹</button>
-          <div id="calTitle" style="font-size:13px;font-weight:700;color:var(--dark);"></div>
-          <button onclick="calNext()" style="background:none;border:none;color:var(--mint);font-size:18px;cursor:pointer;padding:4px 8px;">›</button>
+          <button onclick="calPrev()" aria-label="이전 달" style="background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer;width:40px;height:40px;">‹</button>
+          <div id="calTitle" style="font-family:var(--disp);font-size:18px;letter-spacing:.04em;"></div>
+          <button onclick="calNext()" aria-label="다음 달" style="background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer;width:40px;height:40px;">›</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
           <div style="text-align:center;font-size:10px;color:#ff5c5c;padding:4px 0;">일</div>
@@ -688,6 +854,7 @@ body.in-room .tab-nav{display:none;}
         </div>
         <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
       </div>
+      <div class="sec-title">ENTRIES</div>
       <div id="diaryList"></div>
     </div>
   </div>
@@ -696,23 +863,19 @@ body.in-room .tab-nav{display:none;}
   <!-- 사진첩 -->
   <div class="tc" id="tab-gallery">
     <div class="scroll" style="padding-bottom:30px;">
-      <div style="margin:12px 14px 8px;display:flex;align-items:center;justify-content:space-between;">
-        <div class="sec-title" style="padding:0;">🖼️ 사진첩</div>
-        <label style="background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">
-          + 사진 추가 <input type="file" id="galleryInput" accept="image/*" multiple style="display:none;" onchange="addGalleryImages(this)">
-        </label>
+<div class="page-hd"><div><h2>ALBUM</h2><p>함께 남긴 사진들</p></div><label style="background:var(--mint);color:var(--ink);border-radius:22px;height:44px;padding:0 16px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>사진 추가<input type="file" id="galleryInput" accept="image/*" multiple style="display:none;" onchange="addGalleryImages(this)"></label></div>
+      <div style="margin:14px 16px 10px;">
+        <input id="galleryCaption" placeholder="캡션 입력 (선택)" style="width:100%;box-sizing:border-box;border:1px solid var(--line-soft);border-radius:22px;height:44px;padding:0 16px;font-size:14px;font-family:inherit;color:var(--dark);background:var(--white);outline:none;">
       </div>
-      <div style="margin:0 14px 10px;">
-        <input id="galleryCaption" placeholder="캡션 입력 (선택)" style="width:100%;border:1px solid var(--mint-l);border-radius:var(--rs);padding:8px 12px;font-size:12px;font-family:'Noto Sans KR',sans-serif;color:var(--dark);background:var(--white);outline:none;margin-bottom:6px;">
-      </div>
-      <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 14px;"></div>
+      <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 16px;"></div>
     </div>
   </div>
 
   <!-- 설정 -->
   <div class="tc" id="tab-dream">
-    <div class="scroll" style="padding:12px 0 80px;">
-      <div style="padding:4px 16px 8px;font-size:12px;color:var(--gray);line-height:1.7;">안 봇이 소우타를 정확히 알 수 있도록 프로필을 설정해줘. 이 정보를 기반으로 모든 대화가 이루어져.</div>
+    <div class="scroll">
+      <div class="page-hd"><div><h2>SETTINGS</h2><p>모든 대화는 이 프로필을 바탕으로 이루어져</p></div></div>
+      <div class="sec-title">DREAM PROFILE</div>
       <div class="dream-card">
         <div class="df"><label>이름 (풀네임)</label><input id="d-name" value="" placeholder="사기하시 소우타"></div>
         <div class="df"><label>한자 이름 (풀네임)</label><input id="d-kanji" value="" placeholder="鷺橋 颯太"></div>
@@ -722,18 +885,23 @@ body.in-room .tab-nav{display:none;}
         <div class="df"><label>성격 / 특징</label><textarea id="d-pers" rows="3"></textarea></div>
         <div class="df"><label>안과의 관계 / 드림 서사</label><textarea id="d-rel" rows="4"></textarea></div>
         <div class="df"><label>추가 설정</label><textarea id="d-extra" rows="3" placeholder="기타 드림 서사, 특수 설정 등..."></textarea></div>
-        <button class="save-btn" onclick="saveDP()">💾 저장하기</button>
+        <button class="save-btn" onclick="saveDP()">저장하기</button>
         <div class="saved-ok" id="savedOk">✓ 저장됐어요!</div>
       </div>
-      <div class="ai-card">
+      <div class="sec-title">AI</div>
+      <div class="ai-card" style="margin-top:0;">
         <div class="ai-card-row">
           <div>
-            <div style="font-size:13px;font-weight:700;">🤖 AI 연결 확인</div>
+            <div style="font-size:15px;font-weight:700;">AI 연결 확인</div>
             <div style="font-size:11px;color:var(--gray);margin-top:2px;">답장이 안 오면 여기서 먼저 확인해봐요</div>
           </div>
           <button class="ai-test-btn" id="aiTestBtn" onclick="testAI()">테스트</button>
         </div>
         <div class="ai-result" id="aiResult"></div>
+      </div>
+      <div class="sec-title">STORY</div>
+      <div class="story-card">
+        <button class="row-btn" onclick="openTimeline()">우리의 타임라인<span>1화 ~ 5화</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
     </div>
   </div>
@@ -774,10 +942,10 @@ body.in-room .tab-nav{display:none;}
   <div class="ovl-panel more-panel" role="dialog" aria-label="더보기">
     <div class="sheet-grip"></div>
     <div class="more-list">
-      <button class="more-item" onclick="sw('daily')"><span class="qa-ic">🌟</span><span><b>일상</b><small>안과 함께하는 장면 속으로</small></span></button>
-      <button class="more-item" onclick="sw('diary')"><span class="qa-ic">📔</span><span><b>일기</b><small>안의 일기, 메모, 오늘의 기분</small></span></button>
-      <button class="more-item" onclick="sw('gallery')"><span class="qa-ic">🖼️</span><span><b>사진첩</b><small>함께 남긴 사진들</small></span></button>
-      <button class="more-item" onclick="sw('dream')"><span class="qa-ic">⚙️</span><span><b>설정</b><small>드림 프로필 · AI 연결 확인</small></span></button>
+      <button class="more-item" onclick="sw('daily')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-4.9 3.6 1.9-5.8L4 8.8h6.1z"/></svg></span><span><b>일상</b><small>안과 함께하는 장면 속으로</small></span></button>
+      <button class="more-item" onclick="sw('diary')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span><span><b>일기</b><small>안의 일기, 메모, 오늘의 기분</small></span></button>
+      <button class="more-item" onclick="sw('gallery')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span><span><b>사진첩</b><small>함께 남긴 사진들</small></span></button>
+      <button class="more-item" onclick="sw('dream')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span><b>설정</b><small>드림 프로필 · AI 연결 확인</small></span></button>
     </div>
   </div>
 </div>
@@ -1167,7 +1335,7 @@ function mkPost(p){
       ${avHTML}
       <div><div class="sns-nm">${esc(p.nm)}</div><div class="sns-hl">${esc(p.hl)} · ${p.ts?liveTime(p.ts):p.time}</div></div>
     </div>
-    <div class="sns-body">${esc(p.body)}</div>
+    <div class="sns-body">${renderCmtText(p.body)}</div>
     ${p.img?`<img src="${p.img}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:8px;border:1px solid var(--mint-l);" onclick="window.open('${p.img}','_blank')">`:''}
     <div class="sns-acts">
       <button class="sa${p.liked?' liked':''}" onclick="toggleLk('${p.id}',this)">${p.liked?'💗':'🤍'} ${p.lk}</button>
@@ -1302,7 +1470,7 @@ function makeCmtHTML(c){
     <div class="cmt-body">
       <div class="cmt-who">${esc(displayName)} <span style="font-weight:400;color:var(--gray);font-size:11px;">${esc(handle)}</span></div>
       <div class="cmt-txt">${renderCmtText(c.txt)}</div>
-      <div class="cmt-meta">${c.ts?liveTime(new Date(c.ts)):'방금 전'} <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;">답글</button></div>
+      <div class="cmt-meta">${c.ts?liveTime(new Date(c.ts)):'방금 전'} <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;padding:0 4px;">답글</button></div>
       ${repliesHtml?`<div class="cmt-replies" id="replies-${cmtId}">${repliesHtml}</div>`:`<div class="cmt-replies" id="replies-${cmtId}" style="display:none;"></div>`}
       <div class="reply-inp-area" id="rinp-${cmtId}">
         <div class="cmt-av me" style="width:22px;height:22px;overflow:hidden;flex-shrink:0;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
@@ -1399,7 +1567,7 @@ async function sendReply(cmtId){
 const cmtMap={};
 function renderCmtText(txt){
   // @태그 파란색으로 표시
-  return esc(txt).replace(/@(\S+)/g,'<span style="color:var(--mint);font-weight:500;">@$1</span>');
+  return esc(txt).replace(/([@#][^\s<@#]+)/g,'<span class="tag">$1</span>');
 }
 let pendingImgFile=null;
 function previewImg(input){
@@ -1659,7 +1827,7 @@ function renderRooms(){
       const sc2img=sc2?sideCharImages[sc2.handle]:null;
       const riAv=sc2?(sc2img?`<div class="ri-av" style="overflow:hidden;"><img src="${sc2img}" alt="${sc2.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`):`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
       const riName=sc2?sc2.nm+' '+sc2.icon:'시라이시 안 ⭐';
-      d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
+      d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<span class="chip live" style="margin-top:4px;">진행 중</span>':''}</div>`;
       d.onclick=()=>{if(r.charName)openSideRoom(i);else openRoom(i);};list.appendChild(d);
     });
   });
@@ -1901,23 +2069,23 @@ function startCall(dir){
     document.getElementById('callStxt').textContent='시라이시 안이 전화를 걸어왔어...';
     document.getElementById('callBtns').innerHTML=`
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <button class="cbtn end" onclick="rejectCall()">📵</button>
+        <button class="cbtn end" onclick="rejectCall()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
         <div style="font-size:10px;color:var(--gray);">거절</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <button class="cbtn start" onclick="connectCall()">📞</button>
+        <button class="cbtn start" onclick="connectCall()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
         <div style="font-size:10px;color:var(--gray);">받기</div>
       </div>`;
   } else {
     document.getElementById('callStxt').textContent='연결 중...';
-    document.getElementById('callBtns').innerHTML=`<button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="음소거">🔇</button><button class="cbtn end" onclick="endCall()">📵</button><button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="스피커">🔊</button>`;
+    document.getElementById('callBtns').innerHTML=`<button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="음소거"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/></svg></button><button class="cbtn end" onclick="endCall()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button><button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="스피커"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></button>`;
     setTimeout(()=>connectCall(),1400);
   }
 }
 function connectCall(){
   document.getElementById('callAv').classList.remove('ring');
   document.getElementById('callStxt').innerHTML='<b>시라이시 안</b>과 통화 중';
-  document.getElementById('callBtns').innerHTML=`<button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="음소거">🔇</button><button class="cbtn end" onclick="endCall()">📵</button><button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="스피커">🔊</button>`;
+  document.getElementById('callBtns').innerHTML=`<button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="음소거"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/></svg></button><button class="cbtn end" onclick="endCall()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button><button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="스피커"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></button>`;
   document.getElementById('callTmr').classList.add('vis');
   callInt=setInterval(()=>{callSec++;const m=String(Math.floor(callSec/60)).padStart(2,'0');const s=String(callSec%60).padStart(2,'0');document.getElementById('callTmr').textContent=m+':'+s;},1000);
   document.getElementById('ccBox').style.display='block';
@@ -1947,11 +2115,11 @@ function resetCallUI(){
   document.getElementById('callStxt').textContent='통화를 시작해보세요';
   document.getElementById('callBtns').innerHTML=`
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <button class="cbtn start" onclick="startCall('out')">📞</button>
+      <button class="cbtn start" onclick="startCall('out')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
       <div style="font-size:11px;color:var(--gray);">전화 걸기</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <button class="cbtn start" style="background:var(--mint-l);animation:rp 2s ease-out infinite;" onclick="startCall('in')">📲</button>
+      <button class="cbtn start" style="background:var(--lime);color:var(--ink);" onclick="startCall('in')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v6h6"/><path d="m22 2-6 6"/><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
       <div style="font-size:11px;color:var(--gray);">전화 받기</div>
     </div>`;
 }
@@ -2001,7 +2169,7 @@ function renderCallLogs(){
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="cli-dur">${l.dur}</div>
-        ${l.msgs&&l.msgs.length?`<button onclick="openCallDetail(${i})" style="background:var(--mint-p);border:none;border-radius:10px;padding:4px 10px;font-size:11px;color:var(--mint);cursor:pointer;font-family:'Noto Sans KR',sans-serif;">녹음 보기</button>`:''}
+        ${l.msgs&&l.msgs.length?`<button onclick="openCallDetail(${i})" style="background:var(--mint-p);border:none;border-radius:10px;padding:4px 10px;font-size:11px;color:var(--mint);cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;">녹음 보기</button>`:''}
       </div>`;
     list.appendChild(d);
   });
@@ -2150,7 +2318,7 @@ function renderDailyList(){
     items.forEach(({log:l,idx:i})=>{
       const last=l.msgs[l.msgs.length-1];const{speech}=last?parseMsg(last.content):{speech:'기록 없음'};
       const d=document.createElement('div');d.className='dli';
-      d.innerHTML=`<div class="dli-hdr"><div class="dli-ico">${l.ended?'✅':'🟢'}</div><div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
+      d.innerHTML=`<div class="dli-hdr">${l.ended?'<span class="chip">완료</span>':'<span class="chip live">진행 중</span>'}<div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
       d.onclick=()=>{curDIdx=i;openDOvl(l);};list.appendChild(d);
     });
   });
@@ -2368,7 +2536,7 @@ let firstMet='2023-12-21T00:00:00';
 function updateMetBadge(){
   const el=document.getElementById('metBadge');if(!el||!firstMet)return;
   const days=Math.max(1, Math.floor((Date.now()-new Date(firstMet).getTime())/86400000)+1);
-  el.textContent=`만난 지 ${days}일째`;
+  el.textContent=`D+${days}`;
 }
 updateMetBadge(); // 기본값으로 즉시 표시
 async function saveData(){
@@ -2418,7 +2586,7 @@ function openTimeline(){
   if(badge){
     const intro=document.createElement('div');
     intro.style.cssText='margin-bottom:14px;font-size:12px;color:var(--gray);';
-    intro.textContent=`이 공간에서 ${badge.textContent}예요.`;
+    intro.textContent=`이 공간에서 만난 지 ${badge.textContent.replace('D+','')}일째예요.`;
     list.appendChild(intro);
   }
   dreamChapters.forEach(c=>{
@@ -2447,6 +2615,7 @@ function updateHBadge(){
   const n=notifStore.filter(x=>!x.read).length;
   const b=document.getElementById('hBadge');
   if(b){ if(n>0){b.style.display='';b.textContent=n;} else {b.style.display='none';} }
+  const bd=document.getElementById('bellDot');if(bd)bd.style.display=n>0?'block':'none';
 }
 async function saveNotifs(){ await dbSave('notifications', notifStore); }
 async function genDailyNotif(today){
@@ -2877,7 +3046,7 @@ function renderGallery(){
   [...galleryItems].reverse().forEach((item,i)=>{
     const idx = galleryItems.length-1-i;
     const el = document.createElement('div');
-    el.style.cssText='position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;cursor:pointer;';
+    el.style.cssText='position:relative;aspect-ratio:1;overflow:hidden;border-radius:10px;cursor:pointer;';
     el.innerHTML=`<img src="${item.url}" style="width:100%;height:100%;object-fit:cover;" onclick="openGalleryItem(${idx})">`;
     grid.appendChild(el);
   });
@@ -2899,7 +3068,7 @@ function openGalleryItem(idx){
     <img src="${item.url}" style="max-width:90vw;max-height:75vh;object-fit:contain;border-radius:8px;">
     ${item.caption?`<div style="color:#fff;font-size:13px;margin-top:12px;text-align:center;padding:0 20px;">${esc(item.caption)}</div>`:''}
     <div style="color:rgba(255,255,255,.5);font-size:11px;margin-top:6px;">${item.date||''}</div>
-    <button onclick="deleteGalleryItem(${idx})" style="margin-top:16px;background:rgba(255,92,92,.2);border:1px solid #ff5c5c;color:#ff5c5c;border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">삭제</button>
+    <button onclick="deleteGalleryItem(${idx})" style="margin-top:16px;background:rgba(255,92,92,.2);border:1px solid #ff5c5c;color:#ff5c5c;border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;">삭제</button>
   `;
 }
 
