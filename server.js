@@ -47,31 +47,57 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ── AI API 프록시 ──
+// 모델/게이트웨이는 환경변수로 바꿀 수 있음 (게이트웨이가 지원하는 모델이어야 함)
+const AI_GATEWAY_URL = process.env.AI_GATEWAY_URL ||
+  'https://factchat-cloud.mindlogic.ai/v1/gateway/claude/v1/messages';
+const AI_MODEL = process.env.AI_MODEL || 'claude-sonnet-4-6';
+const AI_MAX_TOKENS = parseInt(process.env.AI_MAX_TOKENS, 10) || 2000;
+
+async function callAI(system, messages, maxTokens = AI_MAX_TOKENS) {
+  if (!process.env.API_KEY) throw new Error('API_KEY 환경변수가 설정되지 않았어요');
+  const response = await fetch(AI_GATEWAY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.API_KEY },
+    body: JSON.stringify({ model: AI_MODEL, max_tokens: maxTokens, system, messages }),
+    signal: AbortSignal.timeout(60000)
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const msg = data.error?.message || data.message || JSON.stringify(data).slice(0, 300);
+    throw new Error(`게이트웨이 오류 ${response.status}: ${msg}`);
+  }
+  const text = data.content?.find(b => b.type === 'text')?.text?.trim() || '';
+  if (!text) throw new Error(`빈 응답 (stop_reason: ${data.stop_reason || '알 수 없음'})`);
+  if (data.stop_reason === 'max_tokens') console.warn('AI 응답이 max_tokens에서 잘림');
+  return { text, data };
+}
+
 app.post('/api/chat', async (req, res) => {
   try {
-    const { system, messages } = req.body;
-    const response = await fetch(
-      'https://factchat-cloud.mindlogic.ai/v1/gateway/claude/v1/messages',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.API_KEY
-        },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          system,
-          messages
-        })
-      }
-    );
-    const data = await response.json();
-    const text = data.content?.find(b => b.type === 'text')?.text || '...';
+    const { system } = req.body;
+    // 빈 메시지는 API가 거부하므로 제거
+    const messages = (req.body.messages || []).filter(m => m && typeof m.content === 'string' && m.content.trim());
+    if (!messages.length) return res.status(400).json({ content: '', error: '메시지가 비어 있어요' });
+    const { text } = await callAI(system, messages);
     res.json({ content: text });
   } catch (e) {
-    console.error('API 에러:', e);
-    res.status(500).json({ content: '...' });
+    console.error('API 에러:', e.message);
+    res.status(502).json({ content: '', error: e.message });
+  }
+});
+
+// ── AI 연결 상태 확인 ──
+app.get('/api/health', async (req, res) => {
+  const started = Date.now();
+  try {
+    const { text, data } = await callAI(
+      '한국어로 한 문장만 답해.',
+      [{ role: 'user', content: '연결 테스트야. "연결 성공!"이라고만 답해줘.' }],
+      50
+    );
+    res.json({ ok: true, model: AI_MODEL, servedModel: data.model || null, latencyMs: Date.now() - started, sample: text });
+  } catch (e) {
+    res.status(502).json({ ok: false, model: AI_MODEL, latencyMs: Date.now() - started, error: e.message });
   }
 });
 

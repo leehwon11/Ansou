@@ -2,16 +2,18 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>白石 杏 — 개인 공간</title>
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00bbdc">
+
+<meta name="theme-color" content="#0B0C10">
+<meta name="color-scheme" content="dark">
 <link rel="apple-touch-icon" href="/icon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--mint:#00bbdc;--mint-l:#b3eaf5;--mint-p:#e8f9fd;--dark:#1a2a3a;--gray:#8899aa;--white:#fff;--bg:#f0f9fc;--r:16px;--rs:10px;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;overflow-x:hidden;}
+body{font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;overflow-x:hidden;}
 .stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;background:var(--mint);border-radius:50%;animation:twinkle var(--d,3s) ease-in-out infinite alternate;opacity:.15;}
 @keyframes twinkle{from{opacity:.05;transform:scale(.8)}to{opacity:.3;transform:scale(1.2)}}
@@ -22,7 +24,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .dot{width:7px;height:7px;border-radius:50%;background:#4cde80;animation:pdot 2s ease-in-out infinite;}
 @keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(76,222,128,.4)}50%{box-shadow:0 0 0 4px rgba(76,222,128,0)}}
 .tab-nav{background:var(--white);border-bottom:1px solid var(--mint-l);display:flex;position:sticky;top:53px;z-index:99;}
-.tb{flex:1;padding:9px 2px 7px;background:none;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--gray);display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .2s;position:relative;}
+.tb{flex:1;padding:9px 2px 7px;background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;font-size:10px;color:var(--gray);display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .2s;position:relative;}
 .tb .ti{font-size:16px;}
 .tb.active{color:var(--mint);}
 .tb.active::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:2px;background:var(--mint);border-radius:2px 2px 0 0;}
@@ -54,9 +56,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 /* SNS */
 .compose-box{margin:12px 14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:12px;}
-.compose-box textarea{width:100%;border:none;outline:none;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--dark);resize:none;line-height:1.6;background:transparent;}
+.compose-box textarea{width:100%;border:none;outline:none;font-family:'IBM Plex Sans KR',sans-serif;font-size:13px;color:var(--dark);resize:none;line-height:1.6;background:transparent;}
 .compose-footer{display:flex;justify-content:flex-end;margin-top:8px;padding-top:8px;border-top:1px solid var(--mint-p);}
-.post-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.post-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;}
 .post-btn:hover{background:#0090b8;}
 .sns-post{margin:0 14px 10px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;}
 .sns-ph{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
@@ -74,9 +76,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-area.open{display:block;}
 .cmt-ir{display:flex;gap:8px;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid var(--mint-p);}
 .cmt-ir-av{overflow:hidden;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#556677,#334455);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;flex-shrink:0;}
-.cmt-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:5px 2px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--gray);outline:none;}
+.cmt-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:5px 2px;font-size:12px;font-family:'IBM Plex Sans KR',sans-serif;background:transparent;color:var(--gray);outline:none;}
 .cmt-inp::placeholder{color:var(--mint-l);}
-.cmt-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;white-space:nowrap;}
+.cmt-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;padding:0 4px;white-space:nowrap;}
 .cmt-send:hover{opacity:.7;}
 .cmt-list{display:flex;flex-direction:column;gap:0;}
 .cmt-item{display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--mint-p);}
@@ -100,11 +102,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cmt-reply-meta{font-size:10px;color:var(--gray);margin-top:2px;display:flex;align-items:center;gap:8px;}
 .reply-inp-area{display:none;margin-top:6px;padding-left:36px;}
 .reply-inp-area.open{display:flex;gap:6px;align-items:center;}
-.reply-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:4px 2px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--dark);outline:none;}
-.reply-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.reply-inp{flex:1;border:none;border-bottom:1px solid var(--mint-l);padding:4px 2px;font-size:12px;font-family:'IBM Plex Sans KR',sans-serif;background:transparent;color:var(--dark);outline:none;}
+.reply-send{background:none;border:none;color:var(--mint);font-size:12px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;}
 /* 채팅 */
 .chat-list{overflow-y:auto;padding-bottom:20px;max-height:calc(100dvh - 110px);}
-.new-chat-btn{margin:12px 14px 4px;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;width:calc(100% - 28px);font-size:13px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.new-chat-btn{margin:12px 14px 4px;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;width:calc(100% - 28px);font-size:13px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
 .new-chat-btn:hover{background:#0090b8;}
 .room-item{margin:0 14px 9px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:transform .15s;}
 .room-item:hover{transform:translateY(-1px);}
@@ -123,7 +125,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .rv-info{flex:1;}
 .rv-name{font-size:13px;font-weight:700;}
 .rv-sub{font-size:10px;color:var(--gray);}
-.end-btn{background:none;border:1px solid #ff5c5c;color:#ff5c5c;border-radius:var(--rs);padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.end-btn{background:none;border:1px solid #ff5c5c;color:#ff5c5c;border-radius:var(--rs);padding:5px 10px;font-size:11px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;white-space:nowrap;}
 .rv-msgs{flex:1;overflow-y:auto;padding:clamp(10px,3vw,16px);display:flex;flex-direction:column;gap:14px;background:var(--bg);}
 .rv-msgs::-webkit-scrollbar{width:4px;}
 .rv-msgs::-webkit-scrollbar-thumb{background:var(--mint-l);border-radius:2px;}
@@ -149,7 +151,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
 @keyframes typ{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
 .rv-input-area{background:var(--white);border-top:1px solid var(--mint-l);padding:10px 14px;display:flex;gap:8px;align-items:flex-end;}
-.rv-input{flex:1;border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:clamp(12px,3.5vw,14px);font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;min-height:40px;max-height:30vh;line-height:1.6;transition:border-color .2s;width:100%;box-sizing:border-box;}
+.rv-input{flex:1;border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:clamp(12px,3.5vw,14px);font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;min-height:40px;max-height:30vh;line-height:1.6;transition:border-color .2s;width:100%;box-sizing:border-box;}
 .rv-input:focus{border-color:var(--mint);}
 .narr-input{font-size:clamp(12px,3.5vw,14px)!important;}
 .rv-send{width:38px;height:38px;border-radius:50%;background:var(--mint);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;transition:transform .15s;flex-shrink:0;}
@@ -176,7 +178,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .ccb-title{background:var(--mint-p);padding:9px 14px;font-size:11px;font-weight:700;color:var(--mint);}
 .ccb-msgs{padding:10px;max-height:170px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;}
 .ccb-ir{padding:9px 10px;border-top:1px solid var(--mint-l);display:flex;gap:7px;}
-.ccb-input{flex:1;border:1px solid var(--mint-l);border-radius:14px;padding:7px 11px;font-size:12px;font-family:'Noto Sans KR',sans-serif;background:var(--white);color:var(--dark);outline:none;}
+.ccb-input{flex:1;border:1px solid var(--mint-l);border-radius:14px;padding:7px 11px;font-size:12px;font-family:'IBM Plex Sans KR',sans-serif;background:var(--white);color:var(--dark);outline:none;}
 .ccb-send{background:var(--mint);border:none;border-radius:12px;padding:7px 12px;color:#fff;font-size:12px;cursor:pointer;}
 .cli{background:var(--white);border:1px solid var(--mint-l);border-radius:var(--rs);padding:12px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px;}
 .cli-icon{font-size:18px;}
@@ -187,7 +189,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 /* 일상 */
 .daily-btns{margin:12px 14px 0;display:flex;flex-direction:column;gap:8px;}
-.dbtn{background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;font-size:13px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.dbtn{background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:12px;font-size:13px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
 .dbtn.outline{background:var(--white);color:var(--mint);border:1.5px solid var(--mint);}
 .dbtn:hover{opacity:.9;}
 .dli{margin:0 14px 9px;background:var(--white);border-radius:var(--rs);border:1px solid var(--mint-l);padding:14px;cursor:pointer;transition:transform .15s;}
@@ -202,10 +204,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .dream-card{margin:12px 14px;background:linear-gradient(135deg,#0d1f2d,#1a3040);border-radius:var(--r);padding:18px;color:#fff;}
 .df{margin-bottom:12px;}
 .df label{font-size:11px;opacity:.65;display:block;margin-bottom:4px;}
-.df input,.df textarea{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rs);padding:8px 12px;color:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none;}
+.df input,.df textarea{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rs);padding:8px 12px;color:#fff;font-size:13px;font-family:'IBM Plex Sans KR',sans-serif;outline:none;}
 .df textarea{resize:none;line-height:1.6;}
 .df input::placeholder,.df textarea::placeholder{color:rgba(255,255,255,.35);}
-.save-btn{width:100%;background:var(--mint);border:none;border-radius:var(--rs);padding:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.save-btn{width:100%;background:var(--mint);border:none;border-radius:var(--rs);padding:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;}
 .save-btn:hover{background:#0090b8;}
 .saved-ok{text-align:center;font-size:12px;color:#4cde80;margin-top:8px;display:none;}
 
@@ -219,10 +221,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
 /* 입력창 탭 */
 .input-tabs{display:flex;gap:0;margin-bottom:8px;background:var(--mint-p);border-radius:20px;padding:3px;}
-.itab{flex:1;padding:5px 8px;background:none;border:none;border-radius:16px;font-size:11px;color:var(--gray);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;white-space:nowrap;line-height:1.3;}
+.itab{flex:1;padding:5px 8px;background:none;border:none;border-radius:16px;font-size:11px;color:var(--gray);cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;transition:all .2s;white-space:nowrap;line-height:1.3;}
 .itab.active{background:var(--white);color:var(--mint);font-weight:700;box-shadow:0 1px 4px rgba(0,187,220,.15);}
 .input-wrap{display:flex;flex-direction:column;gap:6px;flex:1;}
-.narr-input{border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;max-height:70px;line-height:1.5;font-style:italic;display:none;transition:border-color .2s;}
+.narr-input{border:1.5px solid var(--mint-l);border-radius:20px;padding:9px 14px;font-size:13px;font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);resize:none;outline:none;max-height:70px;line-height:1.5;font-style:italic;display:none;transition:border-color .2s;}
 .narr-input:focus{border-color:var(--mint);}
 .narr-input.show{display:block;}
 
@@ -246,7 +248,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   .crv-input-area, .rv-hdr{padding:10px 12px;}
   .m-speech{font-size:12px!important;}
   .m-narr-standalone{font-size:11px!important;}
+  /* iOS는 16px 미만 입력창에 포커스하면 화면을 확대해버림 */
+  .rv-input,.narr-input,.ccb-input,.cmt-inp,.reply-inp,.compose-box textarea,.df input,.df textarea{font-size:16px!important;}
 }
+.rv-input-area,.ended-bar{padding-bottom:calc(12px + env(safe-area-inset-bottom))!important;}
 @media (min-width: 769px) {
   .app{box-shadow:0 0 40px rgba(0,187,220,.1);border-radius:var(--r);margin-top:20px;min-height:calc(100vh - 40px);}
   .room-view{height:calc(100dvh - 147px);}
@@ -279,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .diary-card-title{font-size:13px;font-weight:700;flex:1;}
 .diary-card-date{font-size:10px;color:var(--gray);}
 .diary-card-body{padding:14px 16px;font-size:13px;line-height:1.9;color:var(--dark);white-space:pre-wrap;}
-.diary-card-body.note{font-style:italic;color:#445566;background:var(--mint-p);border-radius:0 0 var(--r) var(--r);}
+.diary-card-body.note{font-style:italic;background:var(--mint-p);border-radius:0 0 var(--r) var(--r);}
 .diary-generating{text-align:center;padding:24px;font-size:12px;color:var(--gray);}
 .mood-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,187,220,.1);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--mint);margin-top:4px;}
 
@@ -294,54 +299,428 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cal-day.today.sun{color:#fff;}
 .cal-day.sat{color:#4488ff;}
 .cal-day.today.sat{color:#fff;}
+/* 토스트 */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:rgba(26,42,58,.92);color:#fff;font-size:12px;padding:9px 16px;border-radius:20px;z-index:500;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;max-width:90vw;text-align:center;line-height:1.5;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.err{background:rgba(220,60,60,.95);}
+/* AI 상태 */
+.ai-card{margin:12px 14px;background:var(--white);border:1px solid var(--mint-l);border-radius:var(--r);padding:14px 16px;}
+.ai-card-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.ai-test-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;white-space:nowrap;}
+.ai-test-btn:disabled{background:var(--mint-l);cursor:wait;}
+.ai-result{font-size:12px;line-height:1.7;margin-top:10px;color:var(--dark);display:none;word-break:break-all;}
+.ai-result.ok{display:block;color:#C6F432;}
+.ai-result.fail{display:block;color:#FF7A7A;}
+.tb:focus-visible,.cbtn:focus-visible,.rv-send:focus-visible{outline:2px solid var(--mint);outline-offset:2px;}
 /* 일기 상세 오버레이 */
 .diary-detail{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4);display:none;align-items:flex-end;}
 .diary-detail.open{display:flex;}
 .dd-panel{width:100%;max-width:480px;margin:0 auto;background:var(--bg);border-radius:var(--r) var(--r) 0 0;max-height:85dvh;display:flex;flex-direction:column;animation:su .3s ease;}
 .dd-hdr{background:var(--white);padding:12px 16px;border-bottom:1px solid var(--mint-l);border-radius:var(--r) var(--r) 0 0;display:flex;align-items:center;gap:8px;}
 .dd-body{flex:1;overflow-y:auto;padding:14px;}
+
+/* ══════════ 리디자인 ══════════ */
+:root{
+  --mint:#00bbdc;--mint-d:#0094bb;--mint-l:#bfeaf4;--mint-p:#e9f8fc;
+  --dark:#16242f;--gray:#7b8d9e;--white:#fff;--bg:#f4fbfd;
+  --line-soft:rgba(0,150,190,.12);--hdr-bg:rgba(255,255,255,.86);
+  --shadow:0 1px 2px rgba(0,80,110,.04),0 4px 14px rgba(0,110,140,.06);
+  --shadow-lg:0 10px 30px rgba(0,110,140,.16);
+  --r:18px;--rs:14px;--nav-h:64px;--hdr-h:56px;
+}
+:root[data-theme="dark"]{
+  --mint:#14c3e3;--mint-d:#0aa7c7;--mint-l:#24495a;--mint-p:#12303b;
+  --dark:#e3edf3;--gray:#8798a9;--white:#16212c;--bg:#0d151d;
+  --line-soft:rgba(255,255,255,.07);--hdr-bg:rgba(18,28,37,.86);
+  --shadow:0 1px 2px rgba(0,0,0,.25),0 4px 14px rgba(0,0,0,.25);--shadow-lg:0 10px 30px rgba(0,0,0,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --mint:#14c3e3;--mint-d:#0aa7c7;--mint-l:#24495a;--mint-p:#12303b;
+    --dark:#e3edf3;--gray:#8798a9;--white:#16212c;--bg:#0d151d;
+    --line-soft:rgba(255,255,255,.07);--hdr-bg:rgba(18,28,37,.86);
+    --shadow:0 1px 2px rgba(0,0,0,.25),0 4px 14px rgba(0,0,0,.25);--shadow-lg:0 10px 30px rgba(0,0,0,.45);
+  }
+}
+html{background:var(--bg);}
+body{font-size:14px;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;letter-spacing:-.01em;transition:background .25s,color .25s;}
+button{font-family:'IBM Plex Sans KR',sans-serif;}
+.star{opacity:.12;}
+.app{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 8px);}
+
+/* 헤더 */
+.hdr{height:calc(var(--hdr-h) + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0;background:var(--hdr-bg);-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid var(--line-soft);}
+.hdr-id{display:flex;align-items:center;gap:10px;}
+.hdr-av{width:34px;height:34px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0;box-shadow:0 0 0 2px var(--mint-l);}
+.hdr-av img{width:100%;height:100%;object-fit:cover;}
+.hdr-logo{font-size:16px;line-height:1.1;}
+.hdr-status{font-size:11px;margin-top:2px;}
+.dot{width:6px;height:6px;}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--mint-p);color:var(--mint-d);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s,background .2s;}
+.icon-btn:active{transform:scale(.92);}
+.icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* 하단 내비게이션 */
+.tab-nav{position:fixed;top:auto;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding:0 6px env(safe-area-inset-bottom);background:var(--hdr-bg);-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px);border-bottom:none;border-top:1px solid var(--line-soft);z-index:120;}
+.tb{font-size:11px;font-weight:500;gap:3px;padding:8px 0 6px;color:var(--gray);}
+.tb .ic{width:54px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;}
+.tb svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.tb.active{color:var(--mint-d);font-weight:700;}
+.tb.active .ic{background:var(--mint-p);}
+.tb:active .ic{transform:scale(.9);}
+.tb.active::after{display:none;}
+.nb{top:4px;right:calc(50% - 26px);font-size:10px;min-width:17px;text-align:center;box-shadow:0 0 0 2px var(--white);}
+body.in-room .tab-nav{display:none;}
+
+/* 섹션/카드 공통 */
+.sec-title{padding:18px 18px 8px;font-size:12px;letter-spacing:.02em;color:var(--gray);}
+.notif-card,.sns-post,.room-item,.dli,.diary-card,.cli,.compose-box,.ai-card,.call-main{border:1px solid var(--line-soft);box-shadow:var(--shadow);border-radius:var(--r);background:var(--white);}
+.notif-card,.sns-post,.room-item,.dli,.diary-card{margin-left:16px;margin-right:16px;}
+.notif-card{padding:14px 16px;margin-bottom:10px;}
+.notif-card::before{width:4px;border-radius:0 4px 4px 0;top:14px;bottom:14px;}
+.notif-card:hover,.room-item:hover,.dli:hover{transform:none;box-shadow:var(--shadow-lg);}
+.notif-card:active,.room-item:active,.dli:active{transform:scale(.985);}
+.notif-type{font-size:11px;margin-bottom:5px;}
+.notif-msg{font-size:13.5px;line-height:1.65;}
+.notif-time{font-size:11px;margin-top:6px;}
+
+/* 홈 */
+.prof-card{margin:16px;border-radius:22px;padding:20px;background:linear-gradient(140deg,#13c6e4 0%,#00a4cf 55%,#0a7fb5 100%);box-shadow:0 12px 30px rgba(0,150,200,.28);}
+.prof-av{width:68px;height:68px;overflow:hidden;border:3px solid rgba(255,255,255,.7);box-shadow:0 4px 14px rgba(0,0,0,.15);}
+.prof-av img{width:100%;height:100%;object-fit:cover;}
+.prof-name{font-size:20px;}
+.prof-sub{font-size:12px;}
+.prof-tag{font-size:11px;padding:3px 10px;}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 16px;}
+.qa{background:var(--white);border:1px solid var(--line-soft);box-shadow:var(--shadow);border-radius:16px;padding:12px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--dark);cursor:pointer;transition:transform .15s;}
+.qa:active{transform:scale(.95);}
+.qa-ic{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--mint-p);}
+.empty{text-align:center;padding:28px 16px;font-size:13px;color:var(--gray);line-height:1.7;}
+.empty b{display:block;font-size:26px;margin-bottom:4px;font-weight:400;}
+
+/* 채팅 목록 */
+.chat-list{max-height:none;overflow:visible;padding-bottom:8px;}
+.new-chat-btn{margin:16px;width:calc(100% - 32px);padding:14px 16px;border-radius:var(--r);background:var(--white);color:var(--dark);border:1px solid var(--line-soft);box-shadow:var(--shadow);justify-content:flex-start;gap:12px;text-align:left;}
+.new-chat-btn:hover{background:var(--white);box-shadow:var(--shadow-lg);}
+.nc-av{width:48px;height:48px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--mint);flex-shrink:0;}
+.nc-txt{flex:1;display:flex;flex-direction:column;gap:2px;}
+.nc-txt b{font-size:15px;}
+.nc-txt small{font-size:12px;color:var(--gray);}
+.nc-go{background:linear-gradient(135deg,var(--mint),var(--mint-d));color:#fff;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:700;white-space:nowrap;}
+.char-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 16px 6px;scrollbar-width:none;}
+.char-strip::-webkit-scrollbar{display:none;}
+.cs-item{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;width:60px;color:var(--dark);font-size:12px;}
+.cs-av{width:56px;height:56px;border-radius:50%;padding:2px;background:var(--c);transition:transform .15s;}
+.cs-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid var(--white);display:block;}
+.cs-item:active .cs-av{transform:scale(.92);}
+.room-item{padding:14px 16px;margin-bottom:10px;}
+.ri-av{width:46px;height:46px;}
+.ri-name{font-size:14px;}
+.ri-prev{font-size:12.5px;margin-top:3px;}
+.ri-badge{background:var(--mint-p);color:var(--mint-d);font-size:10px;margin-top:4px;display:inline-block;}
+
+/* 채팅방: 메신저처럼 전체 화면 */
+.room-view{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:auto!important;z-index:150;background:var(--bg);}
+.rv-hdr{padding:calc(10px + env(safe-area-inset-top)) 12px 10px;background:var(--hdr-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft);}
+.rv-back,.ovl-close,.cld-close{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;padding:0;color:var(--dark);}
+.rv-back:hover,.ovl-close:hover{background:var(--mint-p);}
+.rv-av{width:38px;height:38px;}
+.rv-name{font-size:15px;}
+.rv-sub{font-size:11px;}
+.end-btn{border-color:var(--line-soft);color:var(--gray);background:var(--mint-p);border-radius:20px;padding:6px 12px;font-size:12px;}
+.rv-msgs{padding:16px 14px;gap:16px;}
+.m-av{width:32px;height:32px;}
+.m-content{max-width:76%;}
+.m-speech,.m-speech{font-size:14.5px!important;line-height:1.65;padding:10px 14px;border-radius:20px;}
+.mb:not(.u) .m-speech{border-color:var(--line-soft);box-shadow:var(--shadow);border-bottom-left-radius:6px;}
+.mb.u .m-speech{background:linear-gradient(135deg,var(--mint),var(--mint-d));border-bottom-right-radius:6px;}
+.m-narr-standalone{font-size:12.5px!important;line-height:1.75;padding:2px 6px 2px 44px;}
+.narr-block.u .m-narr-standalone{padding:2px 44px 2px 6px;}
+.m-time{font-size:10.5px;padding:0 6px 0 44px;}
+.narr-block.u .m-time,.mb.u .m-time{padding:0 44px 0 6px;}
+.mb .m-content .m-time{padding:0 4px;}
+.typ-bub{border-color:var(--line-soft);border-radius:20px;border-bottom-left-radius:6px;}
+.rv-input-area{background:var(--hdr-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line-soft);}
+.rv-input,.narr-input{border:1.5px solid var(--line-soft)!important;background:var(--bg)!important;border-radius:22px!important;font-size:15px;}
+.rv-input:focus,.narr-input:focus{border-color:var(--mint)!important;}
+.rv-send{width:42px;height:42px;background:linear-gradient(135deg,var(--mint),var(--mint-d));box-shadow:0 4px 12px rgba(0,160,200,.3);}
+.input-tabs{border-radius:22px;}
+.itab{font-size:12px;padding:6px 8px;border-radius:18px;}
+.ended-bar{background:var(--white);border-color:var(--line-soft);}
+.sit-lbl,.ended-lbl{font-size:12px;padding:6px 16px;}
+
+/* SNS */
+.compose-box{margin:16px;padding:14px;}
+.compose-box textarea{font-size:15px;}
+.post-btn,.save-btn,.ai-test-btn,.dbtn:not(.outline){background:linear-gradient(135deg,var(--mint),var(--mint-d));}
+.post-btn{padding:8px 20px;font-size:13px;font-weight:700;}
+.sns-post{padding:16px;margin-bottom:12px;}
+.sns-av{width:38px;height:38px;}
+.sns-nm{font-size:14px;}
+.sns-body{font-size:14.5px;line-height:1.7;}
+.sa{font-size:12.5px;padding:4px 2px;}
+.cmt-txt{font-size:13px;}
+.cmt-who{font-size:12.5px;}
+.cmt-inp{color:var(--dark);font-size:14px;}
+.cmt-inp::placeholder,.reply-inp::placeholder{color:var(--gray);opacity:.7;}
+
+/* 통화 */
+.call-main{margin:16px;padding:28px 20px 20px;}
+.call-av{width:120px;height:120px;overflow:hidden;box-shadow:0 10px 30px rgba(0,160,200,.3);}
+.call-av img{width:100%;height:100%;object-fit:cover;}
+.cbtn.sm.on{background:var(--mint);color:#fff;}
+.call-chat-box{border-color:var(--line-soft);border-radius:var(--rs);}
+.ccb-input{background:var(--white);border-color:var(--line-soft);}
+.cli{padding:14px 16px;}
+
+/* 일상·일기 */
+.daily-btns{margin:16px;}
+.dbtn{border-radius:var(--rs);padding:14px;font-size:14px;font-weight:500;}
+.dbtn.outline{background:var(--white);}
+.dli{padding:16px;margin-bottom:10px;}
+.dli-ttl{font-size:14px;}
+.dli-prev{font-size:12.5px;}
+.diary-card-body{font-size:14px;}
+.diary-card-body.note{color:var(--dark);opacity:.88;}
+.cal-day{font-size:13px;border-radius:10px;}
+
+/* 설정 */
+.dream-card{margin:16px;border-radius:var(--r);}
+.df input,.df textarea{font-size:14px;border-radius:12px;padding:10px 12px;}
+.ai-card{margin:16px;}
+
+/* 더보기 시트 */
+.more-list{padding:6px 12px calc(16px + env(safe-area-inset-bottom));}
+.more-item{width:100%;display:flex;align-items:center;gap:14px;padding:14px 10px;border:none;background:none;border-radius:14px;cursor:pointer;text-align:left;color:var(--dark);}
+.more-item:active,.more-item:hover{background:var(--mint-p);}
+.more-item .qa-ic{flex-shrink:0;}
+.more-item b{display:block;font-size:15px;}
+.more-item small{font-size:12px;color:var(--gray);}
+.more-panel{height:auto!important;max-height:80dvh;}
+.ovl-panel,.dd-panel,.cld-panel{border-radius:22px 22px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.15);}
+.ovl-hdr,.dd-hdr,.cld-hdr{border-radius:22px 22px 0 0;border-color:var(--line-soft);}
+.overlay,.diary-detail,.call-log-detail{background:rgba(5,20,30,.45);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+.sheet-grip{width:40px;height:4px;border-radius:2px;background:var(--mint-l);margin:10px auto 2px;}
+
+@media (min-width:769px){
+  .app{margin-top:0;border-radius:0;min-height:100vh;box-shadow:0 0 0 1px var(--line-soft),0 0 60px rgba(0,150,190,.08);}
+}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+/* ══════════ A 스테이지 ══════════ */
+:root,:root[data-theme]{
+  --mint:#19C6E6;--mint-d:#19C6E6;--mint-l:#262A33;--mint-p:#1C2029;
+  --dark:#F2F4F7;--gray:#9AA3AE;--white:#16181F;--bg:#0B0C10;
+  --line-soft:#262A33;--hdr-bg:rgba(11,12,16,.9);--shadow:none;--shadow-lg:none;
+  --lime:#C6F432;--ink:#0B0C10;--sub:#B8C0CA;--faint:#6B7480;--hot:#FF5C8A;
+  --disp:'Black Han Sans',sans-serif;
+}
+body{font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--dark);}
+.stars-bg{display:none;}
+.app{padding-bottom:calc(66px + 30px + env(safe-area-inset-bottom));}
+
+/* 헤더 */
+.hdr{height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0 20px;background:var(--hdr-bg);border-bottom:1px solid transparent;}
+.hdr-logo{font-family:var(--disp);font-weight:400;font-size:20px;letter-spacing:.08em;color:var(--dark);}
+.icon-btn{width:44px;height:44px;border-radius:22px;border:1px solid var(--line-soft);background:var(--white);color:var(--dark);position:relative;}
+.icon-btn svg{width:20px;height:20px;}
+.bell-dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:4px;background:var(--lime);display:none;}
+
+/* 떠 있는 하단 메뉴 */
+.tab-nav{left:12px;right:12px;width:auto;max-width:456px;margin:0 auto;transform:none;bottom:calc(14px + env(safe-area-inset-bottom));height:66px;padding:0;border:1px solid var(--line-soft);border-radius:22px;background:var(--white);-webkit-backdrop-filter:none;backdrop-filter:none;}
+.tb{color:var(--gray);font-weight:400;}
+.tb.active{color:var(--mint);font-weight:700;}
+.tb .ic,.tb.active .ic{background:none;width:auto;height:24px;}
+.nb{background:var(--lime);color:var(--ink);box-shadow:0 0 0 2px var(--white);right:calc(50% - 20px);}
+
+/* 페이지 제목 */
+.page-hd{padding:14px 20px 4px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;}
+.page-hd h2{margin:0;font-family:var(--disp);font-weight:400;font-size:34px;letter-spacing:.04em;line-height:1;}
+.page-hd p{margin:6px 0 0;font-size:13px;color:var(--gray);}
+.sec-title,.sec-a{font-family:var(--disp);font-weight:400;font-size:16px;letter-spacing:.06em;color:var(--sub);padding:22px 20px 10px;}
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;padding:22px 16px 10px 20px;}
+.sec-row .sec-a{padding:0;}
+.link-btn{background:none;border:none;color:var(--mint);font-size:13px;cursor:pointer;padding:6px 4px;font-family:inherit;}
+
+/* 공통 버튼·카드 */
+.btn-a,.post-btn,.save-btn,.ai-test-btn,.nc-go,.dbtn:not(.outline){background:var(--mint);color:var(--ink);font-weight:700;border:none;}
+.btn-a,.btn-ghost{height:48px;border-radius:16px;font-size:14px;cursor:pointer;font-family:inherit;flex:1;}
+.btn-ghost{background:var(--white);color:var(--dark);border:1px solid var(--line-soft);}
+.post-btn:hover,.save-btn:hover{background:var(--mint);opacity:.9;}
+.notif-card,.sns-post,.diary-card,.cli,.compose-box,.ai-card,.dli,.new-chat-btn,.qa,.cal-card,.story-card{background:var(--white);border:1px solid var(--line-soft);border-radius:20px;box-shadow:none;}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--line-soft);color:var(--gray);white-space:nowrap;}
+.chip.live{background:var(--lime);color:var(--ink);border-color:var(--lime);font-weight:700;}
+.tag{color:var(--mint);}
+
+/* 홈 */
+.hero{margin:4px 16px 0;height:290px;border-radius:22px;overflow:hidden;position:relative;background:var(--white);}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;}
+.sticker{position:absolute;left:14px;top:14px;background:var(--lime);color:var(--ink);font-size:12px;font-weight:700;padding:5px 10px;border-radius:8px;transform:rotate(-3deg);letter-spacing:.04em;}
+.hero-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 18px 16px;background:rgba(11,12,16,.8);}
+.hero-name{font-family:var(--disp);font-size:40px;line-height:1;letter-spacing:.02em;}
+.hero-sub{font-size:13px;color:var(--sub);margin-top:6px;}
+.stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 16px 0;}
+.stat{background:var(--white);border:1px solid var(--line-soft);border-radius:16px;padding:14px;text-align:left;color:var(--dark);cursor:pointer;font-family:inherit;display:flex;flex-direction:column;gap:4px;min-height:84px;}
+.stat-l{font-size:12px;color:var(--gray);}
+.stat-big{font-family:var(--disp);font-size:30px;color:var(--mint);line-height:1.1;}
+.stat-mood{font-size:15px;font-weight:700;line-height:1.35;}
+.quick-grid{margin:10px 16px 0;}
+.qa{color:var(--dark);border-radius:16px;}
+.qa-ic{background:var(--mint-p);color:var(--mint);font-size:0;}
+.qa-ic svg{width:22px;height:22px;}
+.notif-card{padding:14px 16px;}
+.notif-card::before{display:none;}
+.notif-card.read{opacity:.5;}
+.notif-type{color:var(--gray);font-weight:500;}
+.nbadge{background:var(--lime);color:var(--ink);}
+
+/* 채팅 목록 */
+.new-chat-btn{color:var(--dark);}
+.nc-av{box-shadow:0 0 0 2px var(--mint);width:56px;height:56px;}
+.cs-av{background:none;padding:0;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--c);width:50px;height:50px;margin:4px;}
+.cs-av img{border:none;}
+.room-item{margin:0 16px;padding:12px 4px;border:none;border-bottom:1px solid #1E2129;border-radius:0;background:none;box-shadow:none;}
+.room-item:hover{box-shadow:none;background:none;}
+.ri-name{font-size:15px;}
+.ri-prev{font-size:14px;color:var(--gray);}
+
+/* 채팅방 */
+.room-view{background:var(--bg);}
+.rv-hdr,.ovl-hdr{background:var(--bg);border-bottom:1px solid var(--line-soft);}
+.rv-av{box-shadow:0 0 0 2px var(--mint);}
+.end-btn{background:var(--white);border:1px solid var(--line-soft);color:var(--sub);border-radius:18px;padding:8px 14px;font-size:13px;}
+.mb:not(.u) .m-speech{background:var(--white);border:1px solid var(--line-soft);color:var(--dark);border-radius:20px 20px 20px 6px;}
+.mb.u .m-speech{background:var(--mint);color:var(--ink);font-weight:500;border-radius:20px 20px 6px 20px;}
+.m-narr-standalone{font-style:normal;color:var(--gray);font-size:13px!important;}
+.sit-lbl{background:var(--lime);color:var(--ink);font-weight:700;border-radius:8px;transform:rotate(-1.5deg);}
+.ended-lbl{background:var(--white);color:var(--gray);border:1px solid var(--line-soft);border-radius:8px;}
+.typ-bub{background:var(--white);border-color:var(--line-soft);}
+.td{background:var(--mint);}
+.rv-input-area{background:var(--bg);border-top:1px solid var(--line-soft);}
+.rv-input,.narr-input{background:var(--white)!important;border:1px solid var(--line-soft)!important;color:var(--dark);border-radius:24px!important;}
+.rv-send{background:var(--mint);color:var(--ink);box-shadow:none;width:46px;height:46px;}
+.rv-send:hover{background:var(--mint);}
+.input-tabs{background:none;padding:0;gap:6px;}
+.itab{flex:none;padding:0 14px;height:32px;border-radius:16px;border:1px solid var(--line-soft);color:var(--sub);font-size:13px;}
+.itab.active{background:var(--dark);color:var(--ink);border-color:var(--dark);box-shadow:none;}
+.ended-bar{background:var(--bg);color:var(--gray);border-top:1px solid var(--line-soft);}
+
+/* SNS */
+.compose-box textarea{color:var(--dark);}
+.compose-footer{border-top-color:var(--line-soft);}
+.sns-av{box-shadow:0 0 0 2px var(--mint);}
+.sns-av.u{box-shadow:none;}
+.sns-acts{border-top-color:var(--line-soft);}
+.sa{color:var(--sub);}
+.sa.liked{color:var(--hot);}
+.cmt-area,.cmt-ir{border-top-color:var(--line-soft);}
+.cmt-item{border-bottom-color:#1E2129;}
+.cmt-replies{border-left-color:var(--line-soft);}
+
+/* 통화 */
+.call-main{background:none;border:none;padding:24px 16px 8px;margin:0;}
+.call-av{width:144px;height:144px;background:var(--white);box-shadow:0 0 0 10px var(--bg),0 0 0 12px var(--mint);margin:14px 0 22px;}
+.call-av.ring{animation:none;box-shadow:0 0 0 10px var(--bg),0 0 0 12px var(--lime);}
+.call-name-b{font-family:var(--disp);font-weight:400;font-size:30px;letter-spacing:.02em;}
+.call-stxt{color:var(--gray);font-size:14px;}
+.call-tmr{font-family:var(--disp);font-weight:400;font-size:24px;color:var(--mint);letter-spacing:.08em;}
+.cbtn svg{width:26px;height:26px;}
+.cbtn.start{width:68px;height:68px;background:#22C55E;}
+.cbtn.end{width:76px;height:76px;background:#FF4D4D;}
+.cbtn.end svg{transform:rotate(135deg);}
+.cbtn.sm{width:60px;height:60px;background:var(--white);border:1px solid var(--line-soft);color:var(--dark);}
+.cbtn.sm.on{background:var(--dark);color:var(--ink);}
+.call-chat-box{background:var(--white);border:1px solid var(--line-soft);border-radius:20px;}
+.ccb-title{background:none;color:var(--dark);font-size:12px;letter-spacing:.06em;border-bottom:1px solid var(--line-soft);}
+.rec-dot{background:#FF5C5C;}
+.ccb-ir{border-top-color:var(--line-soft);}
+.ccb-input{background:var(--bg);border-color:var(--line-soft);color:var(--dark);border-radius:22px;padding:10px 16px;font-size:15px;}
+.ccb-send{background:var(--mint);color:var(--ink);border-radius:20px;font-weight:700;padding:0 16px;}
+.call-chat-box{box-sizing:border-box;}
+.ccb-input{min-width:0;width:auto;}
+.ccb-send{flex-shrink:0;height:42px;}
+.cli{margin-bottom:10px;}
+.cli-dur{color:var(--mint);}
+
+/* 일상 */
+.daily-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 16px 0;}
+.dtile{height:132px;border-radius:20px;border:1px solid var(--line-soft);background:var(--white);color:var(--dark);padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;font-family:inherit;cursor:pointer;}
+.dtile.on{background:var(--mint);color:var(--ink);border-color:var(--mint);}
+.dtile b{display:block;font-family:var(--disp);font-weight:400;font-size:20px;}
+.dtile small{font-size:13px;opacity:.85;}
+.dli-ttl{font-size:16px;}
+.dli-time{color:var(--gray);}
+.dli-prev{font-size:14px;color:var(--sub);}
+
+/* 일기 */
+.mood-card{margin:16px 16px 0;background:var(--white);border:1px solid var(--line-soft);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:14px;}
+.mood-tile{width:46px;height:46px;border-radius:14px;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.cal-card{margin:12px 16px 0;padding:12px;}
+.cal-day{color:var(--dark);}
+.cal-day.today{background:var(--mint);color:var(--ink);}
+.cal-day.has-entry::after{background:var(--lime);}
+.cal-day.other-month{color:#3A3F4A;}
+.cal-day.sun{color:#FF7A7A;}
+.cal-day.sat{color:#7AB8FF;}
+.diary-card{margin-bottom:12px;}
+.diary-card-hdr{border-bottom-color:var(--line-soft);}
+.diary-card-body.note{background:var(--mint-p);}
+
+/* 설정 */
+.dream-card{background:var(--white);border:1px solid var(--line-soft);color:var(--dark);}
+.df label{color:var(--gray);opacity:1;font-size:12px;}
+.df input,.df textarea{background:var(--bg);border:1px solid var(--line-soft);color:var(--dark);}
+.df input::placeholder,.df textarea::placeholder{color:var(--faint);}
+.story-card{margin:0 16px;padding:2px 16px;}
+.row-btn{width:100%;display:flex;align-items:center;gap:12px;padding:14px 0;border:none;background:none;color:var(--dark);font-family:inherit;font-size:15px;cursor:pointer;text-align:left;}
+.row-btn span{margin-left:auto;font-size:13px;color:var(--gray);}
+.row-btn svg{color:var(--gray);}
+
+/* 시트·오버레이 */
+.ovl-panel,.dd-panel,.cld-panel{background:var(--bg);border:1px solid var(--line-soft);border-bottom:none;}
+.more-item .qa-ic{background:var(--mint-p);color:var(--mint);}
+.sheet-grip{background:var(--line-soft);}
+.toast{background:var(--dark);color:var(--ink);}
+.toast.err{background:#FF4D4D;color:#fff;}
 </style>
 </head>
 <body>
 <div class="stars-bg" id="sBg"></div>
 <div class="app">
-  <div class="hdr">
-    <div class="hdr-logo">白石 杏</div>
-    <div class="hdr-status"><div class="dot"></div>온라인</div>
-  </div>
-  <nav class="tab-nav">
-    <button class="tb active" onclick="sw('home',this)"><span class="ti">🏠</span>홈<span class="nb" id="hBadge">2</span></button>
-    <button class="tb" onclick="sw('sns',this)"><span class="ti">📱</span>SNS</button>
-    <button class="tb" onclick="sw('chat',this)"><span class="ti">💬</span>채팅</button>
-    <button class="tb" onclick="sw('call',this)"><span class="ti">📞</span>통화</button>
-    <button class="tb" onclick="sw('daily',this)"><span class="ti">🌟</span>일상</button>
-    <button class="tb" onclick="sw('diary',this)"><span class="ti">📔</span>일기</button>
-    <button class="tb" onclick="sw('gallery',this)"><span class="ti">🖼️</span>사진첩</button>
-    <button class="tb" onclick="sw('dream',this)"><span class="ti">⚙️</span>설정</button>
+  <header class="hdr">
+    <div class="hdr-logo">ANSOU</div>
+    <button class="icon-btn" onclick="sw('home')" aria-label="알림"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="bell-dot" id="bellDot"></span></button>
+  </header>
+  <nav class="tab-nav" aria-label="메뉴">
+    <button class="tb active" data-tab="home" onclick="sw('home')"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></span>홈<span class="nb" id="hBadge" style="display:none;"></span></button>
+    <button class="tb" data-tab="chat" onclick="sw('chat')"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.8A8 8 0 1 1 21 12z"/></svg></span>채팅</button>
+    <button class="tb" data-tab="sns" onclick="sw('sns')"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg></span>SNS</button>
+    <button class="tb" data-tab="call" onclick="sw('call')"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>통화</button>
+    <button class="tb" data-tab="more" onclick="openMore()"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg></span>더보기</button>
   </nav>
 
   <!-- 홈 -->
   <div class="tc active" id="tab-home">
     <div class="scroll">
-      <div class="prof-card">
-        <div class="prof-top">
-          <div class="prof-av">⭐</div>
-          <div>
-            <div class="prof-name">白石 杏</div>
-            <div class="prof-sub">Shiraishi An · @LightUptheFire</div>
-            <div class="prof-tag">✦ 찬란한 비너스, 노래하는 소녀</div>
-          </div>
-        </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.2);font-size:11px;opacity:.85;display:flex;align-items:center;gap:6px;">
-          <span style="opacity:.7;">오늘의 상태</span>
-          <span id="homeMoodBadge" style="background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;">일기 탭에서 확인해봐요</span>
-        </div>
-        <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-size:11px;">
-          <span id="metBadge" style="opacity:.9;">만난 지 계산 중...</span>
-          <button onclick="openTimeline()" style="background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:20px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">타임라인 ›</button>
+      <div class="hero">
+        <img class="hero-img" src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="시라이시 안">
+        <span class="sticker">ONLINE</span>
+        <div class="hero-cap">
+          <div class="hero-name">白石 杏</div>
+          <div class="hero-sub">시라이시 안 · Vivid BAD SQUAD · @LightUptheFire</div>
         </div>
       </div>
-      <div class="sec-title" style="display:flex;align-items:center;justify-content:space-between;padding-right:14px;">✦ 새로운 알림 <button onclick="markAllRead()" style="background:none;border:none;font-size:10px;color:var(--mint);cursor:pointer;font-family:'Noto Sans KR',sans-serif;">전체 읽음</button></div>
+      <div class="stat-row">
+        <button class="stat" onclick="openTimeline()"><span class="stat-l">만난 지</span><span class="stat-big" id="metBadge">D+0</span></button>
+        <button class="stat" onclick="sw('diary')"><span class="stat-l">오늘의 안</span><span class="stat-mood" id="homeMoodBadge">일기 탭에서 확인해봐요</span></button>
+      </div>
+      <div class="quick-grid">
+        <button class="qa" onclick="quick('chat')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.8A8 8 0 1 1 21 12z"/></svg></span>연락하기</button>
+        <button class="qa" onclick="quick('call')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>전화</button>
+        <button class="qa" onclick="quick('daily')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-4.9 3.6 1.9-5.8L4 8.8h6.1z"/></svg></span>일상</button>
+        <button class="qa" onclick="quick('diary')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>일기</button>
+      </div>
+      <div class="sec-row"><div class="sec-a">NOW</div><button class="link-btn" onclick="markAllRead()">모두 읽음</button></div>
       <div id="notifList">
 
 
@@ -353,6 +732,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <!-- SNS -->
   <div class="tc" id="tab-sns">
     <div class="scroll">
+      <div class="page-hd"><div><h2>SNS</h2><p>다들 오늘 뭐 했을까</p></div></div>
       <div class="compose-box">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">
           <div class="sns-av u"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" alt="소우타"></div>
@@ -378,16 +758,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <div class="tc" id="tab-chat">
     <div id="chatListWrap">
       <div class="chat-list">
-        <button class="new-chat-btn" onclick="newChat()">✦ 안에게 먼저 연락하기</button>
-        <div style="margin:4px 14px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-          <button onclick="newSideChat('시노노메 아키토')" style="background:linear-gradient(135deg,#FF7620,#ffaa55);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">彰 아키토</button>
-          <button onclick="newSideChat('쿠사나기 네네')" style="background:linear-gradient(135deg,#33dd99,#00c97a);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">寧 네네</button>
-          <button onclick="newSideChat('텐마 사키')" style="background:linear-gradient(135deg,#FFDE45,#ffc700);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">咲 사키</button>
-          <button onclick="newSideChat('아키야마 미즈키')" style="background:linear-gradient(135deg,#DDAACc,#cc88bb);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">瑞 미즈키</button>
-          <button onclick="newSideChat('키리타니 하루카')" style="background:linear-gradient(135deg,#99CDFF,#66aaee);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">春 하루카</button>
-          <button onclick="newSideChat('카미시로 루이')" style="background:linear-gradient(135deg,#bb88ee,#9955dd);color:#fff;border:none;border-radius:10px;padding:8px 4px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">類 루이</button>
-        </div>
-        <div class="sec-title" style="margin-top:2px;">채팅 기록</div>
+        <div class="page-hd"><div><h2>CHAT</h2><p>누구랑 이야기할까?</p></div></div>
+        <button class="new-chat-btn" onclick="newChat()">
+          <img class="nc-av" src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="">
+          <span class="nc-txt"><b>시라이시 안</b><small>먼저 연락해볼까?</small></span>
+          <span class="nc-go">새 대화</span>
+        </button>
+        <div class="sec-title">FRIENDS</div>
+        <div class="char-strip" id="charStrip"></div>
+        <div class="sec-title">HISTORY</div>
         <div id="roomList"></div>
       </div>
     </div>
@@ -396,19 +775,20 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 
   <!-- 통화 -->
   <div class="tc" id="tab-call">
-    <div class="scroll" style="padding:14px 0 80px;">
+    <div class="scroll">
+      <div class="page-hd"><div><h2>CALL</h2><p>목소리가 듣고 싶을 때</p></div></div>
       <div class="call-main">
-        <div class="call-av" id="callAv">⭐</div>
+        <div class="call-av" id="callAv"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="시라이시 안"></div>
         <div class="call-name-b">시라이시 안</div>
         <div class="call-stxt" id="callStxt">통화를 시작해보세요</div>
         <div class="call-tmr" id="callTmr">00:00</div>
         <div class="call-btns" id="callBtns">
           <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-            <button class="cbtn start" onclick="startCall('out')" title="내가 전화 걸기">📞</button>
+            <button class="cbtn start" onclick="startCall('out')" title="내가 전화 걸기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
             <div style="font-size:11px;color:var(--gray);">전화 걸기</div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-            <button class="cbtn start" style="background:var(--mint-l);animation:rp 2s ease-out infinite;" onclick="startCall('in')" title="안에게 전화 받기">📲</button>
+            <button class="cbtn start" style="background:var(--lime);color:var(--ink);" onclick="startCall('in')" title="안에게 전화 받기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v6h6"/><path d="m22 2-6 6"/><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
             <div style="font-size:11px;color:var(--gray);">전화 받기</div>
           </div>
         </div>
@@ -421,8 +801,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
           </div>
         </div>
       </div>
-      <div style="padding:0 14px;">
-        <div class="sec-title" style="padding:0 0 8px;">📋 통화 기록</div>
+      <div style="padding:0 16px;">
+        <div class="sec-title" style="padding:14px 4px 10px;">HISTORY</div>
         <div id="callLogList"><div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">통화 기록이 없어요</div></div>
       </div>
     </div>
@@ -431,11 +811,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <!-- 일상 -->
   <div class="tc" id="tab-daily">
     <div class="scroll">
-      <div class="daily-btns">
-        <button class="dbtn" onclick="startDailyAI()">✦ 안이 먼저 말 걸어오기</button>
-        <button class="dbtn outline" onclick="startDailyMe()">내가 먼저 말 걸기</button>
+<div class="page-hd"><div><h2>DAILY</h2><p>안과 함께하는 장면 속으로</p></div></div>
+      <div class="daily-tiles">
+        <button class="dtile on" onclick="startDailyAI()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-4.9 3.6 1.9-5.8L4 8.8h6.1z"/></svg><span><b>안이 먼저</b><small>랜덤 장면에서 말을 걸어와</small></span></button>
+        <button class="dtile" onclick="startDailyMe()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span><b>내가 먼저</b><small>첫 마디는 소우타가</small></span></button>
       </div>
-      <div class="sec-title" style="margin-top:10px;">일상 기록</div>
+      <div class="sec-title">SCENES</div>
       <div id="dailyList"><div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">아직 기록이 없어요</div></div>
     </div>
   </div>
@@ -443,25 +824,24 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <!-- 일기/노트 -->
   <div class="tc" id="tab-diary">
     <div class="scroll" style="padding-bottom:30px;">
-      <!-- 감정 상태 카드 -->
-      <div id="diaryMoodCard" style="margin:14px;background:linear-gradient(135deg,#f0f9fc,#d8f4fb);border-radius:var(--r);border:1px solid var(--mint-l);padding:16px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:32px;" id="moodEmoji">✨</div>
+<div class="page-hd"><div><h2>DIARY</h2><p>안의 일기장, 몰래 펼쳐보기</p></div></div>
+      <div class="mood-card" id="diaryMoodCard">
+        <div class="mood-tile" id="moodEmoji">✨</div>
         <div>
-          <div style="font-size:11px;color:var(--gray);margin-bottom:3px;">오늘 杏의 상태</div>
-          <div style="font-size:13px;font-weight:500;color:var(--dark);" id="moodText">불러오는 중...</div>
+          <div style="font-size:12px;color:var(--gray);">오늘 杏의 상태</div>
+          <div style="font-size:16px;font-weight:700;margin-top:2px;" id="moodText">불러오는 중...</div>
         </div>
       </div>
-      <div class="sec-title">📔 일기</div>
-      <div style="margin:0 14px 10px;display:flex;gap:8px;">
-        <button onclick="generateDiary()" style="flex:1;background:var(--mint);color:#fff;border:none;border-radius:var(--rs);padding:11px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">✦ 오늘 일기 생성</button>
-        <button onclick="generateNote()" style="flex:1;background:var(--white);color:var(--mint);border:1.5px solid var(--mint);border-radius:var(--rs);padding:11px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">📝 메모/노트</button>
+      <div style="margin:10px 16px 0;display:flex;gap:10px;">
+        <button class="btn-a" onclick="generateDiary()">오늘 일기 쓰기</button>
+        <button class="btn-ghost" onclick="generateNote()">메모 남기기</button>
       </div>
       <!-- 달력 뷰 -->
-      <div style="margin:0 14px 10px;">
+      <div class="cal-card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <button onclick="calPrev()" style="background:none;border:none;color:var(--mint);font-size:18px;cursor:pointer;padding:4px 8px;">‹</button>
-          <div id="calTitle" style="font-size:13px;font-weight:700;color:var(--dark);"></div>
-          <button onclick="calNext()" style="background:none;border:none;color:var(--mint);font-size:18px;cursor:pointer;padding:4px 8px;">›</button>
+          <button onclick="calPrev()" aria-label="이전 달" style="background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer;width:40px;height:40px;">‹</button>
+          <div id="calTitle" style="font-family:var(--disp);font-size:18px;letter-spacing:.04em;"></div>
+          <button onclick="calNext()" aria-label="다음 달" style="background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer;width:40px;height:40px;">›</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
           <div style="text-align:center;font-size:10px;color:#ff5c5c;padding:4px 0;">일</div>
@@ -474,6 +854,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
         </div>
         <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
       </div>
+      <div class="sec-title">ENTRIES</div>
       <div id="diaryList"></div>
     </div>
   </div>
@@ -482,23 +863,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   <!-- 사진첩 -->
   <div class="tc" id="tab-gallery">
     <div class="scroll" style="padding-bottom:30px;">
-      <div style="margin:12px 14px 8px;display:flex;align-items:center;justify-content:space-between;">
-        <div class="sec-title" style="padding:0;">🖼️ 사진첩</div>
-        <label style="background:var(--mint);color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">
-          + 사진 추가 <input type="file" id="galleryInput" accept="image/*" multiple style="display:none;" onchange="addGalleryImages(this)">
-        </label>
+<div class="page-hd"><div><h2>ALBUM</h2><p>함께 남긴 사진들</p></div><label style="background:var(--mint);color:var(--ink);border-radius:22px;height:44px;padding:0 16px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>사진 추가<input type="file" id="galleryInput" accept="image/*" multiple style="display:none;" onchange="addGalleryImages(this)"></label></div>
+      <div style="margin:14px 16px 10px;">
+        <input id="galleryCaption" placeholder="캡션 입력 (선택)" style="width:100%;box-sizing:border-box;border:1px solid var(--line-soft);border-radius:22px;height:44px;padding:0 16px;font-size:14px;font-family:inherit;color:var(--dark);background:var(--white);outline:none;">
       </div>
-      <div style="margin:0 14px 10px;">
-        <input id="galleryCaption" placeholder="캡션 입력 (선택)" style="width:100%;border:1px solid var(--mint-l);border-radius:var(--rs);padding:8px 12px;font-size:12px;font-family:'Noto Sans KR',sans-serif;color:var(--dark);background:var(--white);outline:none;margin-bottom:6px;">
-      </div>
-      <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 14px;"></div>
+      <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 16px;"></div>
     </div>
   </div>
 
   <!-- 설정 -->
   <div class="tc" id="tab-dream">
-    <div class="scroll" style="padding:12px 0 80px;">
-      <div style="padding:4px 16px 8px;font-size:12px;color:var(--gray);line-height:1.7;">안 봇이 소우타를 정확히 알 수 있도록 프로필을 설정해줘. 이 정보를 기반으로 모든 대화가 이루어져.</div>
+    <div class="scroll">
+      <div class="page-hd"><div><h2>SETTINGS</h2><p>모든 대화는 이 프로필을 바탕으로 이루어져</p></div></div>
+      <div class="sec-title">DREAM PROFILE</div>
       <div class="dream-card">
         <div class="df"><label>이름 (풀네임)</label><input id="d-name" value="" placeholder="사기하시 소우타"></div>
         <div class="df"><label>한자 이름 (풀네임)</label><input id="d-kanji" value="" placeholder="鷺橋 颯太"></div>
@@ -508,8 +885,23 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
         <div class="df"><label>성격 / 특징</label><textarea id="d-pers" rows="3"></textarea></div>
         <div class="df"><label>안과의 관계 / 드림 서사</label><textarea id="d-rel" rows="4"></textarea></div>
         <div class="df"><label>추가 설정</label><textarea id="d-extra" rows="3" placeholder="기타 드림 서사, 특수 설정 등..."></textarea></div>
-        <button class="save-btn" onclick="saveDP()">💾 저장하기</button>
+        <button class="save-btn" onclick="saveDP()">저장하기</button>
         <div class="saved-ok" id="savedOk">✓ 저장됐어요!</div>
+      </div>
+      <div class="sec-title">AI</div>
+      <div class="ai-card" style="margin-top:0;">
+        <div class="ai-card-row">
+          <div>
+            <div style="font-size:15px;font-weight:700;">AI 연결 확인</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px;">답장이 안 오면 여기서 먼저 확인해봐요</div>
+          </div>
+          <button class="ai-test-btn" id="aiTestBtn" onclick="testAI()">테스트</button>
+        </div>
+        <div class="ai-result" id="aiResult"></div>
+      </div>
+      <div class="sec-title">STORY</div>
+      <div class="story-card">
+        <button class="row-btn" onclick="openTimeline()">우리의 타임라인<span>1화 ~ 5화</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
     </div>
   </div>
@@ -541,6 +933,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
         </div>
         <button class="rv-send" onclick="sendD()" style="flex-shrink:0;align-self:flex-end;margin-bottom:0;">➤</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 더보기 시트 -->
+<div class="overlay" id="moreOvl" onclick="if(event.target===this)closeMore()">
+  <div class="ovl-panel more-panel" role="dialog" aria-label="더보기">
+    <div class="sheet-grip"></div>
+    <div class="more-list">
+      <button class="more-item" onclick="sw('daily')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-4.9 3.6 1.9-5.8L4 8.8h6.1z"/></svg></span><span><b>일상</b><small>안과 함께하는 장면 속으로</small></span></button>
+      <button class="more-item" onclick="sw('diary')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span><span><b>일기</b><small>안의 일기, 메모, 오늘의 기분</small></span></button>
+      <button class="more-item" onclick="sw('gallery')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span><span><b>사진첩</b><small>함께 남긴 사진들</small></span></button>
+      <button class="more-item" onclick="sw('dream')"><span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span><b>설정</b><small>드림 프로필 · AI 연결 확인</small></span></button>
     </div>
   </div>
 </div>
@@ -634,12 +1039,22 @@ function buildSys(extra=''){
 지금 대화 상대는 사기하시 소우타(鷺橋 颯太)입니다. 소우타의 시점에서 안과 대화하는 드림 기반 롤플레이입니다.
 
 【시라이시 안 — 캐릭터 설정】
-- 카미야마 고등학교 2-A반, 만 17세, 여자, 160cm, Vivid BAD SQUAD 멤버
+- 카미야마 고등학교 2-A반, 만 17세, 여자, 160cm, 생일 7월 26일, Vivid BAD SQUAD 멤버(보컬)
+- 파트너는 아즈사와 코하네. 같은 유닛 동료는 시노노메 아키토, 아오야기 토우야
+- 2-A반 반 친구: 시노노메 아키토, 쿠사나기 네네. 1학년(1-A) 때는 아키야마 미즈키와 같은 반이었음
+- 키리타니 하루카와는 초등학생 때부터의 소꿉친구이자 절친. 어릴 땐 달리기, 급식 빨리 먹기로 승부하던 "공부 빼고 모든 것의 라이벌". 학교가 달라져도 자주 만남
+- 아키토와는 중학생 때 WEEKEND GARAGE에서 알게 됐고 지금은 티격태격하는 라이벌이자 든든한 동료
+- 미즈키와 패션 얘기를 즐겨 함. 미즈키가 무서운 이야기로 놀려서 곤란해함
+- 1학년 땐 풍기위원(친구가 졸라서 들어갔는데, 교칙 지키라고 말할 때마다 긴장해서 말을 더듬음), 2학년은 방송위원. 농구부 등 여러 운동부에 대타로 도와주러 감
 - 꿈: 아버지 시라이시 KEN의 RADder가 개최한 전설의 "RAD WEEKEND"를 뛰어넘는 최고의 이벤트 개최
 - 아버지의 카페 "WEEKEND GARAGE"에서 일하며 라이브 스페이스도 운영. 어머니는 학교 교사
 - 성격: 시원시원하고 지기 싫어하는 성격. 밝고 활기차며 직선적. 승부욕 강함. 솔직함
 - 사람 마음을 잘 읽음. 코하네의 재능을 보며 자극과 불안을 동시에 느낌
 - 귀신의 집을 무서워함. 요리는 잘 못하는 편이나 서빙은 완벽
+- 취미: 민트 키우기. 특기: 커피·홍차 내리기(카페 일 덕분)
+- 좋아하는 음식: 럼레이즌 아이스크림. 싫어하는 음식: 토마토
+- 수학·고전·화학 등 공부 전반에 약함. 아직 산타를 믿음. 휴대폰에 '코하네 🐹'라는 햄스터 사진 앨범이 있음
+- 친한 사람에게 다정하고 너그러움. 주변 사람이 최선을 다하도록 북돋아 줌
 - SNS 계정: @LightUptheFire
 
 【소우타(드림주) 프로필】
@@ -717,9 +1132,29 @@ ${extra}`;
 async function api(messages,sys){
   const s=sys||buildSys();
   const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:s,messages})});
-  const d=await r.json();
-  return d.content||'...';
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok||!d.content) throw new Error(d.error||('응답 오류 '+r.status));
+  return d.content;
 }
+function toast(msg,isErr){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.appendChild(t);}
+  t.textContent=msg;t.classList.toggle('err',!!isErr);t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),isErr?3500:2000);
+}
+function aiFail(e){console.error(e);toast('답장을 받지 못했어요. 잠시 후 다시 보내줘',true);}
+async function testAI(){
+  const btn=document.getElementById('aiTestBtn'),out=document.getElementById('aiResult');
+  btn.disabled=true;btn.textContent='확인 중...';out.className='ai-result';
+  try{
+    const r=await fetch('/api/health');const d=await r.json();
+    if(d.ok){out.className='ai-result ok';out.textContent=`✓ 정상 작동 · 모델 ${d.servedModel||d.model} · ${(d.latencyMs/1000).toFixed(1)}초\n응답: "${d.sample}"`;}
+    else{out.className='ai-result fail';out.textContent=`✕ 연결 실패 · 모델 ${d.model}\n${d.error}`;}
+  }catch(e){out.className='ai-result fail';out.textContent='✕ 서버에 연결할 수 없어요';}
+  out.style.whiteSpace='pre-line';
+  btn.disabled=false;btn.textContent='테스트';
+}
+function dayKey(ts){const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 
 // 유틸
 function ar(el){
@@ -830,7 +1265,7 @@ function mkTyping(avHTML){
 // 알림 읽기
 function rdN(id,tab,action){
   const el=document.getElementById(id);if(el){el.classList.add('read');el.querySelector('.nbadge')?.remove();}
-  const btn=document.querySelector(`.tb[onclick="sw('${tab}',this)"]`);if(btn)sw(tab,btn);
+  sw(tab);
   // 탭 이동 후 액션 실행
   setTimeout(()=>{
     if(action==='newChat'){
@@ -848,28 +1283,28 @@ function rdN(id,tab,action){
   },50);
 }
 function addNotif(icon,type,msg,action){
-  const list=document.getElementById('notifList');
-  const d=document.createElement('div');d.className='notif-card';
-  d.innerHTML=`<div class="notif-type">${icon} ${type} <span class="nbadge">NEW</span></div><div class="notif-msg">${esc(msg)}</div><div class="notif-time">방금 전</div>`;
-  d.onclick=()=>{
-    d.classList.add('read');d.querySelector('.nbadge')?.remove();
-    if(action){
-      const tabId=action==='newChat'?'chat':'sns';
-      const btn=document.querySelector(`.tb[onclick="sw('${tabId}',this)"]`);
-      if(btn)sw(tabId,btn);
-      setTimeout(()=>{
-        if(action==='newChat'){
-          const activeRoom=rooms.findIndex(r=>!r.ended);
-          if(activeRoom>=0){openRoom(activeRoom);}
-          else{newChat();}
-        } else if(action==='snsTop'){
-          const scroll=document.querySelector('#tab-sns .scroll');
-          if(scroll){scroll.scrollTop=0;}
-        }
-      },50);
+  // 새로고침해도 사라지지 않도록 저장소에 넣고 다시 그림
+  notifStore.push({icon,type,msg,date:nowt(),day:dayKey(Date.now()),kind:'event',action:action||null,read:false});
+  if(notifStore.length>60) notifStore=notifStore.slice(-60);
+  renderNotifFromStore();updateHBadge();saveNotifs();
+}
+function runNotifAction(action){
+  if(!action) return;
+  const tabId=action==='newChat'?'chat':action==='call'?'call':'sns';
+  sw(tabId);
+  setTimeout(()=>{
+    if(action==='newChat'){
+      const activeRoom=rooms.findIndex(r=>!r.ended);
+      if(activeRoom>=0){if(rooms[activeRoom].charName)openSideRoom(activeRoom);else openRoom(activeRoom);}
+      else{newChat();}
+    } else if(action==='snsTop'){
+      const scroll=document.querySelector('#tab-sns .scroll');
+      if(scroll){scroll.scrollTop=0;}
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else if(action==='call'){
+      if(!callOn) startCall('in');
     }
-  };
-  list.prepend(d);
+  },50);
 }
 
 // ══ SNS ══
@@ -900,7 +1335,7 @@ function mkPost(p){
       ${avHTML}
       <div><div class="sns-nm">${esc(p.nm)}</div><div class="sns-hl">${esc(p.hl)} · ${p.ts?liveTime(p.ts):p.time}</div></div>
     </div>
-    <div class="sns-body">${esc(p.body)}</div>
+    <div class="sns-body">${renderCmtText(p.body)}</div>
     ${p.img?`<img src="${p.img}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:8px;border:1px solid var(--mint-l);" onclick="window.open('${p.img}','_blank')">`:''}
     <div class="sns-acts">
       <button class="sa${p.liked?' liked':''}" onclick="toggleLk('${p.id}',this)">${p.liked?'💗':'🤍'} ${p.lk}</button>
@@ -965,7 +1400,8 @@ async function addCmt(id){
       sys2=buildSideCharSys(sc,'\n소우타가 내 SNS 게시글에 댓글을 달았다. 짧게 1문장으로 답댓글. 반드시 맨 앞에 @태그 붙일 것. 대사만.');
       prompt2=`[소우타(${myHandle})가 댓글 달았어: "${txt}"]`;
     } else return;
-    const r=await api([{role:'user',content:prompt2}],sys2);
+    let r;
+    try{r=await api([{role:'user',content:prompt2}],sys2);}catch(e){return;}
     const sp=r.replace(/\(.*?\)/gs,'').trim();
     if(!sp) return;
     const ownerReply={who:postOwnerHandle,txt:sp,ts:new Date()};
@@ -1034,7 +1470,7 @@ function makeCmtHTML(c){
     <div class="cmt-body">
       <div class="cmt-who">${esc(displayName)} <span style="font-weight:400;color:var(--gray);font-size:11px;">${esc(handle)}</span></div>
       <div class="cmt-txt">${renderCmtText(c.txt)}</div>
-      <div class="cmt-meta">${c.ts?liveTime(new Date(c.ts)):'방금 전'} <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:0 4px;">답글</button></div>
+      <div class="cmt-meta">${c.ts?liveTime(new Date(c.ts)):'방금 전'} <button onclick="toggleReplyInp('${cmtId}')" style="background:none;border:none;color:var(--mint);font-size:10px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;padding:0 4px;">답글</button></div>
       ${repliesHtml?`<div class="cmt-replies" id="replies-${cmtId}">${repliesHtml}</div>`:`<div class="cmt-replies" id="replies-${cmtId}" style="display:none;"></div>`}
       <div class="reply-inp-area" id="rinp-${cmtId}">
         <div class="cmt-av me" style="width:22px;height:22px;overflow:hidden;flex-shrink:0;"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/souta.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
@@ -1131,7 +1567,7 @@ async function sendReply(cmtId){
 const cmtMap={};
 function renderCmtText(txt){
   // @태그 파란색으로 표시
-  return esc(txt).replace(/@(\S+)/g,'<span style="color:var(--mint);font-weight:500;">@$1</span>');
+  return esc(txt).replace(/([@#][^\s<@#]+)/g,'<span class="tag">$1</span>');
 }
 let pendingImgFile=null;
 function previewImg(input){
@@ -1153,7 +1589,8 @@ function clearImg(){
 async function uploadImg(file){
   const fd=new FormData();fd.append('image',file);
   const r=await fetch('/api/upload',{method:'POST',body:fd});
-  const d=await r.json();
+  const d=await r.json().catch(()=>({}));
+  if(!d.ok) toast('사진 업로드에 실패했어요'+(d.error?': '+d.error:''),true);
   return d.ok?d.url:null;
 }
 async function postMine(){
@@ -1365,21 +1802,19 @@ renderSNS();
 let rooms=[];let curRoom=null;let chatLk=false;
 function renderRooms(){
   const list=document.getElementById('roomList');list.innerHTML='';
-  if(!rooms.length){list.innerHTML='<div style="text-align:center;padding:24px;font-size:12px;color:var(--gray);">아직 채팅 기록이 없어요</div>';return;}
+  if(!rooms.length){list.innerHTML='<div class="empty"><b>💬</b>아직 채팅 기록이 없어요<br>안에게 먼저 연락해볼까?</div>';return;}
   // 최대 30개 유지
   if(rooms.length>30) rooms=rooms.slice(0,30);
   // 날짜별 그룹화
   const groups={};
   rooms.forEach((r,i)=>{
-    const dateKey=r.id?new Date(r.id).toISOString().slice(0,10):(r.st||'기타');
+    const dateKey=r.id?dayKey(r.id):(r.st||'기타');
     if(!groups[dateKey]) groups[dateKey]=[];
     groups[dateKey].push({room:r,idx:i});
   });
   Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(dateKey=>{
     const items=groups[dateKey];
-    const d=new Date(dateKey);
-    const days=['일','월','화','수','목','금','토'];
-    const label=isNaN(d)? dateKey : `${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+    const label=items[0].room.id? getDateWithDay(items[0].room.id) : dateKey;
     const sep=document.createElement('div');
     sep.style.cssText='display:flex;align-items:center;gap:8px;padding:8px 14px 4px;';
     sep.innerHTML=`<div style="flex:1;height:1px;background:var(--mint-l);"></div><div style="font-size:10px;color:var(--mint);font-weight:700;white-space:nowrap;">${esc(label)}</div><div style="flex:1;height:1px;background:var(--mint-l);"></div>`;
@@ -1388,11 +1823,11 @@ function renderRooms(){
       const last=r.msgs[r.msgs.length-1];
       const{speech}=last?parseMsg(last.content):{speech:'...'};
       const d=document.createElement('div');d.className='room-item';
-      const sc2=room.charName?sideChars.find(s=>s.name===room.charName):null;
+      const sc2=r.charName?sideChars.find(s=>s.name===r.charName):null;
       const sc2img=sc2?sideCharImages[sc2.handle]:null;
       const riAv=sc2?(sc2img?`<div class="ri-av" style="overflow:hidden;"><img src="${sc2img}" alt="${sc2.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`):`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
       const riName=sc2?sc2.nm+' '+sc2.icon:'시라이시 안 ⭐';
-      d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<div class="ri-badge">진행중</div>':''}</div>`;
+      d.innerHTML=`${riAv}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}"${esc(speech.slice(0,28))}..."</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<span class="chip live" style="margin-top:4px;">진행 중</span>':''}</div>`;
       d.onclick=()=>{if(r.charName)openSideRoom(i);else openRoom(i);};list.appendChild(d);
     });
   });
@@ -1409,6 +1844,7 @@ async function newSideChat(charName){
 }
 
 function openSideRoom(i){
+  document.body.classList.add('in-room');
   curRoom=i;const room=rooms[i];
   const c=sideChars.find(s=>s.name===room.charName);
   if(!c){openRoom(i);return;}
@@ -1493,7 +1929,10 @@ async function sendSideMsg(){
   const tyAv=sImg?`<div class="m-av" style="overflow:hidden;"><img src="${sImg}" alt="${c.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="m-av" style="background:${sBg};font-size:11px;color:#fff;font-weight:700;">${sIni}</div>`;
   const ty=mkTyping(tyAv);el.appendChild(ty);el.scrollTop=el.scrollHeight;
   const sys=buildSideCharSys(c,'\n【채팅 포맷】\n대사 먼저, 한 줄 띄고 (괄호 안에 상황·심리 서술). 지문은 반드시 서술형(~했다, ~이었다)으로 끝낼 것. 명사형(~함, ~됨) 절대 금지. 반말/경어는 캐릭터 설정 따름.');
-  const rep=await api(room.hist,sys);ty.remove();
+  let rep;
+  try{rep=await api(room.hist,sys);}
+  catch(e){ty.remove();aiFail(e);chatLk=false;if(snd)snd.disabled=false;saveData();return;}
+  ty.remove();
   const parsed=parseMsg(rep);
   room.msgs.push({role:'assistant',content:rep,speech:parsed.speech,narr:parsed.narr,ts:nowt()});
   room.hist.push({role:'assistant',content:rep});
@@ -1516,6 +1955,7 @@ async function newChat(){
   setTimeout(()=>{const inp=document.getElementById('rvInp');if(inp)inp.focus();},200);
 }
 function openRoom(i){
+  document.body.classList.add('in-room');
   curRoom=i;const room=rooms[i];
   document.getElementById('chatListWrap').style.display='none';
   const rv=document.getElementById('roomView');rv.classList.add('open');
@@ -1547,7 +1987,7 @@ function openRoom(i){
   if(room.ended){const lb=document.createElement('div');lb.className='ended-lbl';lb.textContent='── 채팅 종료 ──';el.appendChild(lb);}
   el.scrollTop=el.scrollHeight;
 }
-function closeRoom(){curRoom=null;document.getElementById('roomView').classList.remove('open');document.getElementById('chatListWrap').style.display='';renderRooms();}
+function closeRoom(){document.body.classList.remove('in-room');curRoom=null;document.getElementById('roomView').classList.remove('open');document.getElementById('chatListWrap').style.display='';renderRooms();}
 function endRoom(i){rooms[i].ended=true;closeRoom();saveData();}
 function appendMsg(i,msg,animate){
   const room=rooms[i];const ts=nowt();room.msgs.push({...msg,ts});
@@ -1585,7 +2025,10 @@ async function sendMsg(){
   room.hist.push({role:'user',content:apiTxt});
   const el=document.getElementById('rvMsgs');
   const ty=mkTyping();if(el){el.appendChild(ty);el.scrollTop=el.scrollHeight;}
-  const rep=await api(room.hist);ty.remove();
+  let rep;
+  try{rep=await api(room.hist);}
+  catch(e){ty.remove();aiFail(e);chatLk=false;if(snd)snd.disabled=false;saveData();return;}
+  ty.remove();
   appendMsg(i,{role:'assistant',content:rep},true);room.hist.push({role:'assistant',content:rep});
   chatLk=false;if(snd)snd.disabled=false;
   renderRooms();
@@ -1626,23 +2069,23 @@ function startCall(dir){
     document.getElementById('callStxt').textContent='시라이시 안이 전화를 걸어왔어...';
     document.getElementById('callBtns').innerHTML=`
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <button class="cbtn end" onclick="rejectCall()">📵</button>
+        <button class="cbtn end" onclick="rejectCall()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
         <div style="font-size:10px;color:var(--gray);">거절</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <button class="cbtn start" onclick="connectCall()">📞</button>
+        <button class="cbtn start" onclick="connectCall()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
         <div style="font-size:10px;color:var(--gray);">받기</div>
       </div>`;
   } else {
     document.getElementById('callStxt').textContent='연결 중...';
-    document.getElementById('callBtns').innerHTML=`<button class="cbtn sm">🔇</button><button class="cbtn end" onclick="endCall()">📵</button><button class="cbtn sm">🔊</button>`;
+    document.getElementById('callBtns').innerHTML=`<button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="음소거"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/></svg></button><button class="cbtn end" onclick="endCall()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button><button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="스피커"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></button>`;
     setTimeout(()=>connectCall(),1400);
   }
 }
 function connectCall(){
   document.getElementById('callAv').classList.remove('ring');
   document.getElementById('callStxt').innerHTML='<b>시라이시 안</b>과 통화 중';
-  document.getElementById('callBtns').innerHTML=`<button class="cbtn sm">🔇</button><button class="cbtn end" onclick="endCall()">📵</button><button class="cbtn sm">🔊</button>`;
+  document.getElementById('callBtns').innerHTML=`<button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="음소거"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/></svg></button><button class="cbtn end" onclick="endCall()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button><button class="cbtn sm" onclick="this.classList.toggle('on')" aria-label="스피커"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></button>`;
   document.getElementById('callTmr').classList.add('vis');
   callInt=setInterval(()=>{callSec++;const m=String(Math.floor(callSec/60)).padStart(2,'0');const s=String(callSec%60).padStart(2,'0');document.getElementById('callTmr').textContent=m+':'+s;},1000);
   document.getElementById('ccBox').style.display='block';
@@ -1651,24 +2094,32 @@ function connectCall(){
     ?'[안이 소우타에게 먼저 전화를 걸었다. 소우타가 받았다. 안이 첫 마디를 건넨다.]'
     :'[소우타가 안에게 전화를 걸었다. 안이 받았다. 안이 첫 마디를 건넨다.]';
   const sys=buildSys('\n【현재 상황: 전화 통화 중】\n- 실제 전화 통화처럼 자연스럽게\n- 대사만. 괄호 서술 없음. 짧게.');
+  callLk=true;
   api([{role:'user',content:callCtx}],sys).then(rep=>{
     const sp=rep.replace(/\(.*?\)/gs,'').trim();
     callHistory.push({role:'user',content:callCtx});
     callHistory.push({role:'assistant',content:sp});
     addCC('an',sp);
-  });
+  }).catch(e=>{
+    // 첫 마디 실패해도 통화는 이어지게 — 맥락만 남겨둠
+    callHistory.push({role:'user',content:callCtx});
+    aiFail(e);
+  }).finally(()=>{callLk=false;});
 }
 function rejectCall(){
   callOn=false;
   document.getElementById('callAv').classList.remove('ring');
+  resetCallUI();
+}
+function resetCallUI(){
   document.getElementById('callStxt').textContent='통화를 시작해보세요';
   document.getElementById('callBtns').innerHTML=`
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <button class="cbtn start" onclick="startCall('out')">📞</button>
+      <button class="cbtn start" onclick="startCall('out')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
       <div style="font-size:11px;color:var(--gray);">전화 걸기</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <button class="cbtn start" style="background:var(--mint-l);animation:rp 2s ease-out infinite;" onclick="startCall('in')">📲</button>
+      <button class="cbtn start" style="background:var(--lime);color:var(--ink);" onclick="startCall('in')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v6h6"/><path d="m22 2-6 6"/><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button>
       <div style="font-size:11px;color:var(--gray);">전화 받기</div>
     </div>`;
 }
@@ -1680,8 +2131,7 @@ async function endCall(){
   const logMsgs=[...callHistory];
   callLogs.unshift({nm:'시라이시 안',time:nowt(),dur,msgs:logMsgs,dir:callDirection});renderCallLogs();await saveData();
   callSec=0;document.getElementById('callTmr').textContent='00:00';document.getElementById('callTmr').classList.remove('vis');
-  document.getElementById('callStxt').textContent='통화를 시작해보세요';
-  document.getElementById('callBtns').innerHTML=`<button class="cbtn start" onclick="startCall()">📞</button>`;
+  resetCallUI();
   document.getElementById('ccBox').style.display='none';document.getElementById('ccMsgs').innerHTML='';
   callHistory=[];callLk=false;
 }
@@ -1699,8 +2149,11 @@ async function sendCC(){
   const inp=document.getElementById('ccInp');const txt=inp.value.trim();if(!txt)return;
   inp.value='';callLk=true;addCC('user',txt);callHistory.push({role:'user',content:txt});
   const sys=buildSys('\n【현재 상황: 전화 통화 중】\n- 실제 전화 통화처럼 대화. 문자가 아닌 말투.\n- "어~", "응응", "잠깐만", "맞아" 같은 구어체 자연스럽게\n- 대사만 출력. 괄호 서술 없음.\n- 배경 소리(연습실 소리, 카페 소리 등) 언급 가능\n- 짧고 자연스럽게. 실제 통화하듯.');
-  const rep=await api(callHistory,sys);const sp=rep.replace(/\(.*?\)/gs,'').trim();
-  addCC('an',sp);callHistory.push({role:'assistant',content:rep});callLk=false;
+  try{
+    const rep=await api(callHistory,sys);const sp=rep.replace(/\(.*?\)/gs,'').trim();
+    addCC('an',sp);callHistory.push({role:'assistant',content:sp});
+  }catch(e){aiFail(e);}
+  callLk=false;
 }
 function renderCallLogs(){
   const list=document.getElementById('callLogList');list.innerHTML='';
@@ -1716,7 +2169,7 @@ function renderCallLogs(){
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="cli-dur">${l.dur}</div>
-        ${l.msgs&&l.msgs.length?`<button onclick="openCallDetail(${i})" style="background:var(--mint-p);border:none;border-radius:10px;padding:4px 10px;font-size:11px;color:var(--mint);cursor:pointer;font-family:'Noto Sans KR',sans-serif;">녹음 보기</button>`:''}
+        ${l.msgs&&l.msgs.length?`<button onclick="openCallDetail(${i})" style="background:var(--mint-p);border:none;border-radius:10px;padding:4px 10px;font-size:11px;color:var(--mint);cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;">녹음 보기</button>`:''}
       </div>`;
     list.appendChild(d);
   });
@@ -1766,15 +2219,22 @@ async function startDailyAI(){
   const m=document.getElementById('dMsgs');
   const ty=mkTyping();if(m){m.appendChild(ty);m.scrollTop=m.scrollHeight;}
   const sys=buildSys(`\n【씬】${sc.sit} ${sc.prompt}`);
-  const first=await api([{role:'user',content:'[안이 소우타에게 먼저 말을 건다]'}],sys);
-  if(m&&ty.parentNode===m)ty.remove();
-  addDMsg({role:'assistant',content:first});
-  log.hist=[{role:'user',content:'[안이 소우타에게 먼저 말을 건다]'},{role:'assistant',content:first}];
+  log.hist=[{role:'user',content:'[안이 소우타에게 먼저 말을 건다]'}];
+  dLk=true;
+  try{
+    const first=await api(log.hist,sys);
+    if(m&&ty.parentNode===m)ty.remove();
+    addDMsg({role:'assistant',content:first});
+    log.hist.push({role:'assistant',content:first});
+  }catch(e){if(m&&ty.parentNode===m)ty.remove();aiFail(e);}
+  dLk=false;
+  saveData();
 }
 function startDailyMe(){
   const sc=scenes[Math.floor(Math.random()*scenes.length)];
   const log={id:Date.now(),title:sc.title,sub:sc.sub,sit:sc.sit,st:nowt(),msgs:[],hist:[],ended:false};
   dLogs.unshift(log);curDIdx=0;dHist=[];openDOvl(log);
+  saveData();
 }
 function openDOvl(log){
   document.getElementById('dOvlTitle').textContent=log.title;
@@ -1809,8 +2269,11 @@ async function sendD(){
   addDMsg({role:'user',content:apiTxt,speech:speechTxt,narr:narrTxt});log.hist.push({role:'user',content:apiTxt});
   const m=document.getElementById('dMsgs');const ty=mkTyping();if(m){m.appendChild(ty);m.scrollTop=m.scrollHeight;}
   const sys=buildSys(`\n【씬】${log.sit}`);
-  const rep=await api(log.hist,sys);ty.remove();
-  addDMsg({role:'assistant',content:rep});log.hist.push({role:'assistant',content:rep});dLk=false;
+  try{
+    const rep=await api(log.hist,sys);ty.remove();
+    addDMsg({role:'assistant',content:rep});log.hist.push({role:'assistant',content:rep});
+  }catch(e){ty.remove();aiFail(e);}
+  dLk=false;
   saveData();
 }
 function handleDK(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendD();}}
@@ -1831,7 +2294,7 @@ function switchDTab(tab){
     speech.style.display='';narr.classList.add('show');if(tB)tB.classList.add('active');
   }
 }
-function endDaily(){if(curDIdx!==null)dLogs[curDIdx].ended=true;closeDailyOvl();}
+function endDaily(){if(curDIdx!==null)dLogs[curDIdx].ended=true;closeDailyOvl();saveData();}
 function closeDailyOvl(){document.getElementById('dailyOvl').classList.remove('open');curDIdx=null;renderDailyList();}
 function renderDailyList(){
   const list=document.getElementById('dailyList');list.innerHTML='';
@@ -1840,7 +2303,7 @@ function renderDailyList(){
   const groups={};
   dLogs.forEach((l,i)=>{
     // st에서 날짜 추출 또는 id(timestamp) 사용
-    const dateKey=l.id?new Date(l.id).toISOString().slice(0,10):'기타';
+    const dateKey=l.id?dayKey(l.id):'기타';
     if(!groups[dateKey]) groups[dateKey]=[];
     groups[dateKey].push({log:l,idx:i});
   });
@@ -1855,7 +2318,7 @@ function renderDailyList(){
     items.forEach(({log:l,idx:i})=>{
       const last=l.msgs[l.msgs.length-1];const{speech}=last?parseMsg(last.content):{speech:'기록 없음'};
       const d=document.createElement('div');d.className='dli';
-      d.innerHTML=`<div class="dli-hdr"><div class="dli-ico">${l.ended?'✅':'🟢'}</div><div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
+      d.innerHTML=`<div class="dli-hdr">${l.ended?'<span class="chip">완료</span>':'<span class="chip live">진행 중</span>'}<div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
       d.onclick=()=>{curDIdx=i;openDOvl(l);};list.appendChild(d);
     });
   });
@@ -1896,7 +2359,9 @@ async function loadMood(){
   // 오늘 처음이면 새로 생성 후 저장
   const dateStr=today.getMonth()+1+'월 '+today.getDate()+'일';
   const sys=buildSys('\n오늘('+dateStr+') 시라이시 안의 감정 상태를 한 문장으로 표현해줘. 15자 이내. 괄호 서술 없이. 이모지 없이 텍스트만.');
-  const rep=await api([{role:'user',content:'[오늘 안의 감정 상태는?]'}],sys);
+  let rep;
+  try{rep=await api([{role:'user',content:'[오늘 안의 감정 상태는?]'}],sys);}
+  catch(e){moodLoaded=false;document.getElementById('moodText').textContent='지금은 불러올 수 없어요';return;}
   const txt=rep.replace(/\(.*?\)/gs,'').trim().slice(0,40);
   const emoji=moodEmojis[Math.floor(Math.random()*moodEmojis.length)];
   document.getElementById('moodEmoji').textContent=emoji;
@@ -1920,15 +2385,9 @@ async function generateDiary(){
   loading.innerHTML='<div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px;"><div class="td"></div><div class="td"></div><div class="td"></div></div>일기를 쓰는 중...';
   list.prepend(loading);
   // 오늘 채팅/일상 대화 요약 추출
-  const today2=new Date().toISOString().slice(0,10);
-  const todayRooms=rooms.filter(r=>{
-    const d=r.id?new Date(r.id).toISOString().slice(0,10):'';
-    return d===today2;
-  });
-  const todayDlogs=dLogs.filter(l=>{
-    const d=l.id?new Date(l.id).toISOString().slice(0,10):'';
-    return d===today2;
-  });
+  const today2=dayKey(Date.now());
+  const todayRooms=rooms.filter(r=>r.id&&dayKey(r.id)===today2);
+  const todayDlogs=dLogs.filter(l=>l.id&&dayKey(l.id)===today2);
   let todayContext='';
   if(todayRooms.length){
     const msgs=todayRooms.flatMap(r=>r.msgs.slice(0,4));
@@ -1946,7 +2405,9 @@ async function generateDiary(){
 - 괄호 서술 없이 일기 본문만
 - 마지막 줄에 짧은 한 마디로 마무리
 ${todayContext?'- 아래 오늘 있었던 일을 자연스럽게 반영해줘:'+todayContext:''}`);
-  const rep=await api([{role:'user',content:'[오늘 일기를 써줘]'}],sys);
+  let rep;
+  try{rep=await api([{role:'user',content:'[오늘 일기를 써줘]'}],sys);}
+  catch(e){loading.remove();aiFail(e);return;}
   loading.remove();
   const entry={type:'diary',date:dateStr,content:rep.trim(),ts:Date.now()};
   diaryList.unshift(entry);
@@ -1971,7 +2432,9 @@ async function generateNote(){
 - 100~180자
 - 안의 말투로. 두서없어도 됨
 - 괄호 서술 없이 메모 내용만`);
-  const rep=await api([{role:'user',content:'[메모 써줘]'}],sys);
+  let rep;
+  try{rep=await api([{role:'user',content:'[메모 써줘]'}],sys);}
+  catch(e){loading.remove();aiFail(e);return;}
   loading.remove();
   const entry={type:'note',noteType,date:dateStr,content:rep.trim(),ts:Date.now()};
   diaryList.unshift(entry);
@@ -1994,7 +2457,7 @@ function renderDiaryList(){
   // 날짜별 그룹화
   const groups={};
   diaryList.forEach(entry=>{
-    const dateKey=entry.ts?new Date(entry.ts).toISOString().slice(0,10):(entry.date||'기타');
+    const dateKey=entry.ts?dayKey(entry.ts):(entry.date||'기타');
     if(!groups[dateKey]) groups[dateKey]=[];
     groups[dateKey].push(entry);
   });
@@ -2034,12 +2497,13 @@ function renderDiaryList(){
 renderDiaryList();
 
 // 일기 탭 진입 시 감정 로드
-function sw(id,btn){
+const MORE_TABS=['daily','diary','gallery','dream'];
+function sw(id){
   document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
-  if(id==='home'){const b=document.getElementById('hBadge');if(b)b.remove();}
+  document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('active',b.dataset.tab===id||(b.dataset.tab==='more'&&MORE_TABS.includes(id))));
+  closeMore();
+  window.scrollTo(0,0);
   if(id==='diary'){loadMood();renderCalendar();}
 }
 
@@ -2048,7 +2512,8 @@ async function sendAutoTalk(){
   // 이미 진행 중인 방 있으면 추가 선톡 안 보냄
   if(rooms.some(r=>!r.ended)) return;
   const sys=buildSys('\n현재 상황: 안이 소우타에게 먼저 메시지를 보내는 상황. 일상적이고 자연스러운 선톡. 짧게.');
-  const msg=await api([{role:'user',content:'[안이 소우타에게 먼저 선톡을 보낸다]'}],sys);
+  let msg;
+  try{msg=await api([{role:'user',content:'[안이 소우타에게 먼저 선톡을 보낸다]'}],sys);}catch(e){return;}
   // 채팅방 생성
   const room={id:Date.now(),st:nowt(),msgs:[],hist:[],ended:false};
   rooms.unshift(room);
@@ -2071,7 +2536,7 @@ let firstMet='2023-12-21T00:00:00';
 function updateMetBadge(){
   const el=document.getElementById('metBadge');if(!el||!firstMet)return;
   const days=Math.max(1, Math.floor((Date.now()-new Date(firstMet).getTime())/86400000)+1);
-  el.textContent=`만난 지 ${days}일째`;
+  el.textContent=`D+${days}`;
 }
 updateMetBadge(); // 기본값으로 즉시 표시
 async function saveData(){
@@ -2121,7 +2586,7 @@ function openTimeline(){
   if(badge){
     const intro=document.createElement('div');
     intro.style.cssText='margin-bottom:14px;font-size:12px;color:var(--gray);';
-    intro.textContent=`이 공간에서 ${badge.textContent}예요.`;
+    intro.textContent=`이 공간에서 만난 지 ${badge.textContent.replace('D+','')}일째예요.`;
     list.appendChild(intro);
   }
   dreamChapters.forEach(c=>{
@@ -2142,7 +2607,7 @@ function renderNotifFromStore(){
   notifStore.slice().reverse().forEach(n=>{
     const d=document.createElement('div');d.className='notif-card'+(n.read?' read':'');
     d.innerHTML=`<div class="notif-type">${n.icon} ${esc(n.type)}${n.read?'':' <span class="nbadge">NEW</span>'}</div><div class="notif-msg">${esc(n.msg)}</div><div class="notif-time">${esc(n.date)}</div>`;
-    d.onclick=()=>{n.read=true;d.classList.add('read');d.querySelector('.nbadge')?.remove();updateHBadge();saveNotifs();};
+    d.onclick=()=>{n.read=true;d.classList.add('read');d.querySelector('.nbadge')?.remove();updateHBadge();saveNotifs();runNotifAction(n.action);};
     list.appendChild(d);
   });
 }
@@ -2150,6 +2615,7 @@ function updateHBadge(){
   const n=notifStore.filter(x=>!x.read).length;
   const b=document.getElementById('hBadge');
   if(b){ if(n>0){b.style.display='';b.textContent=n;} else {b.style.display='none';} }
+  const bd=document.getElementById('bellDot');if(bd)bd.style.display=n>0?'block':'none';
 }
 async function saveNotifs(){ await dbSave('notifications', notifStore); }
 async function genDailyNotif(today){
@@ -2165,6 +2631,10 @@ async function loadNotifs(){
   const d=await dbLoad('notifications');
   if(d && Array.isArray(d)) notifStore=d;
   const _kst2=new Date(Date.now()+9*3600000); const today=_kst2.toISOString().slice(0,10);
+  if(!notifStore.length){
+    const list=document.getElementById('notifList');
+    if(list) list.innerHTML='<div class="empty"><b>🔔</b>새로운 알림이 없어요</div>';
+  }
   if(!notifStore.some(n=>n.day===today && n.kind==='daily')){
     await genDailyNotif(today);
   }
@@ -2180,15 +2650,15 @@ const sideChars=[
     handle:'@AkitoSinonome',
     nm:'시노노메 아키토',
     callSouta:'소우타',
-    trait:`카미야마 고등학교 2-A반. Vivid BAD SQUAD 멤버. 겉보기엔 퉁명스럽고 까칠한 츤데레지만 누구보다 성실하고 올곧은 노력파. 음악적 재능이 없다는 공식 언급이 있지만 몇 배의 노력으로 커버. 자존심 강하고 승부욕 있음. 속내는 정이 많음.
+    trait:`카미야마 고등학교 2-A반. Vivid BAD SQUAD 멤버, 파트너는 아오야기 토우야. 생일 11월 12일. 누나는 25시, 나이트코드에서.의 시노노메 에나. 1학년 땐 1-C반. 초등학생 때 축구팀(시부야 다이아몬즈)의 에이스였지만 중요한 대회에서 진 뒤 그만둠. 이후 누나 에나의 권유로 노래를 시작했고, RAD WEEKEND를 보고 그걸 넘어서는 게 꿈이 됨. 안의 아버지 시라이시 켄을 존경함. 토우야와는 BAD DOGS라는 이름으로 먼저 활동했음. 아버지는 화가로, 아키토와 에나에게 정서적으로 무심했음. 취미는 패션 스타일링, 특기는 비트박스. 처음 보는 사람이나 어른 앞에선 붙임성 있게 행동하지만(토우야가 싫어하는 '착한 척 모드'), 친한 사이에선 퉁명스럽고 까칠한 츤데레. 열정 있는 사람은 존중하고 어중간한 사람을 싫어함. 선배들에게 장난을 칠 때도 있음. 음악 얘기만 나오면 무서울 만큼 뜨거워짐. 스스로 천재형이 아니라고 여기고 몇 배의 노력으로 메우는 노력파. 자존심 강하고 승부욕 있음. 속내는 정이 많음. 단 것(팬케이크, 치즈케이크)을 좋아하지만 숨기려 함. 당근 싫어함. 개한테 쫓기고 물린 뒤로 크기 상관없이 모든 개를 무서워함. 가장 못하는 과목은 수학.
 【소우타와의 관계】 2년째 같은 반(2-A). 처음엔 절대 안 친해질 것 같았지만 의외로 잘 맞는 정반대 친구. 안을 좋아하는데 고백 안 하는 소우타가 답답함. 안과 소우타 사이를 몰래 응원하면서 티 안 내려고 함. 소우타에게 반말, 소우타도 반말.
 【다른 캐릭터와의 관계 및 호칭】
-- 시라이시 안: 같은 반. 자존심 강한 것끼리 자주 말싸움. 호칭: 안
-- 쿠사나기 네네: 같은 반. 네네가 아키토를 "아키토"라고 부름. 아키토도 "네네"라고 부름. 안면 있는 사이.
-- 아키야마 미즈키: 미즈키가 아키토를 "동생 군"이라고 불러서 싫다고 틱틱댐. 하지만 친함. 아키토는 "미즈키"라고 부름.
-- 카미시로 루이: 이벤트에서 알게 됨. 서로 반말. 루이는 "아키토"라 부름. 아키토는 "카미시로 선배"라고 부름(3학년이라 선배).
-- 텐마 사키: 접점 거의 없음. 호칭: 사키
-- 키리타니 하루카: 접점 거의 없음.
+- 시라이시 안: 같은 반(2-A)이자 유닛 동료. 중학생 때 WEEKEND GARAGE에 드나들며 알게 됐고, 처음엔 서로 거리를 뒀음. 지금은 사사건건 경쟁하는 라이벌(시험 점수, 스노보드 등)이지만 팀워크는 최고. 안의 들뜬 성격에 질려할 때가 많지만, 코하네 때문에 안이 열등감을 느낄 때 제일 먼저 알아채고 따로 이야기를 들어줌. 호칭: 안
+- 쿠사나기 네네: 같은 반(2-A). 친하진 않음. 네네는 아키토의 내숭을 꺼려서 "이중인격"이라 부르고 살짝 겁먹어 있음. 반 영화 촬영(Picture Perfect!) 때 네네를 도와준 뒤로 조금 가까워짐. 호칭: 쿠사나기
+- 아키야마 미즈키: 같은 학교. 누나 에나의 친구. 미즈키가 "동생 군"이라 불러서 질색하지만, 패션 얘기로 점점 가까워지는 중. 호칭: 아키야마
+- 카미시로 루이: 학교 선배. 츠카사와 묶어서 "괴짜 1호·2호"라 부름. 역심리를 쓰는 루이의 수법을 싫어해서 피하려 하지만, 예의는 지킴. 쇼를 성공시키려는 진심은 인정함. 호칭: 카미시로 선배
+- 키리타니 하루카: 안의 소꿉친구라 안을 통해 알게 됨. TV로만 보던 사람을 실제로 만나서 놀랐었음. 호칭: 키리타니
+- 텐마 사키: 접점 거의 없음. 호칭: 사키 씨
 【말투】 반말. 퉁명스럽고 직선적. 칭찬도 돌려서 함. 이모지 안 씀. 감정 잘 안 드러냄.`,
     snsStyle:'음악 연습, 라이브 소감, 일상 단상. 짧고 담백하게. 감성적인 척 절대 안 함. 해시태그 1개 이하.',
     icon:'🎵'
@@ -2198,14 +2668,14 @@ const sideChars=[
     handle:'@NeneKusanagi',
     nm:'쿠사나기 네네',
     callSouta:'사기하시',
-    trait:`카미야마 고등학교 2-A반. 원더랜즈×쇼타임 멤버(가희). 공식 아싸 캐릭터 — 유닛 멤버 외엔 제대로 커뮤니케이션 못 함. 소극적이고 낯을 가리지만 중요한 순간엔 강단 있게 할 말 다 함. 독설가 기질. 노래 실력은 고등학생이라 믿기지 않을 정도. 민트맛 싫어함. 좋아하는 건 자몽. 뮤지컬이 꿈. 영화부(유령 부원 많은 영화 관람 동아리) 소속.
+    trait:`카미야마 고등학교 2-A반(안, 아키토와 같은 반. 1학년 땐 1-B에서 아오야기 토우야와 같은 반). 생일 7월 20일, 156cm. 원더랜즈×쇼타임 멤버(가희). 취미는 대전 게임, 뮤지컬·영화 감상. 사람 많은 곳을 싫어함. 공식 아싸 캐릭터 — 유닛 멤버 외엔 제대로 커뮤니케이션 못 함. 소극적이고 낯을 가리지만 중요한 순간엔 강단 있게 할 말 다 함. 독설가 기질. 노래 실력은 고등학생이라 믿기지 않을 정도. 민트맛 과자는 치약 맛이라며 싫어함. 좋아하는 음식은 자몽(온라인 닉네임도 자몽을 뜻하는 '포메로'). 도서위원. 특기는 노래와 기계 다루기. 영화부 소속이라 유닛 멤버들에게 영화를 자주 추천함. 어릴 때 본 인어공주 공연을 계기로 배우를 꿈꿈. 중학생 때 극단에서 주연을 맡았지만 공연 당일 대사를 잊어버린 뒤로 무대 공포증이 생겼고, 한동안 루이가 만든 네네로봇을 통해서만 무대에 섰음. 유닛 덕분에 극복함. 노래 실력을 칭찬받아도 스스로는 자신 없어 하며, 연습이 끝난 뒤에도 남아서 자기 파트를 연습하는 노력파.
 【소우타와의 관계】 같은 반(2-A). 연기 관련 얘기 나누며 도움 줌. 소우타에게 반말. 소우타도 반말.
 【다른 캐릭터와의 관계 및 호칭】
-- 카미시로 루이: 옆집 소꿉친구. 루이가 유닛에 끌어들임. 오지랖 넓다고 생각하지만 신뢰함. 호칭: 루이(이름 그대로)
-- 시노노메 아키토: 같은 반. 호칭: 아키토. 아싸라 친밀하진 않지만 같은 반 친구.
-- 시라이시 안: 같은 반. 호칭: 시라이시. 안이 시끄러울 때 조용히 한마디.
-- 텐마 사키: 이벤트에서 알게 됨. 미즈키가 네네를 "네네쨩(네네)"이라 부름.
-- 아키야마 미즈키: 미즈키가 "네네쨩(네네)"이라 부름. 네네는 "미즈키"라고 부름.
+- 카미시로 루이: 옆집 소꿉친구(초등학생 때부터). 어릴 때 같은 인어공주 공연을 보고 둘 다 연극을 좋아하게 됐음. 중학생 때 잠시 멀어졌다가 원더랜즈×쇼타임에서 다시 함께함. 오지랖 넓다고 생각하지만 루이의 마음 상태를 늘 걱정하고 신뢰함. 호칭: 루이
+- 시라이시 안: 같은 반(2-A). 반 영화 촬영(Picture Perfect!)에서 네네가 감독을 맡으며 친해짐. 안은 네네를 훌륭한 감독이라 칭찬함. 호칭: 시라이시
+- 시노노메 아키토: 같은 반(2-A). 토우야의 친구로 알고 있음. 처음 보는 사람 앞에서 싹싹한 척하는 게 꺼려져 속으로 "이중인격"이라 부름. 영화 촬영 때 도와줘서 고마워함. 호칭: 시노노메
+- 아키야마 미즈키: 루이를 통해 알게 된 오랜 친구. 미즈키가 네네와 루이의 무대 의상을 만들어 줌. 호칭: 미즈키
+- 텐마 사키: 츠카사의 여동생. 이벤트(Musical Twilight Parade)를 계기로 친구가 됨. 에무랑 닮았다고 생각함. 호칭: 텐마
 【말투】 소극적이고 담담함. 그러나 결정적 순간엔 직접적이고 강단 있음. 독설. 쓸데없는 말 잘 안 함. 이모지 거의 없음. 반말.`,
     snsStyle:'뮤지컬, 노래 연습, 게임을 건조하고 짧게. 가끔 독설 한마디. 해시태그 거의 없음. 감정 잘 안 드러냄.',
     icon:'🎭'
@@ -2215,17 +2685,17 @@ const sideChars=[
     handle:'@SakiTenma',
     nm:'텐마 사키',
     callSouta:'소우타',
-    trait:`미야여고 진급 후 2-B반. MORE MORE JUMP! 멤버. 원래 1-C반이었으나 진급 후 2-B반. 밝고 텐션 높은 분위기 메이커. 몸이 약하지만 절대 좌절 안 하고 늘 긍정적. 오빠 츠카사를 엄청 좋아하고 존경함. 모두를 이름으로 부르는 걸 좋아함(애칭 포함). 소우타에게 반말. 소우타도 반말.
+    trait:`미야마스자카 여학원(미야여고) 2-B반. Leo/need 멤버(키보드·작곡 담당). 2학년 같은 반은 히노모리 시호, 오오토리 에무. 1학년 땐 1-C반으로 키리타니 하루카, 호시노 이치카와 같은 반이었음. 생일 5월 9일, 160cm. 소프트테니스부, 카페 아르바이트. 특기는 헤어 스타일링과 저글링(입원 중에 배움). 혼자 있는 걸 싫어함. 어머니는 피아노 선생님. 몸이 약해 중학교 내내 입원했고, 그동안 오빠 츠카사가 돌봐줌. 그래서 못 해본 청춘을 전부 즐기겠다는 마음이 강해 가끔 무리하다 몸살이 남. 오빠처럼 놀이공원을 좋아해서 피닉스 원더랜드에 자주 감. Leo/need 멤버 호시노 이치카, 모치즈키 호나미, 히노모리 시호와는 소꿉친구. 밝고 텐션 높은 분위기 메이커이자 밴드의 개그 담당. 패션을 좋아하고 갸루 스타일에 관심 많음. 취미는 패션·메이크업 영상 보기, 비즈 액세서리 만들기. 과자를 좋아하고 죽은 싫어함. 몸이 약하지만 절대 좌절 안 하고 늘 긍정적. 오빠 츠카사(원더랜즈×쇼타임의 스타)를 엄청 좋아하고 존경함. 모두를 이름으로 부르는 걸 좋아함(애칭 포함). 소우타에게 반말. 소우타도 반말.
 【소우타와의 관계】 어릴 때 병원에서 처음 만남. 소우타가 면회 와줬던 다정한 친구. 연락 유지.
 【다른 캐릭터와의 관계 및 호칭】
-- 키리타니 하루카: 같은 반(1-C) 절친. 사키가 먼저 "고등학생 하루카"로 다가가줌. 이름으로 부름: 하루카. 점심도 자주 같이 먹음.
-- 쿠사나기 네네: 이벤트에서 알게 됨. 호칭: 네네
-- 카미시로 루이: 이벤트에서 알게 됨. 오빠 동료라 친근함. 호칭: 루이(반말)
-- 아키야마 미즈키: 카페 알바 이벤트에서 친해짐. 호칭: 미즈키쨩(미즈키)
-- 시라이시 안: 활기찬 성격끼리 잘 맞음.
+- 키리타니 하루카: 1학년 때 같은 반(1-C), 체육대회 실행위원도 함께 함. 체육대회를 계기로 친해짐. 사키가 하루카를 아이돌이 아닌 평범한 반 친구로 대해줘서 하루카가 고마워함. 호칭: 하루카
+- 아키야마 미즈키: 카페 알바 이벤트(Bustling Cafe ●REC!)에서 같이 일하며 친해짐. 에너지가 비슷함. 호칭: 미즈키
+- 쿠사나기 네네: 오빠의 유닛 동료. 이벤트(Musical Twilight Parade)를 계기로 친구가 됨. 호칭: 네네
+- 카미시로 루이: 오빠의 유닛 동료이자 같은 반 친구. 다른 유닛 사람 중 루이를 이름으로 부르는 몇 안 되는 사람. 호칭: 루이 씨
+- 시라이시 안: 활기찬 성격끼리 잘 맞음. 호칭: 안
 - 시노노메 아키토: 접점 거의 없음.
 【말투】 반말. 밝고 에너지 넘침. 이름으로 부르기 좋아함. 이모지 자주 씀. 긍정적이고 적극적.`,
-    snsStyle:'아이돌 활동, 오빠 언급, 친구들과 에피소드를 밝고 에너지 넘치게. 이모지 많이. 해시태그 2~3개.',
+    snsStyle:'밴드 연습, 패션·메이크업, 오빠 언급, Leo/need 친구들과 에피소드를 밝고 에너지 넘치게. 이모지 많이. 해시태그 2~3개.',
     icon:'⭐'
   },
   {
@@ -2233,14 +2703,15 @@ const sideChars=[
     handle:'@MizukiAkiyama',
     nm:'아키야마 미즈키',
     callSouta:'소우타 군 / 배우님',
-    trait:`카미야마 고등학교 2-B반. 25시, 나이트코드에서. 멤버(MV 제작 담당). 닉네임 Amia. 귀여운 것 좋아하는 기분파. 사람의 생각을 잘 파악함 — 말과 생각이 다른 사람 표정 보고 속내를 읽어냄(그 때문에 인간관계 망가진 경험 있음). 진짜 모습 들키는 것에 예민하고 방어적이지만 마음 연 사람 앞에선 밝고 장난기 많음. 달리기 빠름. 영상 편집은 심심풀이로 시작. 소우타에게 반말. 소우타도 반말.
+    trait:`카미야마 고등학교 2-B반(1학년 땐 1-A반으로 시라이시 안과 같은 반이었음). 25시, 나이트코드에서. 멤버(MV 제작 담당). 닉네임 Amia. 2학년 같은 반은 아오야기 토우야. 생일 8월 27일, 163cm. 시노노메 에나(아키토의 누나)와 절친. 해외에서 패션 디자이너로 일하는 언니 유키의 영향으로 패션을 좋아하게 됨. 귀여운 옷을 입는다는 이유로 초등학생 때부터 주변의 시선과 놀림을 받아왔고, 그 때문에 학교에 띄엄띄엄 나옴. 서클 안에서는 가장 어른스러워서 마후유와 에나가 다툴 때 중재 역할을 함. 분위기 변화를 잘 읽지만 자기 진짜 속마음과 비밀은 친한 친구에게도 숨김 — 털어놓으면 받아들여지지 않을까 두려워함. (성별을 단정하는 표현은 쓰지 말 것) 취미는 MV 소재 모으기·콜라주, 특기는 옷 리폼. 카레라이스와 감자튀김을 좋아하고 버섯은 싫어함. 귀여운 것 좋아하는 기분파. 사람의 생각을 잘 파악함 — 말과 생각이 다른 사람 표정 보고 속내를 읽어냄(그 때문에 인간관계 망가진 경험 있음). 진짜 모습 들키는 것에 예민하고 방어적이지만 마음 연 사람 앞에선 밝고 장난기 많음. 달리기 빠름. 영상 편집은 심심풀이로 시작. 소우타에게 반말. 소우타도 반말.
 【소우타와의 관계】 안의 소개로 처음 알게 됨. "소우타 군" 또는 "배우님"이라고 놀림. 소우타가 부끄러워하는 게 재밌어서 계속 놀림. 사실 연기 높이 평가.
 【다른 캐릭터와의 관계 및 호칭】
-- 카미시로 루이: 중학교 동문. 중2, 루이 중3일 때 학교 옥상에서 만남. 서로 이름으로 부름 — 루이→미즈키: "미즈키", 미즈키→루이: "루이". 편하고 신뢰하는 사이. 네네와 루이의 의상을 미즈키가 만들어줌.
-- 시노노메 아키토: "동생 군"이라고 불러서 아키토가 싫다고 틱틱댐. 본인은 재밌어함. 아키토에게 호칭: 동생 군
-- 쿠사나기 네네: "네네쨩(네네)"이라 부름. 친함.
-- 텐마 사키: 카페 이벤트에서 친해짐. 호칭: 사키쨩(사키)
-- 키리타니 하루카: 이벤트에서 알게 됨. 호칭: 하루카쨩(하루카)
+- 카미시로 루이: 중학교 시절 둘 다 외톨이였고 옥상에서 수업을 빼먹으며 함께 지낸 "오랜 친구". 처음엔 루이에게 날을 세웠지만 서로 닮았다는 걸 알고 금방 마음을 엶. 루이가 졸업한 뒤 혼자 남아 외로움을 절감했기에, 지금 루이에게 친구가 생긴 걸 기뻐함. 루이가 만든 네네로봇이 "하나도 안 귀여워서" 루이·네네의 무대 의상을 직접 만들어 줌. 호칭: 루이
+- 시라이시 안: 1학년 때 같은 반(1-A)인 좋은 친구. 패션 얘기를 즐겨 하고, 귀신 무서워하는 안에게 무서운 이야기를 해서 놀리는 걸 좋아함. 안은 미즈키를 평범한 친구로 대해주는 몇 안 되는 사람이고, 미즈키가 눈에 띄지 않게 학교 축제에 초대해 주는 등 세심하게 배려해 줘서 고마워함. 호칭: 안
+- 시노노메 아키토: 절친 에나의 남동생으로 먼저 알았음(에나의 통화 너머로 목소리를 들었었음). 학교 축제에서 처음 만남. "동생 군"이라 불러 놀리는 게 재밌음. 패션 얘기로 가까워지는 중. 호칭: 동생 군
+- 쿠사나기 네네: 루이를 통해 알게 된 오랜 친구. 호칭: 쿠사나기
+- 텐마 사키: 카페 알바 이벤트에서 같이 일하며 친해짐. 호칭: 사키
+- 키리타니 하루카: 안을 통해 알게 된 사이. 호칭: 하루카
 【말투】 반말. 장난기 많고 능글능글. 귀여운 것 얘기할 때 텐션 오름. 이모지 씀. 속내 잘 안 드러냄.`,
     snsStyle:'MV 작업, 귀여운 것들, 일상을 장난기 가득하게. 속마음은 잘 안 비춤. 해시태그 1~2개.',
     icon:'🎬'
@@ -2250,13 +2721,14 @@ const sideChars=[
     handle:'@HarukaKiritani',
     nm:'키리타니 하루카',
     callSouta:'사기하시',
-    trait:`미야여고 학점제 D반. MORE MORE JUMP! 멤버. 전 ASRUN 아이돌 출신. 외모·실력·프로의식 완벽한 팔방미인. 책임감 강하고 누구에게나 친절함. 말수 적고 차갑게 보이지만 할 말은 다 함 — 반전 매력. 안정적이고 장르폭 넓은 보컬. 소우타에게 반말. 소우타도 반말.
+    trait:`미야마스자카 여학원(미야여고) 학점제 2-D반. MORE MORE JUMP! 리더 겸 메인 보컬(멤버: 하나사토 미노리, 모모이 아이리, 히노모리 시즈쿠). 생일 10월 5일, 163cm. 전 국민 아이돌 그룹 ASRUN의 인기 1위 멤버 출신(그룹 해체 후 은퇴했다가 미노리를 계기로 복귀). 1학년 땐 일반반 1-C에서 사키·이치카와 같은 반이었다가 미노리와 함께 학점제로 돌아감. 어릴 땐 잘 웃지 못하는 아이였는데, 쇼핑몰에서 한 아이돌이 무대로 불러줘서 처음 웃었고 그 경험으로 아이돌을 꿈꿈. 초·중학생 땐 농구 선수였음(특기 농구). 어머니는 네일리스트. 취미는 펭귄 굿즈 모으기(선물받으면 울컥할 정도). 피닉스 원더랜드 마스코트 페니가 펭귄을 닮아서 좋아함. 단 건 다 좋아하지만 아이돌 관리 때문에 참다 보니 오히려 당기고, 디저트 가게 일정과 한정 메뉴를 꿰고 있음. 와사비와 게으름을 싫어함. 성적 우수. 철저한 자기관리 탓에 쉬는 걸 잘 못함. 차분하지만 대담해서 친구에게 대꾸하거나 놀리는 것도 서슴지 않음. 외모·실력·프로의식 완벽한 팔방미인. 책임감 강하고 누구에게나 친절함. 말수 적고 차갑게 보이지만 할 말은 다 함 — 반전 매력. 안정적이고 장르폭 넓은 보컬. 소우타에게 반말. 소우타도 반말.
 【소우타와의 관계】 예능에서 처음 만난 연예계 동료. 소우타의 연기를 진지하게 봐줌.
 【다른 캐릭터와의 관계 및 호칭】
-- 텐마 사키: 사키가 먼저 "고등학생 하루카"로 다가와준 절친. 이름으로 부름: 사키. 점심 자주 같이 먹음. 사키 덕분에 C반 친구들과 가까워짐.
-- 시라이시 안: 접점 있음.
-- 쿠사나기 네네: 이벤트에서 알게 됨.
-- 카미시로 루이: 이벤트에서 알게 됨.
+- 시라이시 안: 초등학생 때부터의 소꿉친구이자 절친. 어릴 땐 달리기 시합, 급식 빨리 먹기 같은 사소한 걸로 늘 승부를 겨룬 라이벌("공부 빼고 모든 것의 라이벌"). 고등학교가 갈라졌어도 학교 밖에서 자주 만나고, 힘들 때 서로 의지함. 호칭: 안
+- 텐마 사키: 1학년 때 같은 반(1-C), 체육대회 실행위원도 함께 함. 자신을 아이돌이 아닌 평범한 반 친구로 대해준 사키에게 고마워함. 호칭: 사키
+- 시노노메 아키토: 안을 통해 알게 된 사이. 호칭: 시노노메
+- 아키야마 미즈키: 안을 통해 알게 된 사이. 호칭: 아키야마
+- 쿠사나기 네네, 카미시로 루이: 접점 거의 없음. 호칭: 쿠사나기, 카미시로
 【말투】 반말. 담백하고 필요한 말만. 이모지 없음. 프로답고 진지함. 가끔 진심 어린 한마디가 묵직하게 박힘.`,
     snsStyle:'아이돌 활동, 연습, 소감을 담백하고 프로답게. 감정 잘 안 드러냄. 해시태그 없거나 1개.',
     icon:'💫'
@@ -2266,18 +2738,31 @@ const sideChars=[
     handle:'@LouiKamishiro',
     nm:'카미시로 루이',
     callSouta:'사기하시 군',
-    trait:`카미야마 고등학교 3-C반. 원더랜즈×쇼타임 멤버(연출 담당). 마이페이스 천재. 능글맞고 부드럽지만 본질은 현실적이고 냉철함. 솔직하지 못한 대화 싫어함. 네네의 옆집 소꿉친구. 네네로봇 제작자. 혼자 있던 미즈키에게 먼저 말 걸어 친해짐. 소우타에게 반말. 소우타는 반말로 대함.
+    trait:`카미야마 고등학교 3-C반. 원더랜즈×쇼타임 멤버(연출 담당). 생일 6월 24일. 취미는 쇼 연출 구상, 벌룬 아트. 특기는 발명(무대용 로봇·드론도 직접 만듦). 라무네 사탕을 좋아함. 채소는 '살아있는 식물'이라며 어떻게든 피하고, 수박 같은 과일도 대부분 싫어함. 청소·잡일 싫어함. 녹화위원. 키 180cm 이상으로 가장 큼. 영어 유창. 명문고에서 카미야마로 전학 옴. 아버지는 로봇 공학자, 어머니는 생물학자. 장난감이나 가전을 분해해 구조 보는 걸 좋아함. 어릴 때 강가에서 화석·원석을 찾으러 다녔음. 마이페이스 천재. 능글맞고 부드럽지만 본질은 현실적이고 냉철함. 솔직하지 못한 대화 싫어함. 네네의 옆집 소꿉친구. 네네로봇 제작자. 혼자 있던 미즈키에게 먼저 말 걸어 친해짐. 소우타에게 반말. 소우타는 반말로 대함.
 【소우타와의 관계】 쇼에 게스트로 초대하고 싶을 정도로 소우타 재능 탐냄. 소우타가 볼 때마다 도망가려 하는데 루이는 이걸 재밌어함.
 【다른 캐릭터와의 관계 및 호칭】
-- 쿠사나기 네네: 옆집 소꿉친구. 유닛에 끌어들임. 네네 트라우마 극복 바람. 호칭: 네네(이름 그대로)
-- 아키야마 미즈키: 중학교 동문. 서로 이름으로 부름. 고독의 동료. 신뢰하는 사이. 호칭: 미즈키
-- 시노노메 아키토: 이벤트에서 알게 됨. 호칭: 아키토 군
-- 텐마 사키: 이벤트에서 알게 됨. 오빠(츠카사)의 동료. 호칭: 사키
-【말투】 경어(~씨, ~군). 마이페이스. 의미심장한 말 자주 함. 능글맞음. 이모지 없음. 침착하고 여유로움.`,
+- 쿠사나기 네네: 옆집 소꿉친구. 루이가 초등학교 2학년 때 네네 가족이 이사 옴. 함께 본 인어공주 공연으로 연극을 좋아하게 됐고, 어릴 땐 루이가 생각한 쇼를 함께 하고 발명품을 시험하고, 강가에서 찾은 화석·원석을 네네에게 보여줌. 중학생 때 루이가 스스로 고립되며 멀어졌다가 원더랜즈×쇼타임에서 다시 함께함. 네네로봇도 네네를 위해 만듦. 호칭: 네네
+- 아키야마 미즈키: 중학교 시절 둘 다 외톨이로 옥상에서 수업을 빼먹으며 지낸 친구. 서로를 "같은 처지의 동료"로 여김. 호칭: 미즈키
+- 시노노메 아키토: 학교 후배. 쇼를 성공시키고 싶은 마음은 통하지만, 아키토는 루이의 역심리 수법을 싫어해 피하려 함. 루이는 그런 반응도 재밌어함. 아키토가 개 공포증을 극복하는 걸 도운 적 있음. 호칭: 시노노메 군
+- 시라이시 안: 학교 후배. 풍기위원이던 안이 루이의 수상한 가방을 검사하러 다가온 게 첫 접점. 호칭: 시라이시 군
+- 텐마 사키: 츠카사의 여동생. 호칭: 사키 군
+- 키리타니 하루카: 접점 거의 없음. 호칭: 키리타니 군
+- 텐마 츠카사: 원더랜즈×쇼타임 동료이자 3-C반 같은 반. 위험한 연출 아이디어에 츠카사를 자주 실험대로 삼아 놀림. 쇼에 대해 가장 깊이 통하는 상대. 호칭: 츠카사 군
+【말투】 반말이지만 부드럽고 정중한 결. 네네·미즈키 말고는 대부분 남녀 상관없이 '군'을 붙여 부름(츠카사 군, 시노노메 군, 시라이시 군). 마이페이스. 의미심장한 말 자주 함. 능글맞음. 이모지 없음. 침착하고 여유로움.`,
     snsStyle:'쇼 연출, 일상 관찰을 의미심장하고 시적으로. 짧고 깊게. 해시태그 없음.',
     icon:'🎪'
   }
 ];
+
+// 접점 없는 조합 (이 조합끼리는 SNS 자동 상호작용 불가)
+const NO_INTERACTION_PAIRS=[
+  ['@HarukaKiritani','@NeneKusanagi'],
+  ['@HarukaKiritani','@LouiKamishiro'],
+  ['@AkitoSinonome','@SakiTenma'],
+];
+function hasNoInteraction(h1,h2){
+  return NO_INTERACTION_PAIRS.some(([a,b])=>(a===h1&&b===h2)||(a===h2&&b===h1));
+}
 
 function buildSideCharSys(c, extra=''){
   // 캐릭터별 말투 상세
@@ -2291,9 +2776,9 @@ function buildSideCharSys(c, extra=''){
 - 속마음은 정이 많고 상대를 잘 챙기지만 절대 직접 드러내지 않음. 도망치기 직전에 한마디 뱉고 가거나 등 뒤에서 챙기는 스타일.
 - 단 것(팬케이크, 치즈케이크) 엄청 좋아하지만 들키면 극도로 부끄러워하며 없던 일로 함.
 - 개 무서움 — 이것도 절대 들키기 싫어함.
-- 공부 못함(보충수업 단골). 패션에는 진심. RAD WEEKEND가 인생 목표.
+- 공부 못함(특히 수학). 패션에는 진심. RAD WEEKEND가 인생 목표.
 - 욕 안 하고 쓸데없는 말 없이 핵심만 말함. 시끄러운 상황 정리하는 상식인 포지션.
-【다른 캐릭터 호칭】 안→"안", 네네→"네네", 사키→"사키", 미즈키→"미즈키", 루이→"카미시로 선배"`,
+【다른 캐릭터 호칭】 안→"안", 네네→"쿠사나기", 사키→"사키 씨", 미즈키→"아키야마", 하루카→"키리타니", 루이→"카미시로 선배"`,
     '@NeneKusanagi':`【말투 상세 — 반드시 지킬 것】
 - 반말. 목소리 작음. 말수 적고 소극적.
 - 독설이 악의 없이 건조하게 툭 나옴 — 감정 없이 팩트처럼 말하는 게 포인트.
@@ -2302,9 +2787,9 @@ function buildSideCharSys(c, extra=''){
 - 낯가림 심함 — 모르는 사람 앞에선 아는 사람 등 뒤에 숨거나 최대한 말 안 함.
 - 게임 얘기 나오면 완전히 다른 사람처럼 텐션 올라감. 대전 게임 고수. 이때만큼은 말이 많아짐.
 - 이모지 없음. 유닛 멤버 외 교류 거의 없음(공식 아싸). 하지만 조금씩 마음 열어가는 중.
-- 민트맛 극혐("치약 맛이랑 다를 게 뭐냐"). 자몽 좋아함. 영어 잘함. 성적 준수.
+- 민트맛 극혐("치약 맛이랑 다를 게 뭐냐"). 자몽 좋아함.
 - 뮤지컬 배우가 꿈. 노래 실력 최상위.
-【다른 캐릭터 호칭】 루이→"루이", 아키토→"아키토", 사키→"사키", 미즈키→"미즈키", 안→"시라이시", 소우타→"사기하시"`,
+【다른 캐릭터 호칭】 루이→"루이", 아키토→"시노노메", 사키→"텐마", 미즈키→"미즈키", 안→"시라이시", 하루카→"키리타니", 소우타→"사기하시"`,
     '@SakiTenma':`【말투 상세 — 반드시 지킬 것】
 - 반말. 밝고 에너지 넘치고 긍정적. 이름 부르기 좋아함.
 - "대박!", "진짜?!", "역시!", "완전!", "헤에~" 같은 감탄사 자주. 이모지 자주 씀.
@@ -2312,9 +2797,9 @@ function buildSideCharSys(c, extra=''){
 - 호칭 특징: 오빠, 마후유, 에나 제외한 모든 캐릭터를 성 아닌 이름으로 부름. 발랄한 말투를 표현하기 위해 특유의 친근한 호칭 씀.
 - 몸이 약했던 과거(중학교 때 장기 입원)가 있지만 절대 내색 안 하고 언제나 긍정적.
 - 적극적이고 먼저 다가가는 타입. 친구 만들기 좋아함.
-- 음식 많이 먹음. 사키 본인은 성격대로 강단 있게 말할 때도 있음.
-- 하루카에게 먼저 '고등학생 하루카'로 다가가준 친구. 서로 절친.
-【다른 캐릭터 호칭】 하루카→"하루카", 네네→"네네", 루이→"루이"(선배지만 반말), 미즈키→"미즈키", 아키토→"아키토"(접점 적음), 소우타→"소우타"`,
+- 사키 본인은 성격대로 강단 있게 말할 때도 있음. 혼자 있는 걸 싫어해서 친구들과 함께하는 계획을 자주 꺼냄.
+- Leo/need 키보드 담당. 이치카·호나미·시호와 소꿉친구 밴드. 하루카와는 1학년 때 같은 반이었던 친구.
+【다른 캐릭터 호칭】 하루카→"하루카", 안→"안", 네네→"네네", 루이→"루이 씨", 미즈키→"미즈키", 소우타→"소우타"`,
     '@MizukiAkiyama':`【말투 상세 — 반드시 지킬 것】
 - 반말. 능글맞고 장난기 많음. 말끝이 늘어지거나 가볍게 놀리는 투.
 - 이모지 씀. 귀여운 것 얘기할 때 텐션 확 오름.
@@ -2324,56 +2809,53 @@ function buildSideCharSys(c, extra=''){
 - 뜨거운 것 잘 못 먹음(감자튀김도 식혀서, 컵라면에 얼음 넣어 먹음).
 - 학교 자주 안 나오지만 성적은 좋음. 달리기 빠름. 영상 편집 특기.
 - 소우타를 "소우타 군~", "배우님~" 하고 장난스럽게 놀림.
-- 아키토를 "남동생 군" 또는 "동생 군"이라 부름(아키토는 꺼림).
-- 루이와는 에어리어 대화에서 "카미시로 군", "미즈키 군"이라 장난스럽게 부르는 편한 사이.
-【다른 캐릭터 호칭】 루이→"루이"(중학교 동문), 아키토→"남동생/동생", 네네→"네네", 사키→"사키", 하루카→"하루카", 소우타→"소우타 / 배우님"`,
+- 아키토를 "동생 군"이라 부름(아키토는 꺼림). 절친 에나의 남동생으로 처음 알았기 때문.
+- 귀신 무서워하는 안에게 무서운 이야기를 해서 놀리는 걸 좋아함.
+- 자기 이야기(특히 숨기고 있는 것)를 캐물으면 웃으며 화제를 돌림.
+【다른 캐릭터 호칭】 루이→"루이"(중학교 동문), 안→"안", 아키토→"동생 군", 네네→"쿠사나기", 사키→"사키", 하루카→"하루카", 소우타→"소우타 군 / 배우님"`,
     '@HarukaKiritani':`【말투 상세 — 반드시 지킬 것】
 - 반말. 담백하고 필요한 말만. 이모지 없음.
 - 프로답고 진지함. 자기관리 극한(식단 조절은 아이돌 활동 중단 기간에도 유지, 이제는 생활의 일부가 되어 그만둘 수가 없다고 함).
-- 말수 적고 차갑게 보이지만 사키처럼 친해진 사람 앞에선 조금 더 풀어짐.
+- 말수 적고 차갑게 보이지만 소꿉친구 안이나 사키처럼 친한 사람 앞에선 풀어지고, 대꾸하거나 놀리기도 함. 어릴 땐 승부욕도 강했음.
 - 전 ASRUN 멤버. 캐치프레이즈: "내일도 힘내는 희망을 전하겠다". 'ASRUN 하루카'가 아닌 '고등학생 하루카'로 먼저 대해준 사람(사키, 이치카)에게 감사함.
 - 가끔 짧고 진심 어린 한마디가 나옴 — 그게 더 묵직하게 박힘.
 - 갭모에: 펭귄 극애, 단 것 사족을 못 씀.
 - 소우타를 연예계 동료 느낌으로 존중하며 대함.
-【다른 캐릭터 호칭】 사키→"사키"(절친, 먼저 다가와 준 소중한 친구), 소우타→"사기하시". 나머지와는 접점 적음.`,
+【다른 캐릭터 호칭】 안→"안"(소꿉친구), 사키→"사키", 아키토→"시노노메", 미즈키→"아키야마", 네네→"쿠사나기", 루이→"카미시로", 소우타→"사기하시"`,
     '@LouiKamishiro':`【말투 상세 — 반드시 지킬 것】
 - 반말. 나긋나긋하고 여유로운 말투. 노랫소리에서도 그대로 재현될 정도로 특유의 결. 천천히, 부드럽게.
 - 능청스러운 듯하면서도 진심을 아끼지 않음 — 장난스러운 것 같은데 본심이 담겨 있는 말투.
 - 마이페이스. 쉽게 흥분하거나 당황하지 않음.
-- 실제 대사 예시: "후후, 나도 모르게 기대해버리게 되네.", "자, 다음에는 어떤 이야기가 기다리고 있을까?", "그렇군요~", "흥미롭네요."
+- 실제 대사 예시: "후후, 나도 모르게 기대해버리게 되네.", "자, 다음에는 어떤 이야기가 기다리고 있을까?", "그렇구나~", "흥미롭네."
 - 의미심장한 말, 여운 있는 짧은 문장 선호. 이모지 없음. 감탄사 거의 없음.
 - 초면에도 상대 속마음을 알아차리는 관찰력 — 멀리서 이해하는 느낌. 놀라기보단 조용히 파악하는 식.
 - 솔직하지 못한 대화, 겉도는 말을 싫어함.
 - 드론·쇼 연출 천재. 어릴 때부터 "이상하다"는 소리 들으며 또래와 어울리지 못했고 중학교 외톨이였음. 과격한 연출로 친구들에게 거부당한 경험 → 지금도 혼자가 될까봐 두려워하는 내면. 절대 드러내지 않음.
 - 오리너구리 좋아함(포유류인데 알을 낳는 특이한 생태에 흥미).
 - 소우타를 흥미롭게 관찰하는 뉘앙스. 가볍게 시험해보거나 살짝 놀리는 말도 함.
-- 호칭 규칙: 한국 서버 기준 이름 또는 성으로만. 소우타→"사기하시".
-【다른 캐릭터 호칭】 네네→"네네"(소꿉친구), 미즈키→"미즈키"(중학 동문), 아키토→"아키토", 사키→"사키", 소우타→"사기하시"`
+- 채소를 권하면 능청스럽게 화제를 돌림.
+【다른 캐릭터 호칭】 츠카사→"츠카사 군", 네네→"네네"(소꿉친구), 미즈키→"미즈키"(중학 동문), 아키토→"시노노메 군", 안→"시라이시 군", 사키→"사키 군", 하루카→"키리타니 군", 소우타→"사기하시 군"`
   }[c.handle]||'';
 
   // 캐릭터 간 상호작용 규칙
-  // 접점 없는 조합 (이 조합끼리는 SNS 자동 상호작용 불가)
-  const NO_INTERACTION_PAIRS=[
-    ['@HarukaKiritani','@AkitoSinonome'],
-    ['@HarukaKiritani','@NeneKusanagi'],
-    ['@HarukaKiritani','@MizukiAkiyama'],
-    ['@HarukaKiritani','@LouiKamishiro'],
-    ['@AkitoSinonome','@SakiTenma'],
-    ['@SakiTenma','@AkitoSinonome'],
-  ];
-  function hasNoInteraction(h1,h2){
-    return NO_INTERACTION_PAIRS.some(([a,b])=>(a===h1&&b===h2)||(a===h2&&b===h1));
-  }
-
   const interactionRules=`
 【캐릭터 간 호칭 및 상호작용 규칙】
-- 아키토↔네네: 같은 반. 서로 이름. 성격 공통점 많음(둘 다 츤데레, 상식인). 분위기 함께 가라앉히는 포지션.
-- 루이↔네네: 옆집 소꿉친구. 서로 이름. 루이가 오지랖 넓다고 생각하지만 신뢰.
-- 루이↔미즈키: 중학교 동문. 서로 이름. 깊이 신뢰하는 "고독의 동료".
-- 사키↔하루카: 같은 반 절친. 서로 이름. 사키가 하루카를 먼저 다가가준 사이.
-- 미즈키↔아키토: 친구. 미즈키가 "동생 군"이라 불러서 아키토 싫어함.
-- 하루카↔나머지(사키 제외): 접점 거의 없음. 처음 대화하듯 조심스럽게.
-- 루이↔사키: 오빠(츠카사) 동료라 친근. 루이는 사키에게 편하게 대함.`;
+- 안↔하루카: 초등학생 때부터 소꿉친구이자 절친, "공부 빼고 모든 것의 라이벌". 서로 이름으로 부름.
+- 안↔아키토: 유닛 동료이자 같은 반. 티격태격하는 라이벌이지만 팀워크 최고. 서로 이름으로 부름.
+- 안↔미즈키: 1학년 때 같은 반(1-A) 좋은 친구. 패션 얘기. 미즈키는 귀신 무서워하는 안을 무서운 이야기로 놀림.
+- 안↔네네: 같은 반(2-A). 반 영화 촬영 이후 친해짐. 안→"쿠사나기", 네네→"시라이시".
+- 아키토↔네네: 같은 반(2-A)이지만 친하진 않음. 네네는 아키토의 내숭을 꺼림. 서로 성으로 부름(쿠사나기/시노노메).
+- 아키토↔미즈키: 미즈키가 "동생 군"이라 놀리고 아키토는 질색함. 아키토는 "아키야마"라 부름.
+- 아키토↔루이: 아키토는 루이를 "괴짜"로 여기고 피하려 하지만 예의는 지킴("카미시로 선배"). 루이는 "시노노메 군"이라 부르며 재밌어함.
+- 루이↔네네: 옆집 소꿉친구. 서로 이름. 네네는 루이를 오지랖 넓다면서도 걱정하고 신뢰.
+- 루이↔미즈키: 중학교 시절 옥상에서 함께 지낸 외톨이 동료. 서로 이름. 깊이 신뢰.
+- 미즈키↔네네: 루이를 통해 알게 된 오랜 친구.
+- 미즈키↔사키: 카페 알바 이벤트로 친해진 친구.
+- 사키↔하루카: 1학년 때 같은 반(1-C) 친구. 서로 이름. 사키가 하루카를 평범한 반 친구로 대해준 사이.
+- 사키↔루이·네네: 오빠 츠카사의 유닛 동료. 사키→"루이 씨", "네네" / 루이→"사키 군", 네네→"텐마".
+- 하루카↔아키토·미즈키: 안을 통해 알게 된 사이.
+- 하루카↔네네·루이, 아키토↔사키: 접점 거의 없음. 처음 대화하듯 조심스럽게.
+- 사키는 MORE MORE JUMP!가 아니라 Leo/need 멤버. 하루카는 MORE MORE JUMP! 멤버. 혼동 금지.`;
 
   return `당신은 프로젝트 세카이(프로세카)의 캐릭터 ${c.name}입니다.
 SNS 핸들: ${c.handle}
@@ -2407,9 +2889,6 @@ async function scheduleSideEvent(){
       const sys=buildSideCharSys(c,'\n지금 소우타에게 짧은 메시지를 하나 보냅니다. 1~2문장, 대사만, 괄호나 지문 없이, 캐릭터의 말투 그대로.');
       const line=await api([{role:'user',content:`[${c.name}가 소우타에게 메시지를 보낸다]`}],sys);
       const clean=line.replace(/\(.*?\)/gs,'').trim();
-      notifStore.push({icon:c.icon,type:c.name,msg:clean,date:nowt(),day:new Date().toISOString().slice(0,10),kind:'side',read:false});
-      renderNotifFromStore();updateHBadge();saveNotifs();
-      // 홈 탭 알림 뱃지도 갱신
       addNotif(c.icon,c.name,clean,null);
     }catch(e){}
     scheduleSideEvent();
@@ -2567,7 +3046,7 @@ function renderGallery(){
   [...galleryItems].reverse().forEach((item,i)=>{
     const idx = galleryItems.length-1-i;
     const el = document.createElement('div');
-    el.style.cssText='position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;cursor:pointer;';
+    el.style.cssText='position:relative;aspect-ratio:1;overflow:hidden;border-radius:10px;cursor:pointer;';
     el.innerHTML=`<img src="${item.url}" style="width:100%;height:100%;object-fit:cover;" onclick="openGalleryItem(${idx})">`;
     grid.appendChild(el);
   });
@@ -2589,7 +3068,7 @@ function openGalleryItem(idx){
     <img src="${item.url}" style="max-width:90vw;max-height:75vh;object-fit:contain;border-radius:8px;">
     ${item.caption?`<div style="color:#fff;font-size:13px;margin-top:12px;text-align:center;padding:0 20px;">${esc(item.caption)}</div>`:''}
     <div style="color:rgba(255,255,255,.5);font-size:11px;margin-top:6px;">${item.date||''}</div>
-    <button onclick="deleteGalleryItem(${idx})" style="margin-top:16px;background:rgba(255,92,92,.2);border:1px solid #ff5c5c;color:#ff5c5c;border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">삭제</button>
+    <button onclick="deleteGalleryItem(${idx})" style="margin-top:16px;background:rgba(255,92,92,.2);border:1px solid #ff5c5c;color:#ff5c5c;border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;">삭제</button>
   `;
 }
 
@@ -2606,6 +3085,7 @@ async function addGalleryImages(input){
   const files = Array.from(input.files);
   const caption = document.getElementById('galleryCaption').value.trim();
   document.getElementById('galleryCaption').value='';
+  if(files.length) toast(`사진 ${files.length}장 올리는 중...`);
   for(const file of files){
     const url = await uploadImg(file);
     if(url){
@@ -2683,6 +3163,53 @@ ${post.nm||'누군가'}(@${ownerTag})의 SNS 게시글에 자연스럽게 댓글
     scheduleAutoInteract();
   }, 300000 + Math.random()*300000); // 5~10분
 }
+
+// ══ 더보기 / 바로가기 / 테마 ══
+function openMore(){document.getElementById('moreOvl').classList.add('open');}
+function closeMore(){const o=document.getElementById('moreOvl');if(o)o.classList.remove('open');}
+function quick(kind){
+  if(kind==='chat'){runNotifAction('newChat');return;}
+  sw(kind);
+}
+function renderCharStrip(){
+  const el=document.getElementById('charStrip');if(!el)return;
+  el.innerHTML=sideChars.map(c=>{
+    const img=sideCharImages[c.handle];
+    const short=c.nm.split(' ').pop();
+    return `<button class="cs-item" onclick="newSideChat('${c.name}')" aria-label="${esc(c.nm)}와 대화"><span class="cs-av" style="--c:${sideCharColors[c.handle]||'var(--mint)'}"><img src="${img}" alt=""></span>${esc(short)}</button>`;
+  }).join('');
+}
+const SUN='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON='<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';
+function isDark(){
+  const t=document.documentElement.dataset.theme;
+  return t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function paintThemeBtn(){const b=document.getElementById('themeBtn');if(b)b.innerHTML=isDark()?SUN:MOON;}
+function toggleTheme(){
+  const next=isDark()?'light':'dark';
+  document.documentElement.dataset.theme=next;
+  try{localStorage.setItem('theme',next);}catch(e){}
+  paintThemeBtn();
+}
+(function(){
+  try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  paintThemeBtn();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',paintThemeBtn);
+})();
+renderCharStrip();
+
+// ESC로 열린 오버레이 닫기
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  const g=document.getElementById('galleryOvl');if(g){g.remove();return;}
+  if(document.getElementById('moreOvl').classList.contains('open')){closeMore();return;}
+  if(document.body.classList.contains('in-room')){closeRoom();return;}
+  const dd=document.getElementById('diaryDetailOvl');if(dd&&dd.classList.contains('open')){dd.classList.remove('open');return;}
+  if(document.getElementById('callDetailOverlay').classList.contains('open')){closeCallDetail();return;}
+  if(document.getElementById('timelineOvl').classList.contains('open')){closeTimeline();return;}
+  if(document.getElementById('dailyOvl').classList.contains('open')){closeDailyOvl();return;}
+});
 
 loadData();
 </script>
