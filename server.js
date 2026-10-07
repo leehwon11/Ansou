@@ -3,6 +3,7 @@ const { Pool } = require('pg');
 const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 const multer = require('multer');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -45,6 +46,44 @@ async function initDB() {
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ── 잠금 (APP_PASSWORD 환경변수가 있을 때만 켜짐) ──
+// 비밀번호는 코드가 아니라 Render 환경변수에 둠 (저장소가 공개라서)
+const APP_PASSWORD = process.env.APP_PASSWORD || '';
+const AUTH_TOKEN = APP_PASSWORD
+  ? crypto.createHmac('sha256', APP_PASSWORD).update('ansou-auth-v1').digest('hex')
+  : '';
+function readCookie(req, name) {
+  const pair = (req.headers.cookie || '').split(/;\s*/).find(x => x.startsWith(name + '='));
+  return pair ? decodeURIComponent(pair.slice(name.length + 1)) : '';
+}
+function isAuthed(req) {
+  return !APP_PASSWORD || readCookie(req, 'ansou_auth') === AUTH_TOKEN;
+}
+// 4자리 비밀번호라 연속 실패 시 잠깐 막음
+const loginFails = new Map();
+app.post('/api/login', (req, res) => {
+  if (!APP_PASSWORD) return res.json({ ok: true });
+  const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.ip;
+  const f = loginFails.get(ip) || { n: 0, until: 0 };
+  if (f.until > Date.now()) return res.status(429).json({ ok: false, error: '잠시 후 다시 시도해줘' });
+  const hash = v => crypto.createHash('sha256').update(String(v)).digest();
+  if (!crypto.timingSafeEqual(hash(req.body?.password ?? ''), hash(APP_PASSWORD))) {
+    f.n += 1;
+    if (f.n >= 5) { f.n = 0; f.until = Date.now() + 60000; }
+    loginFails.set(ip, f);
+    return res.status(401).json({ ok: false });
+  }
+  loginFails.delete(ip);
+  const secure = req.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
+  res.setHeader('Set-Cookie', `ansou_auth=${AUTH_TOKEN}; Path=/; HttpOnly; SameSite=Lax; Max-Age=31536000${secure}`);
+  res.json({ ok: true });
+});
+app.get('/api/session', (req, res) => res.json({ ok: isAuthed(req), locked: !!APP_PASSWORD }));
+app.use('/api', (req, res, next) => {
+  if (isAuthed(req)) return next();
+  res.status(401).json({ ok: false, error: 'locked' });
+});
 
 // ── AI API 프록시 ──
 // 모델/게이트웨이는 환경변수로 바꿀 수 있음 (게이트웨이가 지원하는 모델이어야 함)
