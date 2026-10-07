@@ -742,6 +742,11 @@ body{font-family:'IBM Plex Sans KR',sans-serif;background:var(--bg);color:var(--
 .sa svg{flex-shrink:0;}
 .empty b svg{color:var(--gray);}
 .diary-card-icon{display:flex;align-items:center;}
+/* 삭제 버튼 */
+.row-del{flex-shrink:0;width:36px;height:36px;border-radius:18px;border:none;background:none;color:var(--faint);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;margin-left:4px;}
+.row-del:hover,.row-del:active{color:#FF7A7A;background:rgba(255,92,92,.1);}
+.dli-hdr{align-items:center;}
+.diary-card-hdr{align-items:center;}
 /* 시트·오버레이 */
 .ovl-panel,.dd-panel,.cld-panel{background:var(--bg);border:1px solid var(--line-soft);border-bottom:none;}
 .more-item .qa-ic{background:var(--mint-p);color:var(--mint);}
@@ -1998,7 +2003,7 @@ function renderRooms(){
         riName=`${esc(r.title)} <span style="color:var(--gray);font-weight:400;font-size:13px;">${r.members.length+1}</span>`;
         prev=last?`${last.role==='user'?'나':esc(memberInfo(last.who).nm)}: ${esc((last.speech||last.content||'').slice(0,26))}`:'아직 대화가 없어요';
       }
-      d.innerHTML=`${avHTML}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}${prev}</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<span class="chip live" style="margin-top:4px;">진행 중</span>':''}</div>`;
+      d.innerHTML=`${avHTML}<div class="ri-info"><div class="ri-name">${riName}</div><div class="ri-prev">${r.ended?'[종료] ':''}${prev}</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;color:var(--gray);">${r.st}</div>${!r.ended?'<span class="chip live" style="margin-top:4px;">진행 중</span>':''}</div><button class="row-del" onclick="event.stopPropagation();deleteRoom(${i})" aria-label="채팅방 삭제">${ICON('trash',16)}</button>`;
       d.onclick=()=>openAnyRoom(i);list.appendChild(d);
     });
   });
@@ -2347,6 +2352,7 @@ function renderCallLogs(){
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="cli-dur">${l.dur}</div>
         ${l.msgs&&l.msgs.length?`<button onclick="openCallDetail(${i})" style="background:var(--mint-p);border:none;border-radius:10px;padding:4px 10px;font-size:11px;color:var(--mint);cursor:pointer;font-family:'IBM Plex Sans KR',sans-serif;">녹음 보기</button>`:''}
+        <button class="row-del" onclick="event.stopPropagation();deleteCallLog(${i})" aria-label="통화 기록 삭제">${ICON('trash',16)}</button>
       </div>`;
     list.appendChild(d);
   });
@@ -2495,7 +2501,7 @@ function renderDailyList(){
     items.forEach(({log:l,idx:i})=>{
       const last=l.msgs[l.msgs.length-1];const{speech}=last?parseMsg(last.content):{speech:'기록 없음'};
       const d=document.createElement('div');d.className='dli';
-      d.innerHTML=`<div class="dli-hdr">${l.ended?'<span class="chip">완료</span>':'<span class="chip live">진행 중</span>'}<div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
+      d.innerHTML=`<div class="dli-hdr">${l.ended?'<span class="chip">완료</span>':'<span class="chip live">진행 중</span>'}<div class="dli-ttl">${esc(l.title)}</div><div class="dli-time">${l.sub}</div><button class="row-del" onclick="event.stopPropagation();deleteDaily(${i})" aria-label="일상 기록 삭제">${ICON('trash',16)}</button></div><div class="dli-prev">"${esc(speech.slice(0,38))}..."</div>`;
       d.onclick=()=>{curDIdx=i;openDOvl(l);};list.appendChild(d);
     });
   });
@@ -2656,6 +2662,7 @@ function renderDiaryList(){
             <div class="diary-card-icon" style="color:var(--mint);">${ICON('book',18)}</div>
             <div class="diary-card-title">오늘의 일기</div>
             <div class="diary-card-date">${esc(dateLabel)}</div>
+            <button class="row-del" onclick="event.stopPropagation();deleteDiary(${diaryList.indexOf(entry)})" aria-label="일기 삭제">${ICON('trash',16)}</button>
           </div>
           <div class="diary-card-body">${esc(entry.content)}</div>`;
       } else {
@@ -2664,6 +2671,7 @@ function renderDiaryList(){
             <div class="diary-card-icon" style="color:var(--lime);">${ICON('pen',18)}</div>
             <div class="diary-card-title">${esc(entry.noteType)}</div>
             <div class="diary-card-date">${esc(dateLabel)}</div>
+            <button class="row-del" onclick="event.stopPropagation();deleteDiary(${diaryList.indexOf(entry)})" aria-label="일기 삭제">${ICON('trash',16)}</button>
           </div>
           <div class="diary-card-body note">${esc(entry.content)}</div>`;
       }
@@ -3392,6 +3400,28 @@ function toggleTheme(){
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',paintThemeBtn);
 })();
 renderCharStrip();
+
+// ══ 삭제 ══
+function deleteRoom(i){
+  if(!rooms[i]||!confirm('이 채팅방을 삭제할까요? 되돌릴 수 없어요.'))return;
+  if(curRoom===i)closeRoom();
+  rooms.splice(i,1);if(curRoom!==null&&curRoom>i)curRoom--;
+  renderRooms();saveData();toast('채팅방을 삭제했어요');
+}
+function deleteDaily(i){
+  if(!dLogs[i]||!confirm('이 일상 기록을 삭제할까요? 되돌릴 수 없어요.'))return;
+  if(curDIdx===i)closeDailyOvl();
+  dLogs.splice(i,1);if(curDIdx!==null&&curDIdx>i)curDIdx--;
+  renderDailyList();saveData();toast('일상 기록을 삭제했어요');
+}
+function deleteCallLog(i){
+  if(!callLogs[i]||!confirm('이 통화 기록을 삭제할까요?'))return;
+  callLogs.splice(i,1);renderCallLogs();saveData();toast('통화 기록을 삭제했어요');
+}
+function deleteDiary(i){
+  if(i<0||!diaryList[i]||!confirm('이 일기를 삭제할까요? 되돌릴 수 없어요.'))return;
+  diaryList.splice(i,1);renderDiaryList();renderCalendar();saveData();toast('삭제했어요');
+}
 
 // ══ 단톡방 ══
 const CHAR_COLOR={an:'#19C6E6','@AkitoSinonome':'#FF7620','@NeneKusanagi':'#33DD99','@SakiTenma':'#FFDE45','@MizukiAkiyama':'#DDAACC','@HarukaKiritani':'#99CDFF','@LouiKamishiro':'#BB88EE'};
