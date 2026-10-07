@@ -246,7 +246,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
   .crv-input-area, .rv-hdr{padding:10px 12px;}
   .m-speech{font-size:12px!important;}
   .m-narr-standalone{font-size:11px!important;}
+  /* iOS는 16px 미만 입력창에 포커스하면 화면을 확대해버림 */
+  .rv-input,.narr-input,.ccb-input,.cmt-inp,.reply-inp,.compose-box textarea,.df input,.df textarea{font-size:16px!important;}
 }
+.rv-input-area,.ended-bar{padding-bottom:calc(12px + env(safe-area-inset-bottom))!important;}
 @media (min-width: 769px) {
   .app{box-shadow:0 0 40px rgba(0,187,220,.1);border-radius:var(--r);margin-top:20px;min-height:calc(100vh - 40px);}
   .room-view{height:calc(100dvh - 147px);}
@@ -294,6 +297,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 .cal-day.today.sun{color:#fff;}
 .cal-day.sat{color:#4488ff;}
 .cal-day.today.sat{color:#fff;}
+/* 토스트 */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:rgba(26,42,58,.92);color:#fff;font-size:12px;padding:9px 16px;border-radius:20px;z-index:500;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;max-width:90vw;text-align:center;line-height:1.5;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.err{background:rgba(220,60,60,.95);}
+/* AI 상태 */
+.ai-card{margin:12px 14px;background:var(--white);border:1px solid var(--mint-l);border-radius:var(--r);padding:14px 16px;}
+.ai-card-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.ai-test-btn{background:var(--mint);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.ai-test-btn:disabled{background:var(--mint-l);cursor:wait;}
+.ai-result{font-size:12px;line-height:1.7;margin-top:10px;color:var(--dark);display:none;word-break:break-all;}
+.ai-result.ok{display:block;color:#1d9a52;}
+.ai-result.fail{display:block;color:#d64545;}
+.tb:focus-visible,.cbtn:focus-visible,.rv-send:focus-visible{outline:2px solid var(--mint);outline-offset:2px;}
 /* 일기 상세 오버레이 */
 .diary-detail{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4);display:none;align-items:flex-end;}
 .diary-detail.open{display:flex;}
@@ -310,7 +326,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
     <div class="hdr-status"><div class="dot"></div>온라인</div>
   </div>
   <nav class="tab-nav">
-    <button class="tb active" onclick="sw('home',this)"><span class="ti">🏠</span>홈<span class="nb" id="hBadge">2</span></button>
+    <button class="tb active" onclick="sw('home',this)"><span class="ti">🏠</span>홈<span class="nb" id="hBadge" style="display:none;"></span></button>
     <button class="tb" onclick="sw('sns',this)"><span class="ti">📱</span>SNS</button>
     <button class="tb" onclick="sw('chat',this)"><span class="ti">💬</span>채팅</button>
     <button class="tb" onclick="sw('call',this)"><span class="ti">📞</span>통화</button>
@@ -510,6 +526,16 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
         <div class="df"><label>추가 설정</label><textarea id="d-extra" rows="3" placeholder="기타 드림 서사, 특수 설정 등..."></textarea></div>
         <button class="save-btn" onclick="saveDP()">💾 저장하기</button>
         <div class="saved-ok" id="savedOk">✓ 저장됐어요!</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-row">
+          <div>
+            <div style="font-size:13px;font-weight:700;">🤖 AI 연결 확인</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px;">답장이 안 오면 여기서 먼저 확인해봐요</div>
+          </div>
+          <button class="ai-test-btn" id="aiTestBtn" onclick="testAI()">테스트</button>
+        </div>
+        <div class="ai-result" id="aiResult"></div>
       </div>
     </div>
   </div>
@@ -717,9 +743,29 @@ ${extra}`;
 async function api(messages,sys){
   const s=sys||buildSys();
   const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:s,messages})});
-  const d=await r.json();
-  return d.content||'...';
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok||!d.content) throw new Error(d.error||('응답 오류 '+r.status));
+  return d.content;
 }
+function toast(msg,isErr){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.appendChild(t);}
+  t.textContent=msg;t.classList.toggle('err',!!isErr);t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),isErr?3500:2000);
+}
+function aiFail(e){console.error(e);toast('답장을 받지 못했어요. 잠시 후 다시 보내줘',true);}
+async function testAI(){
+  const btn=document.getElementById('aiTestBtn'),out=document.getElementById('aiResult');
+  btn.disabled=true;btn.textContent='확인 중...';out.className='ai-result';
+  try{
+    const r=await fetch('/api/health');const d=await r.json();
+    if(d.ok){out.className='ai-result ok';out.textContent=`✓ 정상 작동 · 모델 ${d.servedModel||d.model} · ${(d.latencyMs/1000).toFixed(1)}초\n응답: "${d.sample}"`;}
+    else{out.className='ai-result fail';out.textContent=`✕ 연결 실패 · 모델 ${d.model}\n${d.error}`;}
+  }catch(e){out.className='ai-result fail';out.textContent='✕ 서버에 연결할 수 없어요';}
+  out.style.whiteSpace='pre-line';
+  btn.disabled=false;btn.textContent='테스트';
+}
+function dayKey(ts){const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 
 // 유틸
 function ar(el){
@@ -848,28 +894,29 @@ function rdN(id,tab,action){
   },50);
 }
 function addNotif(icon,type,msg,action){
-  const list=document.getElementById('notifList');
-  const d=document.createElement('div');d.className='notif-card';
-  d.innerHTML=`<div class="notif-type">${icon} ${type} <span class="nbadge">NEW</span></div><div class="notif-msg">${esc(msg)}</div><div class="notif-time">방금 전</div>`;
-  d.onclick=()=>{
-    d.classList.add('read');d.querySelector('.nbadge')?.remove();
-    if(action){
-      const tabId=action==='newChat'?'chat':'sns';
-      const btn=document.querySelector(`.tb[onclick="sw('${tabId}',this)"]`);
-      if(btn)sw(tabId,btn);
-      setTimeout(()=>{
-        if(action==='newChat'){
-          const activeRoom=rooms.findIndex(r=>!r.ended);
-          if(activeRoom>=0){openRoom(activeRoom);}
-          else{newChat();}
-        } else if(action==='snsTop'){
-          const scroll=document.querySelector('#tab-sns .scroll');
-          if(scroll){scroll.scrollTop=0;}
-        }
-      },50);
+  // 새로고침해도 사라지지 않도록 저장소에 넣고 다시 그림
+  notifStore.push({icon,type,msg,date:nowt(),day:dayKey(Date.now()),kind:'event',action:action||null,read:false});
+  if(notifStore.length>60) notifStore=notifStore.slice(-60);
+  renderNotifFromStore();updateHBadge();saveNotifs();
+}
+function runNotifAction(action){
+  if(!action) return;
+  const tabId=action==='newChat'?'chat':action==='call'?'call':'sns';
+  const btn=document.querySelector(`.tb[onclick="sw('${tabId}',this)"]`);
+  if(btn)sw(tabId,btn);
+  setTimeout(()=>{
+    if(action==='newChat'){
+      const activeRoom=rooms.findIndex(r=>!r.ended);
+      if(activeRoom>=0){if(rooms[activeRoom].charName)openSideRoom(activeRoom);else openRoom(activeRoom);}
+      else{newChat();}
+    } else if(action==='snsTop'){
+      const scroll=document.querySelector('#tab-sns .scroll');
+      if(scroll){scroll.scrollTop=0;}
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else if(action==='call'){
+      if(!callOn) startCall('in');
     }
-  };
-  list.prepend(d);
+  },50);
 }
 
 // ══ SNS ══
@@ -965,7 +1012,8 @@ async function addCmt(id){
       sys2=buildSideCharSys(sc,'\n소우타가 내 SNS 게시글에 댓글을 달았다. 짧게 1문장으로 답댓글. 반드시 맨 앞에 @태그 붙일 것. 대사만.');
       prompt2=`[소우타(${myHandle})가 댓글 달았어: "${txt}"]`;
     } else return;
-    const r=await api([{role:'user',content:prompt2}],sys2);
+    let r;
+    try{r=await api([{role:'user',content:prompt2}],sys2);}catch(e){return;}
     const sp=r.replace(/\(.*?\)/gs,'').trim();
     if(!sp) return;
     const ownerReply={who:postOwnerHandle,txt:sp,ts:new Date()};
@@ -1153,7 +1201,8 @@ function clearImg(){
 async function uploadImg(file){
   const fd=new FormData();fd.append('image',file);
   const r=await fetch('/api/upload',{method:'POST',body:fd});
-  const d=await r.json();
+  const d=await r.json().catch(()=>({}));
+  if(!d.ok) toast('사진 업로드에 실패했어요'+(d.error?': '+d.error:''),true);
   return d.ok?d.url:null;
 }
 async function postMine(){
@@ -1371,15 +1420,13 @@ function renderRooms(){
   // 날짜별 그룹화
   const groups={};
   rooms.forEach((r,i)=>{
-    const dateKey=r.id?new Date(r.id).toISOString().slice(0,10):(r.st||'기타');
+    const dateKey=r.id?dayKey(r.id):(r.st||'기타');
     if(!groups[dateKey]) groups[dateKey]=[];
     groups[dateKey].push({room:r,idx:i});
   });
   Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(dateKey=>{
     const items=groups[dateKey];
-    const d=new Date(dateKey);
-    const days=['일','월','화','수','목','금','토'];
-    const label=isNaN(d)? dateKey : `${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+    const label=items[0].room.id? getDateWithDay(items[0].room.id) : dateKey;
     const sep=document.createElement('div');
     sep.style.cssText='display:flex;align-items:center;gap:8px;padding:8px 14px 4px;';
     sep.innerHTML=`<div style="flex:1;height:1px;background:var(--mint-l);"></div><div style="font-size:10px;color:var(--mint);font-weight:700;white-space:nowrap;">${esc(label)}</div><div style="flex:1;height:1px;background:var(--mint-l);"></div>`;
@@ -1388,7 +1435,7 @@ function renderRooms(){
       const last=r.msgs[r.msgs.length-1];
       const{speech}=last?parseMsg(last.content):{speech:'...'};
       const d=document.createElement('div');d.className='room-item';
-      const sc2=room.charName?sideChars.find(s=>s.name===room.charName):null;
+      const sc2=r.charName?sideChars.find(s=>s.name===r.charName):null;
       const sc2img=sc2?sideCharImages[sc2.handle]:null;
       const riAv=sc2?(sc2img?`<div class="ri-av" style="overflow:hidden;"><img src="${sc2img}" alt="${sc2.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="ri-av" style="background:${sideCharColors[sc2.handle]||'#aaa'};font-size:16px;color:#fff;font-weight:700;">${sideCharInitials[sc2.handle]||sc2.nm[0]}</div>`):`<div class="ri-av"><img src="https://raw.githubusercontent.com/leehwon11/Ansou/d2f66ede0bb818ab6618c0f2cb98fe6ec9f30408/images/an.png" alt="안" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
       const riName=sc2?sc2.nm+' '+sc2.icon:'시라이시 안 ⭐';
@@ -1493,7 +1540,10 @@ async function sendSideMsg(){
   const tyAv=sImg?`<div class="m-av" style="overflow:hidden;"><img src="${sImg}" alt="${c.nm}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`:`<div class="m-av" style="background:${sBg};font-size:11px;color:#fff;font-weight:700;">${sIni}</div>`;
   const ty=mkTyping(tyAv);el.appendChild(ty);el.scrollTop=el.scrollHeight;
   const sys=buildSideCharSys(c,'\n【채팅 포맷】\n대사 먼저, 한 줄 띄고 (괄호 안에 상황·심리 서술). 지문은 반드시 서술형(~했다, ~이었다)으로 끝낼 것. 명사형(~함, ~됨) 절대 금지. 반말/경어는 캐릭터 설정 따름.');
-  const rep=await api(room.hist,sys);ty.remove();
+  let rep;
+  try{rep=await api(room.hist,sys);}
+  catch(e){ty.remove();aiFail(e);chatLk=false;if(snd)snd.disabled=false;saveData();return;}
+  ty.remove();
   const parsed=parseMsg(rep);
   room.msgs.push({role:'assistant',content:rep,speech:parsed.speech,narr:parsed.narr,ts:nowt()});
   room.hist.push({role:'assistant',content:rep});
@@ -1585,7 +1635,10 @@ async function sendMsg(){
   room.hist.push({role:'user',content:apiTxt});
   const el=document.getElementById('rvMsgs');
   const ty=mkTyping();if(el){el.appendChild(ty);el.scrollTop=el.scrollHeight;}
-  const rep=await api(room.hist);ty.remove();
+  let rep;
+  try{rep=await api(room.hist);}
+  catch(e){ty.remove();aiFail(e);chatLk=false;if(snd)snd.disabled=false;saveData();return;}
+  ty.remove();
   appendMsg(i,{role:'assistant',content:rep},true);room.hist.push({role:'assistant',content:rep});
   chatLk=false;if(snd)snd.disabled=false;
   renderRooms();
@@ -1651,16 +1704,24 @@ function connectCall(){
     ?'[안이 소우타에게 먼저 전화를 걸었다. 소우타가 받았다. 안이 첫 마디를 건넨다.]'
     :'[소우타가 안에게 전화를 걸었다. 안이 받았다. 안이 첫 마디를 건넨다.]';
   const sys=buildSys('\n【현재 상황: 전화 통화 중】\n- 실제 전화 통화처럼 자연스럽게\n- 대사만. 괄호 서술 없음. 짧게.');
+  callLk=true;
   api([{role:'user',content:callCtx}],sys).then(rep=>{
     const sp=rep.replace(/\(.*?\)/gs,'').trim();
     callHistory.push({role:'user',content:callCtx});
     callHistory.push({role:'assistant',content:sp});
     addCC('an',sp);
-  });
+  }).catch(e=>{
+    // 첫 마디 실패해도 통화는 이어지게 — 맥락만 남겨둠
+    callHistory.push({role:'user',content:callCtx});
+    aiFail(e);
+  }).finally(()=>{callLk=false;});
 }
 function rejectCall(){
   callOn=false;
   document.getElementById('callAv').classList.remove('ring');
+  resetCallUI();
+}
+function resetCallUI(){
   document.getElementById('callStxt').textContent='통화를 시작해보세요';
   document.getElementById('callBtns').innerHTML=`
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
@@ -1680,8 +1741,7 @@ async function endCall(){
   const logMsgs=[...callHistory];
   callLogs.unshift({nm:'시라이시 안',time:nowt(),dur,msgs:logMsgs,dir:callDirection});renderCallLogs();await saveData();
   callSec=0;document.getElementById('callTmr').textContent='00:00';document.getElementById('callTmr').classList.remove('vis');
-  document.getElementById('callStxt').textContent='통화를 시작해보세요';
-  document.getElementById('callBtns').innerHTML=`<button class="cbtn start" onclick="startCall()">📞</button>`;
+  resetCallUI();
   document.getElementById('ccBox').style.display='none';document.getElementById('ccMsgs').innerHTML='';
   callHistory=[];callLk=false;
 }
@@ -1699,8 +1759,11 @@ async function sendCC(){
   const inp=document.getElementById('ccInp');const txt=inp.value.trim();if(!txt)return;
   inp.value='';callLk=true;addCC('user',txt);callHistory.push({role:'user',content:txt});
   const sys=buildSys('\n【현재 상황: 전화 통화 중】\n- 실제 전화 통화처럼 대화. 문자가 아닌 말투.\n- "어~", "응응", "잠깐만", "맞아" 같은 구어체 자연스럽게\n- 대사만 출력. 괄호 서술 없음.\n- 배경 소리(연습실 소리, 카페 소리 등) 언급 가능\n- 짧고 자연스럽게. 실제 통화하듯.');
-  const rep=await api(callHistory,sys);const sp=rep.replace(/\(.*?\)/gs,'').trim();
-  addCC('an',sp);callHistory.push({role:'assistant',content:rep});callLk=false;
+  try{
+    const rep=await api(callHistory,sys);const sp=rep.replace(/\(.*?\)/gs,'').trim();
+    addCC('an',sp);callHistory.push({role:'assistant',content:sp});
+  }catch(e){aiFail(e);}
+  callLk=false;
 }
 function renderCallLogs(){
   const list=document.getElementById('callLogList');list.innerHTML='';
@@ -1766,15 +1829,22 @@ async function startDailyAI(){
   const m=document.getElementById('dMsgs');
   const ty=mkTyping();if(m){m.appendChild(ty);m.scrollTop=m.scrollHeight;}
   const sys=buildSys(`\n【씬】${sc.sit} ${sc.prompt}`);
-  const first=await api([{role:'user',content:'[안이 소우타에게 먼저 말을 건다]'}],sys);
-  if(m&&ty.parentNode===m)ty.remove();
-  addDMsg({role:'assistant',content:first});
-  log.hist=[{role:'user',content:'[안이 소우타에게 먼저 말을 건다]'},{role:'assistant',content:first}];
+  log.hist=[{role:'user',content:'[안이 소우타에게 먼저 말을 건다]'}];
+  dLk=true;
+  try{
+    const first=await api(log.hist,sys);
+    if(m&&ty.parentNode===m)ty.remove();
+    addDMsg({role:'assistant',content:first});
+    log.hist.push({role:'assistant',content:first});
+  }catch(e){if(m&&ty.parentNode===m)ty.remove();aiFail(e);}
+  dLk=false;
+  saveData();
 }
 function startDailyMe(){
   const sc=scenes[Math.floor(Math.random()*scenes.length)];
   const log={id:Date.now(),title:sc.title,sub:sc.sub,sit:sc.sit,st:nowt(),msgs:[],hist:[],ended:false};
   dLogs.unshift(log);curDIdx=0;dHist=[];openDOvl(log);
+  saveData();
 }
 function openDOvl(log){
   document.getElementById('dOvlTitle').textContent=log.title;
@@ -1809,8 +1879,11 @@ async function sendD(){
   addDMsg({role:'user',content:apiTxt,speech:speechTxt,narr:narrTxt});log.hist.push({role:'user',content:apiTxt});
   const m=document.getElementById('dMsgs');const ty=mkTyping();if(m){m.appendChild(ty);m.scrollTop=m.scrollHeight;}
   const sys=buildSys(`\n【씬】${log.sit}`);
-  const rep=await api(log.hist,sys);ty.remove();
-  addDMsg({role:'assistant',content:rep});log.hist.push({role:'assistant',content:rep});dLk=false;
+  try{
+    const rep=await api(log.hist,sys);ty.remove();
+    addDMsg({role:'assistant',content:rep});log.hist.push({role:'assistant',content:rep});
+  }catch(e){ty.remove();aiFail(e);}
+  dLk=false;
   saveData();
 }
 function handleDK(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendD();}}
@@ -1831,7 +1904,7 @@ function switchDTab(tab){
     speech.style.display='';narr.classList.add('show');if(tB)tB.classList.add('active');
   }
 }
-function endDaily(){if(curDIdx!==null)dLogs[curDIdx].ended=true;closeDailyOvl();}
+function endDaily(){if(curDIdx!==null)dLogs[curDIdx].ended=true;closeDailyOvl();saveData();}
 function closeDailyOvl(){document.getElementById('dailyOvl').classList.remove('open');curDIdx=null;renderDailyList();}
 function renderDailyList(){
   const list=document.getElementById('dailyList');list.innerHTML='';
@@ -1840,7 +1913,7 @@ function renderDailyList(){
   const groups={};
   dLogs.forEach((l,i)=>{
     // st에서 날짜 추출 또는 id(timestamp) 사용
-    const dateKey=l.id?new Date(l.id).toISOString().slice(0,10):'기타';
+    const dateKey=l.id?dayKey(l.id):'기타';
     if(!groups[dateKey]) groups[dateKey]=[];
     groups[dateKey].push({log:l,idx:i});
   });
@@ -1896,7 +1969,9 @@ async function loadMood(){
   // 오늘 처음이면 새로 생성 후 저장
   const dateStr=today.getMonth()+1+'월 '+today.getDate()+'일';
   const sys=buildSys('\n오늘('+dateStr+') 시라이시 안의 감정 상태를 한 문장으로 표현해줘. 15자 이내. 괄호 서술 없이. 이모지 없이 텍스트만.');
-  const rep=await api([{role:'user',content:'[오늘 안의 감정 상태는?]'}],sys);
+  let rep;
+  try{rep=await api([{role:'user',content:'[오늘 안의 감정 상태는?]'}],sys);}
+  catch(e){moodLoaded=false;document.getElementById('moodText').textContent='지금은 불러올 수 없어요';return;}
   const txt=rep.replace(/\(.*?\)/gs,'').trim().slice(0,40);
   const emoji=moodEmojis[Math.floor(Math.random()*moodEmojis.length)];
   document.getElementById('moodEmoji').textContent=emoji;
@@ -1920,15 +1995,9 @@ async function generateDiary(){
   loading.innerHTML='<div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px;"><div class="td"></div><div class="td"></div><div class="td"></div></div>일기를 쓰는 중...';
   list.prepend(loading);
   // 오늘 채팅/일상 대화 요약 추출
-  const today2=new Date().toISOString().slice(0,10);
-  const todayRooms=rooms.filter(r=>{
-    const d=r.id?new Date(r.id).toISOString().slice(0,10):'';
-    return d===today2;
-  });
-  const todayDlogs=dLogs.filter(l=>{
-    const d=l.id?new Date(l.id).toISOString().slice(0,10):'';
-    return d===today2;
-  });
+  const today2=dayKey(Date.now());
+  const todayRooms=rooms.filter(r=>r.id&&dayKey(r.id)===today2);
+  const todayDlogs=dLogs.filter(l=>l.id&&dayKey(l.id)===today2);
   let todayContext='';
   if(todayRooms.length){
     const msgs=todayRooms.flatMap(r=>r.msgs.slice(0,4));
@@ -1946,7 +2015,9 @@ async function generateDiary(){
 - 괄호 서술 없이 일기 본문만
 - 마지막 줄에 짧은 한 마디로 마무리
 ${todayContext?'- 아래 오늘 있었던 일을 자연스럽게 반영해줘:'+todayContext:''}`);
-  const rep=await api([{role:'user',content:'[오늘 일기를 써줘]'}],sys);
+  let rep;
+  try{rep=await api([{role:'user',content:'[오늘 일기를 써줘]'}],sys);}
+  catch(e){loading.remove();aiFail(e);return;}
   loading.remove();
   const entry={type:'diary',date:dateStr,content:rep.trim(),ts:Date.now()};
   diaryList.unshift(entry);
@@ -1971,7 +2042,9 @@ async function generateNote(){
 - 100~180자
 - 안의 말투로. 두서없어도 됨
 - 괄호 서술 없이 메모 내용만`);
-  const rep=await api([{role:'user',content:'[메모 써줘]'}],sys);
+  let rep;
+  try{rep=await api([{role:'user',content:'[메모 써줘]'}],sys);}
+  catch(e){loading.remove();aiFail(e);return;}
   loading.remove();
   const entry={type:'note',noteType,date:dateStr,content:rep.trim(),ts:Date.now()};
   diaryList.unshift(entry);
@@ -1994,7 +2067,7 @@ function renderDiaryList(){
   // 날짜별 그룹화
   const groups={};
   diaryList.forEach(entry=>{
-    const dateKey=entry.ts?new Date(entry.ts).toISOString().slice(0,10):(entry.date||'기타');
+    const dateKey=entry.ts?dayKey(entry.ts):(entry.date||'기타');
     if(!groups[dateKey]) groups[dateKey]=[];
     groups[dateKey].push(entry);
   });
@@ -2039,7 +2112,7 @@ function sw(id,btn){
   document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
-  if(id==='home'){const b=document.getElementById('hBadge');if(b)b.remove();}
+  window.scrollTo(0,0);
   if(id==='diary'){loadMood();renderCalendar();}
 }
 
@@ -2048,7 +2121,8 @@ async function sendAutoTalk(){
   // 이미 진행 중인 방 있으면 추가 선톡 안 보냄
   if(rooms.some(r=>!r.ended)) return;
   const sys=buildSys('\n현재 상황: 안이 소우타에게 먼저 메시지를 보내는 상황. 일상적이고 자연스러운 선톡. 짧게.');
-  const msg=await api([{role:'user',content:'[안이 소우타에게 먼저 선톡을 보낸다]'}],sys);
+  let msg;
+  try{msg=await api([{role:'user',content:'[안이 소우타에게 먼저 선톡을 보낸다]'}],sys);}catch(e){return;}
   // 채팅방 생성
   const room={id:Date.now(),st:nowt(),msgs:[],hist:[],ended:false};
   rooms.unshift(room);
@@ -2142,7 +2216,7 @@ function renderNotifFromStore(){
   notifStore.slice().reverse().forEach(n=>{
     const d=document.createElement('div');d.className='notif-card'+(n.read?' read':'');
     d.innerHTML=`<div class="notif-type">${n.icon} ${esc(n.type)}${n.read?'':' <span class="nbadge">NEW</span>'}</div><div class="notif-msg">${esc(n.msg)}</div><div class="notif-time">${esc(n.date)}</div>`;
-    d.onclick=()=>{n.read=true;d.classList.add('read');d.querySelector('.nbadge')?.remove();updateHBadge();saveNotifs();};
+    d.onclick=()=>{n.read=true;d.classList.add('read');d.querySelector('.nbadge')?.remove();updateHBadge();saveNotifs();runNotifAction(n.action);};
     list.appendChild(d);
   });
 }
@@ -2165,6 +2239,10 @@ async function loadNotifs(){
   const d=await dbLoad('notifications');
   if(d && Array.isArray(d)) notifStore=d;
   const _kst2=new Date(Date.now()+9*3600000); const today=_kst2.toISOString().slice(0,10);
+  if(!notifStore.length){
+    const list=document.getElementById('notifList');
+    if(list) list.innerHTML='<div style="text-align:center;padding:16px;font-size:12px;color:var(--gray);">새로운 알림이 없어요</div>';
+  }
   if(!notifStore.some(n=>n.day===today && n.kind==='daily')){
     await genDailyNotif(today);
   }
@@ -2279,6 +2357,18 @@ const sideChars=[
   }
 ];
 
+// 접점 없는 조합 (이 조합끼리는 SNS 자동 상호작용 불가)
+const NO_INTERACTION_PAIRS=[
+  ['@HarukaKiritani','@AkitoSinonome'],
+  ['@HarukaKiritani','@NeneKusanagi'],
+  ['@HarukaKiritani','@MizukiAkiyama'],
+  ['@HarukaKiritani','@LouiKamishiro'],
+  ['@AkitoSinonome','@SakiTenma'],
+];
+function hasNoInteraction(h1,h2){
+  return NO_INTERACTION_PAIRS.some(([a,b])=>(a===h1&&b===h2)||(a===h2&&b===h1));
+}
+
 function buildSideCharSys(c, extra=''){
   // 캐릭터별 말투 상세
   const speechStyle={
@@ -2352,19 +2442,6 @@ function buildSideCharSys(c, extra=''){
   }[c.handle]||'';
 
   // 캐릭터 간 상호작용 규칙
-  // 접점 없는 조합 (이 조합끼리는 SNS 자동 상호작용 불가)
-  const NO_INTERACTION_PAIRS=[
-    ['@HarukaKiritani','@AkitoSinonome'],
-    ['@HarukaKiritani','@NeneKusanagi'],
-    ['@HarukaKiritani','@MizukiAkiyama'],
-    ['@HarukaKiritani','@LouiKamishiro'],
-    ['@AkitoSinonome','@SakiTenma'],
-    ['@SakiTenma','@AkitoSinonome'],
-  ];
-  function hasNoInteraction(h1,h2){
-    return NO_INTERACTION_PAIRS.some(([a,b])=>(a===h1&&b===h2)||(a===h2&&b===h1));
-  }
-
   const interactionRules=`
 【캐릭터 간 호칭 및 상호작용 규칙】
 - 아키토↔네네: 같은 반. 서로 이름. 성격 공통점 많음(둘 다 츤데레, 상식인). 분위기 함께 가라앉히는 포지션.
@@ -2407,9 +2484,6 @@ async function scheduleSideEvent(){
       const sys=buildSideCharSys(c,'\n지금 소우타에게 짧은 메시지를 하나 보냅니다. 1~2문장, 대사만, 괄호나 지문 없이, 캐릭터의 말투 그대로.');
       const line=await api([{role:'user',content:`[${c.name}가 소우타에게 메시지를 보낸다]`}],sys);
       const clean=line.replace(/\(.*?\)/gs,'').trim();
-      notifStore.push({icon:c.icon,type:c.name,msg:clean,date:nowt(),day:new Date().toISOString().slice(0,10),kind:'side',read:false});
-      renderNotifFromStore();updateHBadge();saveNotifs();
-      // 홈 탭 알림 뱃지도 갱신
       addNotif(c.icon,c.name,clean,null);
     }catch(e){}
     scheduleSideEvent();
@@ -2606,6 +2680,7 @@ async function addGalleryImages(input){
   const files = Array.from(input.files);
   const caption = document.getElementById('galleryCaption').value.trim();
   document.getElementById('galleryCaption').value='';
+  if(files.length) toast(`사진 ${files.length}장 올리는 중...`);
   for(const file of files){
     const url = await uploadImg(file);
     if(url){
@@ -2683,6 +2758,16 @@ ${post.nm||'누군가'}(@${ownerTag})의 SNS 게시글에 자연스럽게 댓글
     scheduleAutoInteract();
   }, 300000 + Math.random()*300000); // 5~10분
 }
+
+// ESC로 열린 오버레이 닫기
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  const g=document.getElementById('galleryOvl');if(g){g.remove();return;}
+  const dd=document.getElementById('diaryDetailOvl');if(dd&&dd.classList.contains('open')){dd.classList.remove('open');return;}
+  if(document.getElementById('callDetailOverlay').classList.contains('open')){closeCallDetail();return;}
+  if(document.getElementById('timelineOvl').classList.contains('open')){closeTimeline();return;}
+  if(document.getElementById('dailyOvl').classList.contains('open')){closeDailyOvl();return;}
+});
 
 loadData();
 </script>
