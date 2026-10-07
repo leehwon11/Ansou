@@ -1569,7 +1569,7 @@ async function addCmt(id){
     const cmtId=Object.keys(cmtMap).find(k=>cmtMap[k]===myCmt);
     if(cmtId){
       const repliesEl=document.getElementById('replies-'+cmtId);
-      if(repliesEl){repliesEl.style.display='';repliesEl.insertAdjacentHTML('beforeend',makeReplyHTML(ownerReply));}
+      if(repliesEl){repliesEl.style.display='';repliesEl.insertAdjacentHTML('beforeend',makeReplyHTML(ownerReply,cmtId));}
     } else {
       renderSNS();
     }
@@ -1623,7 +1623,7 @@ function makeCmtHTML(c){
   const cmtId='cmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
   if(!c.ts) c.ts=new Date();
   cmtMap[cmtId]=c;
-  const repliesHtml=(c.replies||[]).map(r=>makeReplyHTML(r)).join('');
+  const repliesHtml=(c.replies||[]).map(r=>makeReplyHTML(r,cmtId)).join('');
   return `<div class="cmt-item" id="${cmtId}">
     <div class="cmt-av ${avClass}">${avContent}</div>
     <div class="cmt-body">
@@ -1640,7 +1640,7 @@ function makeCmtHTML(c){
   </div>`;
 }
 
-function makeReplyHTML(r){
+function makeReplyHTML(r,cmtId){
   const isAn2=r.who==='@LightUptheFire';
   const isMe2=r.who===(DP.handle||'@FLYtotheFUTURE')||r.who==='me';
   const sc2=sideChars&&sideChars.find(s=>s.handle===r.who);
@@ -1663,19 +1663,20 @@ function makeReplyHTML(r){
     <div class="cmt-reply-body">
       <div class="cmt-reply-who">${esc(nm2)}</div>
       <div class="cmt-reply-txt">${renderCmtText(r.txt)}</div>
-      <div class="cmt-reply-meta" data-ts="${r.ts?new Date(r.ts).getTime():''}">방금 전</div>
+      <div class="cmt-reply-meta"><span data-ts="${r.ts?new Date(r.ts).getTime():''}">${r.ts?liveTime(new Date(r.ts)):'방금 전'}</span>${cmtId&&!isMe2?`<button class="link-btn" style="font-size:11px;padding:2px 4px;" onclick="toggleReplyInp('${cmtId}','${r.who}')">답글</button>`:''}</div>
     </div>
   </div>`;
 }
 
-function toggleReplyInp(cmtId){
+function toggleReplyInp(cmtId,target){
   const area=document.getElementById('rinp-'+cmtId);
   if(!area)return;
-  area.classList.toggle('open');
-  if(area.classList.contains('open')){
-    const inp=document.getElementById('ri-'+cmtId);
-    if(inp)inp.focus();
-  }
+  const inp=document.getElementById('ri-'+cmtId);
+  const c=cmtMap[cmtId];const who=target||(c&&c.who);
+  const same=inp&&inp.dataset.target===who;
+  if(area.classList.contains('open')&&same){area.classList.remove('open');return;}
+  area.classList.add('open');
+  if(inp){inp.dataset.target=who;inp.placeholder=handleOf(who)+'에게 답글...';inp.focus();}
 }
 
 async function sendReply(cmtId){
@@ -1685,29 +1686,33 @@ async function sendReply(cmtId){
   const txt=inp.value.trim();if(!txt)return;
   inp.value='';
   const myHandle=DP.handle||'@FLYtotheFUTURE';
+  const target=inp.dataset.target||c.who;
+  // 답장 받는 쪽이 했던 마지막 말 (맥락용)
+  const theirs=[c,...(c.replies||[])].filter(x=>x.who===target).pop();
   // 답글 저장
   if(!c.replies) c.replies=[];
-  const taggedTxt=`@${c.who.replace('@','')} ${txt}`;
+  const taggedTxt=`@${handleOf(target).replace('@','')} ${txt}`;
   const reply={who:myHandle,txt:taggedTxt,ts:new Date()};
   c.replies.push(reply);
   const repliesEl=document.getElementById('replies-'+cmtId);
   if(repliesEl){
     repliesEl.style.display='';
-    repliesEl.insertAdjacentHTML('beforeend',makeReplyHTML(reply));
+    repliesEl.insertAdjacentHTML('beforeend',makeReplyHTML(reply,cmtId));
   }
   document.getElementById('rinp-'+cmtId).classList.remove('open');
   saveData();
   // 답글 대상 캐릭터가 응답
-  const postOwnerWho=c.who;
+  const postOwnerWho=target;
+  const ctx=theirs?` (네가 앞서 쓴 말: "${String(theirs.txt).slice(0,80)}")`:'';
   let sys3,prompt3;
   if(postOwnerWho==='@LightUptheFire'){
     sys3=buildSys('\n상황: SNS 댓글 답글. 1문장. 대사만. 반드시 맨 앞에 @'+myHandle.replace('@','')+' 태그.');
-    prompt3='소우타가 답글을 달았어: "'+txt+'". 짧게 1문장으로 답해줘.';
+    prompt3='소우타가 답글을 달았어'+ctx+': "'+txt+'". 짧게 1문장으로 답해줘.';
   } else {
     const sc3=sideChars.find(s=>s.handle===postOwnerWho);
     if(!sc3) return;
     sys3=buildSideCharSys(sc3,'\n소우타가 내 댓글에 답글을 달았다. 1문장. 반드시 맨 앞에 @'+myHandle.replace('@','')+' 태그. 대사만.');
-    prompt3='[소우타 답글: "'+txt+'"]';
+    prompt3='[소우타 답글'+ctx+': "'+txt+'"]';
   }
   setTimeout(async()=>{
     try{
@@ -1716,7 +1721,7 @@ async function sendReply(cmtId){
       const reply2={who:postOwnerWho,txt:sp2,ts:new Date()};
       c.replies.push(reply2);
       const repliesEl2=document.getElementById('replies-'+cmtId);
-      if(repliesEl2){repliesEl2.style.display='';repliesEl2.insertAdjacentHTML('beforeend',makeReplyHTML(reply2));}
+      if(repliesEl2){repliesEl2.style.display='';repliesEl2.insertAdjacentHTML('beforeend',makeReplyHTML(reply2,cmtId));}
       saveData();
     }catch(e){}
   },1000+Math.random()*1500);
@@ -1724,9 +1729,11 @@ async function sendReply(cmtId){
 
 // 댓글 객체 전역 저장소
 const cmtMap={};
+// 내부 표기(me/an)를 실제 SNS 핸들로
+function handleOf(who){if(who==='me')return DP.handle||'@FLYtotheFUTURE';if(who==='an')return '@LightUptheFire';return who;}
 function renderCmtText(txt){
   // @태그 파란색으로 표시
-  return esc(txt).replace(/([@#][^\s<@#]+)/g,'<span class="tag">$1</span>');
+  return esc(txt).replace(/@me(?![A-Za-z0-9_])/g,handleOf('me')).replace(/([@#][^\s<@#]+)/g,'<span class="tag">$1</span>');
 }
 let pendingImgFile=null;
 function previewImg(input){
@@ -3310,13 +3317,13 @@ async function scheduleAutoInteract(){
       const post=allPosts[Math.floor(Math.random()*allPosts.length)];
       // 이미 댓글 단 캐릭터 제외
       const commentedHandles=post.cmts.map(c=>c.who);
-      const postHandle=post.who==='an'?'@LightUptheFire':post.who;
+      const postHandle=handleOf(post.who);
       const available=sideChars.filter(c=>!commentedHandles.includes(c.handle) && c.handle!==post.who && !hasNoInteraction(c.handle,postHandle));
       if(!available.length){ scheduleAutoInteract(); return; }
       const c=available[Math.floor(Math.random()*available.length)];
       // 게시글 주인 파악
       const isAnPost=post.who==='an'||post.who==='@LightUptheFire';
-      const ownerHandle=isAnPost?'@LightUptheFire':post.who;
+      const ownerHandle=handleOf(post.who);
       const ownerTag=ownerHandle.replace('@','');
       const sys=buildSideCharSys(c,`
 ${post.nm||'누군가'}(@${ownerTag})의 SNS 게시글에 자연스럽게 댓글. 1문장. 반드시 맨 앞에 @${ownerTag} 태그. 대사만. 괄호 없이.`);
