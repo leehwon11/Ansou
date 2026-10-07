@@ -1729,6 +1729,41 @@ async function sendReply(cmtId){
 
 // 댓글 객체 전역 저장소
 const cmtMap={};
+// 예전 버전이 다른 사람의 댓글을 첫 댓글의 '답글'로 넣어둔 걸 게시글 댓글로 되돌림
+function fixCommentThreads(){
+  let changed=false;
+  const tagOf=t=>{const m=String(t||'').match(/^@(\S+)/);return m?'@'+m[1]:'';};
+  [...myPosts,...snsData].forEach(post=>{
+    const owner=handleOf(post.who);
+    const isOwnerTag=t=>t===owner||(post.who==='me'&&t==='@me');
+    const moved=[];
+    (post.cmts||[]).forEach(cm=>{
+      if(!cm.replies||!cm.replies.length)return;
+      const cmWho=handleOf(cm.who);
+      cm.replies=cm.replies.filter(r=>{
+        const who=handleOf(r.who);
+        // 게시글 주인을 태그한, 주인도 댓글 작성자도 아닌 사람의 글 → 원래 게시글 댓글
+        if(who!==owner&&who!==cmWho&&isOwnerTag(tagOf(r.txt))){moved.push({...r,replies:[]});return false;}
+        return true;
+      });
+    });
+    if(!moved.length)return;
+    changed=true;
+    // 옮긴 댓글에 게시글 주인이 단 답글도 함께 옮김
+    (post.cmts||[]).forEach(cm=>{
+      if(!cm.replies)return;
+      cm.replies=cm.replies.filter(r=>{
+        if(handleOf(r.who)!==owner)return true;
+        const target=moved.find(m=>tagOf(r.txt)===handleOf(m.who));
+        if(target){target.replies.push(r);return false;}
+        return true;
+      });
+    });
+    post.cmts.push(...moved);
+    post.cmts.sort((a,b)=>new Date(a.ts||0)-new Date(b.ts||0));
+  });
+  return changed;
+}
 // 내부 표기(me/an)를 실제 SNS 핸들로
 function handleOf(who){if(who==='me')return DP.handle||'@FLYtotheFUTURE';if(who==='an')return '@LightUptheFire';return who;}
 function renderCmtText(txt){
@@ -1786,7 +1821,7 @@ async function postMine(){
 
   // 멘션된 캐릭터 무조건 댓글 (replies에)
   if(txt){
-    const mentionedChars=sideChars.filter(c=>txt.includes(c.nm)||txt.includes(c.name)||txt.includes(c.handle));
+    const mentionedChars=sideChars.filter(c=>txt.includes(c.nm)||txt.includes(c.name)||txt.includes(c.handle)||txt.includes(c.nm.split(' ').pop()));
     mentionedChars.forEach((sc,idx)=>{
       const postSideCmt=async(retry=0)=>{
         try{
@@ -1794,12 +1829,7 @@ async function postMine(){
           const cr=await api([{role:'user',content:`[소우타 게시글: "${txt}"]`}],csys);
           const csp=cr.replace(/\(.*?\)/gs,'').trim();
           if(!csp && retry<2){setTimeout(()=>postSideCmt(retry+1),3000);return;}
-          if(p.cmts.length>0){
-            if(!p.cmts[0].replies) p.cmts[0].replies=[];
-            p.cmts[0].replies.push({who:sc.handle,txt:csp,ts:new Date()});
-          } else {
-            p.cmts.push({who:sc.handle,txt:csp,ts:new Date()});
-          }
+          p.cmts.push({who:sc.handle,txt:csp,ts:new Date(),replies:[]});
           renderSNS();saveData();
         }catch(e){if(retry<2)setTimeout(()=>postSideCmt(retry+1),3000);}
       };
@@ -1815,12 +1845,7 @@ async function postMine(){
           const cr=await api([{role:'user',content:`[소우타 게시글: "${txt}"]`}],csys);
           const csp=cr.replace(/\(.*?\)/gs,'').trim();
           if(!csp && retry<2){setTimeout(()=>postRandomCmt(retry+1),3000);return;}
-          if(p.cmts.length>0){
-            if(!p.cmts[0].replies) p.cmts[0].replies=[];
-            p.cmts[0].replies.push({who:randomSide.handle,txt:csp,ts:new Date()});
-          } else {
-            p.cmts.push({who:randomSide.handle,txt:csp,ts:new Date()});
-          }
+          p.cmts.push({who:randomSide.handle,txt:csp,ts:new Date(),replies:[]});
           renderSNS();saveData();
         }catch(e){if(retry<2)setTimeout(()=>postRandomCmt(retry+1),3000);}
       };
@@ -1850,16 +1875,7 @@ async function generateAnPost(slot, today, ts){
           const csys=buildSideCharSys(sc,'\n안(@LightUptheFire)의 SNS 게시글에 짧은 댓글. 1문장. 반드시 맨 앞에 @LightUptheFire 태그. 대사만.');
           const cr=await api([{role:'user',content:`[안의 글: "${clean}"]`}],csys);
           const csp=cr.replace(/\(.*?\)/gs,'').trim();
-          if(ci===0){
-            ap.cmts.push({who:sc.handle,txt:csp,ts:new Date()});
-          } else {
-            if(ap.cmts.length>0){
-              if(!ap.cmts[0].replies) ap.cmts[0].replies=[];
-              ap.cmts[0].replies.push({who:sc.handle,txt:csp,ts:new Date()});
-            } else {
-              ap.cmts.push({who:sc.handle,txt:csp,ts:new Date()});
-            }
-          }
+          ap.cmts.push({who:sc.handle,txt:csp,ts:new Date(),replies:[]});
           renderSNS();saveData();
         }catch(e){}
       },5000+(ci*4000)+Math.random()*3000);
@@ -1887,13 +1903,9 @@ async function generateSidePost(c, today, sideSlot, ts){
           const cr=await api([{role:'user',content:`[게시글: "${clean}"]`}],csys);
           const csp=cr.replace(/\(.*?\)/gs,'').trim();
           if(!csp && retry<2){setTimeout(()=>postSideInteract(retry+1),3000);return;}
-          // 첫 댓글이면 cmts에, 이미 있으면 replies에
-          if(cp.cmts.length>0){
-            if(!cp.cmts[0].replies) cp.cmts[0].replies=[];
-            cp.cmts[0].replies.push({who:commenter.handle,txt:csp,ts:new Date()});
-          } else {
-            cp.cmts.push({who:commenter.handle,txt:csp,ts:new Date()});
-          }
+          // 게시글에 다는 댓글은 항상 최상위 댓글로
+          const theCmt={who:commenter.handle,txt:csp,ts:new Date(),replies:[]};
+          cp.cmts.push(theCmt);
           renderSNS();saveData();
           // 50% 확률로 게시글 주인도 답댓글 (replies에)
           if(Math.random()>0.5){
@@ -1903,8 +1915,7 @@ async function generateSidePost(c, today, sideSlot, ts){
                 const r2=await api([{role:'user',content:`[${commenter.nm}이 댓글: "${csp}"]`}],sys2);
                 const sp2=r2.replace(/\(.*?\)/gs,'').trim();
                 if(sp2){
-                  if(!cp.cmts[0].replies) cp.cmts[0].replies=[];
-                  cp.cmts[0].replies.push({who:c.handle,txt:sp2,ts:new Date()});
+                  theCmt.replies.push({who:c.handle,txt:sp2,ts:new Date()});
                   renderSNS();saveData();
                 }
               }catch(e){}
@@ -2750,6 +2761,7 @@ async function loadData(){
     if(d.DP){ DP=withDefaults(d.DP); localStorage.setItem('dp',JSON.stringify(DP)); applyDP(); }
     if(d.galleryItems) galleryItems=d.galleryItems;
     if(Array.isArray(d.memories)) memories=d.memories;
+    if(fixCommentThreads()) setTimeout(saveData,0);
     if(Array.isArray(d.eventsDone)) eventsDone=d.eventsDone;
     if(d.avatars && typeof d.avatars==='object'){ avatarMap=d.avatars; try{localStorage.setItem('avatars',JSON.stringify(avatarMap));}catch(e){} renderAvatarGrid(); refreshAvatars(); }
   }
@@ -3330,14 +3342,9 @@ ${post.nm||'누군가'}(@${ownerTag})의 SNS 게시글에 자연스럽게 댓글
       const prompt=`[게시글: "${(post.body||'').slice(0,80)}"]`;
       const r=await api([{role:'user',content:prompt}],sys);
       const sp=r.replace(/\(.*?\)/gs,'').trim();
-      // 기존 댓글 있으면 replies에, 없으면 cmts에
+      // 게시글에 다는 댓글은 항상 최상위 댓글로
       const newCmt={who:c.handle,txt:sp,ts:new Date(),replies:[]};
-      if(post.cmts.length>0){
-        if(!post.cmts[0].replies) post.cmts[0].replies=[];
-        post.cmts[0].replies.push({who:c.handle,txt:sp,ts:new Date()});
-      } else {
-        post.cmts.push(newCmt);
-      }
+      post.cmts.push(newCmt);
       renderSNS();
       saveData();
       // 50% 확률로 게시글 주인도 답댓글 (항상 첫 댓글의 replies에)
@@ -3356,14 +3363,8 @@ ${post.nm||'누군가'}(@${ownerTag})의 SNS 게시글에 자연스럽게 댓글
             }
             const r2=await api([{role:'user',content:prompt2}],sys2);
             const sp2=r2.replace(/\(.*?\)/gs,'').trim();
-            // 주인 답댓글은 방금 달린 댓글의 replies에
-            const targetCmt=post.cmts.length>0?post.cmts[post.cmts.length>1?0:0]:null;
-            if(targetCmt){
-              if(!targetCmt.replies) targetCmt.replies=[];
-              targetCmt.replies.push({who:ownerHandle,txt:sp2,ts:new Date()});
-            } else {
-              post.cmts.push({who:ownerHandle,txt:sp2,ts:new Date()});
-            }
+            // 주인 답글은 방금 달린 그 댓글 아래에
+            newCmt.replies.push({who:ownerHandle,txt:sp2,ts:new Date()});
             renderSNS();saveData();
           }catch(e){}
         },3000+Math.random()*4000);
