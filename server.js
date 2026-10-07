@@ -125,6 +125,37 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// ── 사진 설명 (이미지 인식) ──
+// 사진을 한 번만 보고 짧은 설명을 만들어 둠 → 캐릭터들은 이 설명을 보고 반응
+const IMG_RE = /^data:(image\/(?:jpeg|png|webp|gif));base64,([A-Za-z0-9+/=]+)$/;
+async function describeImage(dataUrl, hint) {
+  const m = IMG_RE.exec(dataUrl || '');
+  if (!m) throw new Error('이미지 형식이 올바르지 않아요');
+  const { text } = await callAI(
+    '사진을 보고 무엇이 찍혀 있는지 한국어로 1~2문장으로 구체적으로 묘사해. 사람·사물·장소·분위기·색감 위주로. 추측은 "~같다"로. 묘사만 출력.',
+    [{ role: 'user', content: [
+      { type: 'image', source: { type: 'base64', media_type: m[1], data: m[2] } },
+      { type: 'text', text: hint ? `참고(올린 사람이 쓴 글): ${String(hint).slice(0, 200)}` : '이 사진을 묘사해줘.' }
+    ] }],
+    300
+  );
+  return text;
+}
+app.post('/api/vision', async (req, res) => {
+  try {
+    res.json({ ok: true, description: await describeImage(req.body?.image, req.body?.hint) });
+  } catch (e) {
+    console.error('이미지 인식 에러:', e.message);
+    res.status(502).json({ ok: false, error: e.message });
+  }
+});
+// 게이트웨이가 이미지를 받아주는지 확인용 (빨간 사각형)
+const TEST_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAG0lEQVR4nGP4z8BAEmIY1TCqYVTDqIbhqgEAQ2tfoQeyaGEAAAAASUVORK5CYII=';
+app.get('/api/health/vision', async (req, res) => {
+  try { res.json({ ok: true, description: await describeImage(TEST_IMG) }); }
+  catch (e) { res.status(502).json({ ok: false, error: e.message }); }
+});
+
 // ── AI 연결 상태 확인 ──
 app.get('/api/health', async (req, res) => {
   const started = Date.now();
