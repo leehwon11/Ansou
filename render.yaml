@@ -14,6 +14,8 @@ services:
         sync: false
       - key: SUPABASE_ANON_KEY
         sync: false
+      - key: APP_PASSWORD
+        sync: false
       - key: AI_MODEL
         value: claude-sonnet-4-6
       - key: NODE_VERSION
